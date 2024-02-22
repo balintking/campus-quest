@@ -15,6 +15,8 @@ A szobákban elvétve tranzisztorok is találhatók. A hallgatónál levő tranz
 
 Minden szobának van egy (a szobára jellemző) befogadóképessége. Ennél több hallgató és oktató a szobában nem tartózkodhat. Ezen kívül a szobáknak több fajtája is ismert. Vannak szobák, amikben mérgező gáz van. Az ide belépő hallgatók és oktatók egy rövid időre eszméletüket vesztik és a náluk lévő tárgyakat elejtik. Ha valakinél van FFP2-es maszk, akkor ezekben a szobákban adott időre védettséget kap, de a maszk egyre rövidebb ideig képes a védelem nyújtására. Vannak olyan elátkozott szobák, amiknek az ajtajai időnként eltűnnek, majd később újra előtűnnek.
 
+:))
+
 A szobák egy korábbi (félresikerült) gráfelméleti tételbizonyítás eredményeként meghazudtolják a fizika törvényeit: képesek egyesülni és osztódni. Két szomszédos szoba egyesülésével létrejövő szoba a korábbi két szoba tulajdonságaival és szomszédaival rendelelkezik, de a befogadóképessége a nagyobb szoba befogadóképességével lesz azonos. Az osztódó szoba két olyan szobára válik szét, amelyek egymás szomszédai lesznek, és megosztoznak a korábbi szoba képességein és szomszédain (a korábbi szomszédok vagy csak az egyik, vagy csak a másik “új” szobának lesznek szomszédai).
 
 A játékot egyszerre több játékos játssza, akik a hallgatókat irányítják, és akkor nyernek, ha megadott időn belül megtalálták és magukhoz vették a Logarlécet.

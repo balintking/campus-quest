@@ -1,15 +1,15 @@
 
-
-java:S1192"_Define a constant instead of duplicating this literal "Choose a number between 1 and " 3 times.(úúûıÿÿÿÿ8Ñú¯µæ1
-G	java:S106"+Replace this use of System.out by a logger.(ÿ‰ŞË8ßú¯µæ1
-L	java:S106"+Replace this use of System.out by a logger.(úúûıÿÿÿÿ8ßú¯µæ1
-L	java:S106$"+Replace this use of System.out by a logger.(úúûıÿÿÿÿ8àú¯µæ1
-L	java:S106&"+Replace this use of System.out by a logger.(úúûıÿÿÿÿ8àú¯µæ1
-L	java:S1061"+Replace this use of System.out by a logger.(›×½óûÿÿÿÿ8áú¯µæ1
-L	java:S1064"+Replace this use of System.out by a logger.(áˆõÄúÿÿÿÿ8áú¯µæ1
-L	java:S1067"+Replace this use of System.out by a logger.(œŞ°«ùÿÿÿÿ8áú¯µæ1
-L	java:S106:"+Replace this use of System.out by a logger.(ì›‰üÿÿÿÿ8áú¯µæ1
-L	java:S106="+Replace this use of System.out by a logger.(Ê›µ‰úÿÿÿÿ8âú¯µæ1
-L	java:S106@"+Replace this use of System.out by a logger.(ª¯Å–üÿÿÿÿ8âú¯µæ1
-L	java:S106R"+Replace this use of System.out by a logger.(™È—ıÿÿÿÿ8ãú¯µæ1
-G	java:S106^"+Replace this use of System.out by a logger.(Áæ¯8äú¯µæ1
+z
+java:S1192"_Define a constant instead of duplicating this literal "Choose a number between 1 and " 3 times.(úúûıÿÿÿÿ
+@	java:S106"+Replace this use of System.out by a logger.(ÿ‰ŞË
+E	java:S106"+Replace this use of System.out by a logger.(úúûıÿÿÿÿ
+E	java:S106$"+Replace this use of System.out by a logger.(úúûıÿÿÿÿ
+E	java:S106&"+Replace this use of System.out by a logger.(úúûıÿÿÿÿ
+E	java:S1061"+Replace this use of System.out by a logger.(›×½óûÿÿÿÿ
+E	java:S1064"+Replace this use of System.out by a logger.(áˆõÄúÿÿÿÿ
+E	java:S1067"+Replace this use of System.out by a logger.(œŞ°«ùÿÿÿÿ
+E	java:S106:"+Replace this use of System.out by a logger.(ì›‰üÿÿÿÿ
+E	java:S106="+Replace this use of System.out by a logger.(Ê›µ‰úÿÿÿÿ
+E	java:S106@"+Replace this use of System.out by a logger.(ª¯Å–üÿÿÿÿ
+E	java:S106R"+Replace this use of System.out by a logger.(™È—ıÿÿÿÿ
+@	java:S106^"+Replace this use of System.out by a logger.(Áæ¯

@@ -37,6 +37,12 @@ public class Student extends Person {
         Logger.logReturn();
     }
 
+    //nothing happens
+    public void clothStun(){
+        Logger.logCall("clothStun", "void");
+        Logger.logReturn();
+    }
+
     /**
      * An event handler for gas stun. It checks if there are protective items available and if yes
      * it selects the one with the lowest(min check) priority. If there is no protection then it suffers gas attack.

@@ -79,11 +79,7 @@ public class Skeleton {
         //end of init3
 
         t.initAttack();
-        r.getPeople();
-        s.teacherAttack();
-        tvsz.teacherThreat();
-        s.teacherProtection(tvsz, 0);
-        tvsz.acceptProtection();
+        //offerprotection nem hivodik be-> tvsz nem kerul be protectiveitemsbe->nem jon acceptprotection
 
     }
     private static void testCase4() {
@@ -122,12 +118,6 @@ public class Skeleton {
         //end of init5
 
         s.initActivate(c);
-        c.activate();
-        s.getRoom();
-        r.getPeople();
-        t.clothStun();
-        s.clothStun();
-        c.destroy();
     }
     private static void testCase6() {
         System.out.println("init6");

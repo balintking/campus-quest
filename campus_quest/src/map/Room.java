@@ -68,7 +68,14 @@ public class Room implements Entity {
 
     public List<Person> getPeople() {
         Logger.logCall("getPeople", "List<Person>");
-        Logger.logReturn();
+        StringBuilder x=new StringBuilder();
+        for (int i = 0; i < people.size(); i++) { //people to string for logreturn
+            x.append(people.get(i).toString());
+            if (i != people.size() - 1) {
+                x.append(", ");
+            }
+        }
+        Logger.logReturn(x.toString());
         return people;
     }
 

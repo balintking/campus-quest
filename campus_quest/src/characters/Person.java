@@ -74,7 +74,7 @@ public abstract class Person implements Entity {
      * @param item
      */
     public void pickup(Item item) {
-
+        items.add(item);
     }
 
     public void addItem(Item item){
@@ -104,7 +104,8 @@ public abstract class Person implements Entity {
      * @param priority
      */
     public void teacherProtection(Item protectionProvider, int priority) {
-
+        Logger.logCall("teacherProtection", new String[]{"protectionProvider, priority"},"void");
+        Logger.logReturn();
     }
 
     /**

@@ -3,26 +3,42 @@ package characters;
 import items.Item;
 import utility.Logger;
 
+import java.util.List;
+
 public class Teacher extends Person {
 
-    //A rongy hatására megbénul 3 körig.
-    public void clothStun(){}
+    //Gets stun by cloth for 3 rounds
+    public void clothStun(){
+        Logger.logCall("clothStun", "void");
+        stunned = true;
+        Logger.logReturn();
+    }
 
-    //A gáz hatására megbénul 2 körig.
+    //Gets stun by gas for 2 rounds
     public void gasStun(){
         Logger.logCall("gasStun", "void");
         stunned = true;
         Logger.logReturn();
     };
 
-    //Megtámadja a vele egy szobában tartózkodó személyeket.
-    public void initAttack(){}
+    //The Teacher attacks all the people in their room
+    public void initAttack(){
+        Logger.logCall("initAttack","void");
+        List<Person> targets = room.getPeople();
+        for(Person p:targets){
+            p.teacherAttack();
+        }
+        Logger.logReturn();
+    }
 
-    //A felvett tárgyat megsemmisíti.
+    //The teacher destroys the picked up item
     public void pickup(Item item){}
 
-    //Oktató támadására immunis, ez az implementáció semmit nem csinál. 
-    public void teacherAttack(){}
+    //Teachers are immune to attacks by teacher, in this case nothing happens
+    public void teacherAttack(){
+        Logger.logCall("teacherAttack","void");
+        Logger.logReturn();
+    }
 
     @Override
     public void offerProtection(Item i, int priority) {

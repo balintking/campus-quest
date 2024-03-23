@@ -108,7 +108,7 @@ public class Logger {
             sc.next();
         }
         String input = sc.nextLine();
-        input.trim();
+        input = input.trim().toLowerCase();
         while (!(input.equals("i") || input.equals("n"))){
             System.out.println("Please enter a valid input! i for yes or n for no!");
             while (!sc.hasNextLine()) {
@@ -116,9 +116,8 @@ public class Logger {
                 sc.next();
             }
             input = sc.nextLine();
-            input.trim();
+            input = input.trim().toLowerCase();
         }
-        sc.close();
         return input.equals("i");
     }
 

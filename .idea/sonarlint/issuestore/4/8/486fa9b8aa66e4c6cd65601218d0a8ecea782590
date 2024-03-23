@@ -1,13 +1,9 @@
 
 \
-java:S1118	":Add a private constructor to hide the implicit public one.(ŸæÌıÿÿÿÿ8”€½çæ1
-L	java:S106$"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8—€½çæ1
-L	java:S106@"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8›€½çæ1
-L	java:S106`"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8€½çæ1
-G	java:S106j"+Replace this use of System.out by a logger.(‘³–8Ÿ€½çæ1
-E
-java:S2201o"(The return value of "trim" must be used.(ÿÓ™§8 €½çæ1
-G	java:S106q"+Replace this use of System.out by a logger.(¯¼êÍ8 €½çæ1
-G	java:S106s"+Replace this use of System.out by a logger.(¯¼êÍ8¡€½çæ1
-E
-java:S2201w"(The return value of "trim" must be used.(ÿÓ™§8¡€½çæ1
+java:S1118	":Add a private constructor to hide the implicit public one.(ŸæÌıÿÿÿÿ8¨æÖçæ1
+L	java:S106$"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8¬æÖçæ1
+L	java:S106@"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8¯æÖçæ1
+L	java:S106`"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8±æÖçæ1
+G	java:S106j"+Replace this use of System.out by a logger.(‘³–8´æÖçæ1
+G	java:S106q"+Replace this use of System.out by a logger.(¯¼êÍ8µæÖçæ1
+G	java:S106s"+Replace this use of System.out by a logger.(¯¼êÍ8µæÖçæ1

@@ -18,6 +18,14 @@ public abstract class Person implements Entity {
         this.room = room;
     }
 
+    public Person(String n){
+        name=n;
+    }
+
+    public void setRoom(Room r){
+        room=r;
+    }
+
     /**
      * Alerts the Person about a cloth threat
      */

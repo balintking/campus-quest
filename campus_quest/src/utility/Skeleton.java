@@ -53,12 +53,51 @@ public class Skeleton {
     }
     private static void testCase3() {
         System.out.println("init3");
+
+        Room r = new Room(1, 10, false, false);
+        Student s = new Student("student1");
+        Teacher t = new Teacher("teacher1");
+        TVSZ tvsz = new TVSZ();
+
+        r.addPerson(s);
+        r.addPerson(t);
+        
+        s.setRoom(r);
+        t.setRoom(r);
+
+        s.pickup(tvsz);
+
+        tvsz.setOwner(s);
     }
     private static void testCase4() {
         System.out.println("init4");
+
+        Room r = new Room(1, 10, false, false);
+        Teacher t = new Teacher("teacher1");
+
+        r.addPerson(t);
+
+        t.setRoom(r);
+
+        r.gas();
     }
     private static void testCase5() {
         System.out.println("init5");
+
+        Room r = new Room(1, 10, false, false);
+        Student s = new Student("student1");
+        Teacher t = new Teacher("teacher1");
+        Cloth c = new Cloth();
+
+        r.addPerson(s);
+        r.addPerson(t);
+        
+        s.setRoom(r);
+        t.setRoom(r);
+
+        s.pickup(c);
+
+        c.setOwner(s);
     }
     private static void testCase6() {
         System.out.println("init6");

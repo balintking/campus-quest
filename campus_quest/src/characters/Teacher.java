@@ -9,6 +9,10 @@ public class Teacher extends Person {
         super(room);
     }
 
+    public Teacher(String name) {
+        super(name);
+    }
+
     //A rongy hatására megbénul 3 körig.
     public void clothStun(){}
 

@@ -13,6 +13,10 @@ public class Student extends Person {
         super(room);
     }
 
+    public Student(String name) {
+        super(name);
+    }
+
     public void initActivate(Item i) {
         i.activate();
     }

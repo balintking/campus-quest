@@ -12,7 +12,7 @@ public class Student extends Person {
 
     // just to avoid copying code
     private void selectProtectionProvider() {
-        // here we select the protective item with the lowest prioirity and we accept its offer
+        // here we select the protective item with the lowest prioirity and accept its offer
         int min = Integer.MAX_VALUE;
         Item minItem = null;
 

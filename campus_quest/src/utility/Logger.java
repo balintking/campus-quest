@@ -1,5 +1,7 @@
 package utility;
 
+import java.util.Scanner;
+
 /**
  * Implementation of a simple Logger class capable of writing to the console output.
  * @author Szakos Máté Antal
@@ -71,6 +73,53 @@ public class Logger {
         logReturn("void");
     }
 
+    /**
+     * A static method for logging the creation of an object instance.
+     * @param objectType The type of the object.
+     * @param constructorParameters The parameters the constructor takes.
+     */
+    public static void logCreate(String objectType,String[] constructorParameters) {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < depth; i++) {
+            sb.append('\t');
+        }
+        sb.append("create: "); sb.append(objectType); sb.append('(');
+        if(constructorParameters != null) {
+            for (int i = 0; i < constructorParameters.length; i++) {
+                sb.append(constructorParameters[i]);
+                if (i != constructorParameters.length - 1) {
+                    sb.append(',');
+                }
+            }
+        }
+        sb.append(')');
+        System.out.println(sb);
+    }
+
+    /**
+     * Asks a question for the tester and they should answer it with eiter yes or no.
+     * @param question The question to be asked.
+     * @return Wether the user input was yes or no.
+     */
+    public static boolean testerInput(String question) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Tester intervention needed: " + question + "\n Press i (for yes) or n (for no)!");
+        while(!sc.hasNextLine()) {
+            sc.next();
+        }
+        String input = sc.nextLine();
+        input.trim();
+        while (!(input.equals("i") || input.equals("n"))){
+            System.out.println("Please enter a valid input! i for yes or n for no!");
+            while (!sc.hasNextLine()) {
+                System.out.println("Please enter a valid input! i for yes or n for no!");
+                sc.next();
+            }
+            input = sc.nextLine();
+            input.trim();
+        }
+        return input.equals("i");
+    }
 
 
 }

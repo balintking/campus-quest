@@ -22,6 +22,9 @@ public class Skeleton {
         testCases.add(Skeleton::testCase6);
         testCases.add(Skeleton::testCase7);
         testCases.add(Skeleton::testCase8);
+        testCases.add(Skeleton::testCase9);
+        testCases.add(Skeleton::testCase10);
+        testCases.add(Skeleton::testCase11);
         testCases.add(Skeleton::testCase12);
         testCases.add(Skeleton::testCase13);
         testCases.add(Skeleton::testCase14);
@@ -166,6 +169,40 @@ public class Skeleton {
         s.pickup(m);    //3
         m.setOwner(s);  //4
         r.tick();
+    }
+
+    private static void testCase9() {
+        System.out.println("init9");
+
+        Room room = new Room(1,10,false,false);
+        Student student1 = new Student("student1");
+        Teacher teacher1 = new Teacher("teacher1");
+        Beer beer = new Beer();
+        TVSZ tvsz = new TVSZ();
+
+        room.addPerson(student1);
+        room.addPerson(teacher1);
+        student1.addItem(tvsz);
+        student1.addItem(beer);
+        student1.setRoom(room);
+        teacher1.setRoom(room);
+        beer.setOwner(student1);
+        tvsz.setOwner(student1);
+
+        teacher1.initAttack();
+
+    }
+
+    private static void testCase10() {
+        System.out.println("init10");
+
+
+    }
+
+    private static void testCase11() {
+        System.out.println("init11");
+
+
     }
 
     private static void testCase12(){

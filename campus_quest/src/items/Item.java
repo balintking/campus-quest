@@ -18,7 +18,7 @@ public abstract class Item implements Entity {
     /**
      * Activates the item
      */
-    public void activate(){}
+    public void activate(){active = true;}
 
     // Beállítja a tárgy szobáját.
     public void changeRoom(Room room){}

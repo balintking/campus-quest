@@ -7,7 +7,27 @@ import java.util.HashMap;
 
 public class Student extends Person {
 
-    private HashMap<Item, Integer> protectiveItems = new HashMap<Item, Integer>();
+    private HashMap<Item, Integer> protectiveItems = new HashMap<>();
+
+    // just to avoid copying code
+    private void selectProtectionProvider() {
+        // here we select the protective item with the lowest prioirity and we accept its offer
+        int min = Integer.MAX_VALUE;
+        Item minItem = null;
+
+        for(Item i : protectiveItems.keySet()) {
+            int val = protectiveItems.get(i);
+            if(val < min) {
+                min = val;
+                minItem = i;
+            }
+        }
+        if(minItem != null) {
+            minItem.acceptProtection();
+        } else {
+            throw new NullPointerException("The protectiveItems list contains a null reference!");
+        }
+    }
 
     public Student(Room room) {
         super(room);
@@ -21,6 +41,11 @@ public class Student extends Person {
         i.activate();
     }
 
+    /**
+     * An event handler for gas stun. It checks if there are protective items available and if yes
+     * it selects the one with the lowest(min check) priority. If there is no protection then it suffers gas attack.
+     * @throws NullPointerException If the protectiveItems list has a null reference inside by mistake.
+     */
     @Override
     public void gasStun() {
         for (Item i : items) {
@@ -30,7 +55,21 @@ public class Student extends Person {
             stunned = true;
             dropAll();
         } else {
-            //TODO: a legkisebb prioritású protectiveItem-en meg kell hívni az accepProtection()-t
+            selectProtectionProvider();
+        }
+        protectiveItems.clear();
+    }
+
+    @Override
+    public void teacherAttack() {
+        for (Item i : items) {
+            i.teacherThreat();
+        }
+        if (protectiveItems.isEmpty()) {
+            // the student dies
+            room.removePerson(this);
+        } else {
+            selectProtectionProvider();
         }
         protectiveItems.clear();
     }

@@ -82,6 +82,10 @@ public abstract class Person implements Entity {
 
     }
 
+    public void addItem(Item item){
+        items.add(item);
+    }
+
     /**
      * SlideRule calls this function whenever it's picked up
      * @param slideRule

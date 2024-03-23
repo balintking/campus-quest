@@ -23,6 +23,10 @@ public abstract class Item implements Entity {
     // Beállítja a tárgy szobáját.
     public void changeRoom(Room room){}
 
+    public Room getRoom(){
+        return room;
+    }
+
     /**
      * Destroys the item
      */

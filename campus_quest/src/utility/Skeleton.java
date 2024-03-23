@@ -3,6 +3,7 @@ package utility;
 import characters.Student;
 import characters.Teacher;
 import items.*;
+import map.Door;
 import map.Room;
 
 import java.util.ArrayList;
@@ -21,6 +22,10 @@ public class Skeleton {
         testCases.add(Skeleton::testCase6);
         testCases.add(Skeleton::testCase7);
         testCases.add(Skeleton::testCase8);
+        testCases.add(Skeleton::testCase12);
+        testCases.add(Skeleton::testCase13);
+        testCases.add(Skeleton::testCase14);
+        testCases.add(Skeleton::testCase15);
 
 
         Scanner scanner = new Scanner(System.in);
@@ -120,7 +125,7 @@ public class Skeleton {
     private static void testCase7(){
         System.out.println("init7");
 
-        Room r = new Room(1, 10, true, false);    //1
+        Room r = new Room(1, 10,false, false);    //1
         Student s = new Student(r);
         TVSZ t = new TVSZ();
         r.addPerson(s); //2
@@ -139,6 +144,99 @@ public class Skeleton {
         s.pickup(m);    //3
         m.setOwner(s);  //4
         r.tick();
+    }
+
+    private static void testCase12(){
+        System.out.println("init12");
+
+        SlideRule sr = new SlideRule();
+        Room r = new Room(1,10, false, false);
+        Student s = new Student(r);
+
+        sr.changeRoom(r);
+        r.addPerson(s);
+        r.addItem(sr);
+
+        s.pickup(sr);
+        r.removeItem(sr);
+        sr.setOwner(s);
+        s.slideRuleNotification(sr);
+
+    }
+    private static void testCase13(){
+        System.out.println("init12");
+
+        SlideRule sr = new SlideRule();
+        Room r = new Room(1,10, false, false);
+        Teacher t = new Teacher(r);
+
+        sr.changeRoom(r);
+        r.addPerson(t);
+        r.addItem(sr);
+
+        t.pickup(sr);
+        r.removeItem(sr);
+        sr.setOwner(t);
+        t.slideRuleNotification(sr);
+        sr.setOwner(null);
+        r.addItem(sr);
+//        We are not taking the item away from the person
+
+    }
+
+    private static void testCase14(){
+        Room r1 = new Room(1,10,false,false);
+        Room r2 = new Room(2,10,false, false);
+        Door d = new Door(r1, r2);
+
+        Student s = new Student(r1);
+
+        Transistor t1 = new Transistor();
+        Transistor t2 = new Transistor();
+
+        r1.addPerson(s);
+        s.addItem(t1);
+        s.addItem(t2);
+
+        t1.setOwner(s);
+        t2.setOwner(s);
+
+        s.initActivate(t1);
+        t1.activate();
+
+        s.initActivate(t2);
+        t2.activate();
+
+        s.drop(t1);
+
+        s.move(d);
+//        Ask from tester if the room is full
+        s.drop(t2);
+
+        t2.changeRoom(r2);
+        t1.getRoom();
+        s.teleport(r1);
+//        Ask from tester if the room is full
+        r2.removePerson(s);
+        r1.addPerson(s);
+
+        t2.deactivate();
+        t1.deactivate();
+    }
+    private static void testCase15(){
+        Room r = new Room(1,10, false, false);
+        Teacher t = new Teacher(r);
+
+        Transistor t1 = new Transistor();
+        Transistor t2 = new Transistor();
+
+        t1.changeRoom(r);
+
+        t.pickup(t1);
+        r.removeItem(t1);
+
+        t1.destroy();
+        t2.reset();
     }
 }
 

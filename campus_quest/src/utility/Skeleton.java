@@ -59,50 +59,72 @@ public class Skeleton {
     private static void testCase3() {
         System.out.println("init3");
 
-        Room r = new Room(1, 10, false, false);
+        Room r = new Room(1, 10, false, false); //1
         Student s = new Student("student1");
         Teacher t = new Teacher("teacher1");
         TVSZ tvsz = new TVSZ();
 
-        r.addPerson(s);
+        r.addPerson(s); //2
         r.addPerson(t);
         
         s.setRoom(r);
         t.setRoom(r);
 
-        s.pickup(tvsz);
+        s.pickup(tvsz); //3
 
-        tvsz.setOwner(s);
+        tvsz.setOwner(s); //4
+        //end of init3
+
+        t.initAttack();
+        r.getPeople();
+        s.teacherAttack();
+        tvsz.teacherThreat();
+        s.teacherProtection(tvsz, 0);
+        tvsz.acceptProtection();
+
     }
     private static void testCase4() {
         System.out.println("init4");
 
-        Room r = new Room(1, 10, false, false);
+        Room r = new Room(1, 10, false, false); //1
         Teacher t = new Teacher("teacher1");
 
-        r.addPerson(t);
+        r.addPerson(t); //2
 
         t.setRoom(r);
 
-        r.gas();
+        r.gas(); //3
+        //end of init4
+
+        t.gasStun();
+
     }
     private static void testCase5() {
         System.out.println("init5");
 
-        Room r = new Room(1, 10, false, false);
+        Room r = new Room(1, 10, false, false); //1
         Student s = new Student("student1");
         Teacher t = new Teacher("teacher1");
         Cloth c = new Cloth();
 
-        r.addPerson(s);
+        r.addPerson(s); //2
         r.addPerson(t);
         
         s.setRoom(r);
         t.setRoom(r);
 
-        s.pickup(c);
+        s.pickup(c); //3
 
-        c.setOwner(s);
+        c.setOwner(s); //4
+        //end of init5
+
+        s.initActivate(c);
+        c.activate();
+        s.getRoom();
+        r.getPeople();
+        t.clothStun();
+        s.clothStun();
+        c.destroy();
     }
     private static void testCase6() {
         System.out.println("init6");

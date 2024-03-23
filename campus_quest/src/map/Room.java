@@ -3,6 +3,7 @@ package map;
 import characters.Person;
 import items.Item;
 import utility.Entity;
+import utility.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +67,8 @@ public class Room implements Entity {
 
 
     public List<Person> getPeople() {
+        Logger.logCall("getPeople", "List<Person>");
+        Logger.logReturn();
         return people;
     }
 

@@ -3,6 +3,7 @@ package items;
 import characters.*;
 import map.*;
 import utility.Entity;
+import utility.Logger;
 
 public abstract class Item implements Entity {
 
@@ -18,7 +19,9 @@ public abstract class Item implements Entity {
     /**
      * Activates the item
      */
-    public void activate(){active = true;}
+    public void activate() {
+        active = true;
+    }
 
     // Beállítja a tárgy szobáját.
     public void changeRoom(Room room){}
@@ -31,12 +34,17 @@ public abstract class Item implements Entity {
      * Destroys the item
      */
     public void destroy(){
+        Logger.logCall("destroy", "void");
         owner = null;
         room = null;
+        Logger.logReturn();
     }
 
     //A Characters.Person ezzel a hívással jelez az összes általa birtokolt Items.Item felé ha gázos szobában tartózkodik.
-    public void gasThreat(){}
+    public void gasThreat(){
+        Logger.logCall("gasThreat", "void");
+        Logger.logReturn();
+    }
 
     //Beállítja a tárgy tulajdonosát és kezeli azt az eseményt, hogy a tárgyat felvették, utóbbi néhány implementációban lényeges.
     public void setOwner(Person owner){

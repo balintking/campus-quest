@@ -2,6 +2,7 @@ package characters;
 
 import items.Item;
 import map.Room;
+import utility.Logger;
 
 import java.util.HashMap;
 
@@ -29,16 +30,11 @@ public class Student extends Person {
         }
     }
 
-    public Student(Room room) {
-        super(room);
-    }
-
-    public Student(String name) {
-        super(name);
-    }
-
     public void initActivate(Item i) {
+        Logger.logCall("initActivate", new String[]{i.toString()},"void");
         i.activate();
+
+        Logger.logReturn();
     }
 
     /**
@@ -48,6 +44,7 @@ public class Student extends Person {
      */
     @Override
     public void gasStun() {
+        Logger.logCall("gasStun", "void");
         for (Item i : items) {
             i.gasThreat();
         }
@@ -58,10 +55,12 @@ public class Student extends Person {
             selectProtectionProvider();
         }
         protectiveItems.clear();
+        Logger.logReturn();
     }
 
     @Override
     public void teacherAttack() {
+        Logger.logCall("teacherAttack", "void");
         for (Item i : items) {
             i.teacherThreat();
         }
@@ -72,10 +71,13 @@ public class Student extends Person {
             selectProtectionProvider();
         }
         protectiveItems.clear();
+        Logger.logReturn();
     }
 
     @Override
     public void offerProtection(Item i, int priority) {
+        Logger.logCall("offerProtection", new String[]{i.toString(), Integer.toString(priority)}, "void");
         protectiveItems.put(i, priority);
+        Logger.logReturn();
     }
 }

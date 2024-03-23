@@ -1,8 +1,4 @@
 
-f
-java:S1192B"IDefine a constant instead of duplicating this literal "student1" 3 times.(òÁ …8ôú¨åæ1
-e
-java:S1192C"IDefine a constant instead of duplicating this literal "teacher1" 4 times.(ÖĞÓ?8ôú¨åæ1
 
 java:S1192&"_Define a constant instead of duplicating this literal "Choose a number between 1 and " 3 times.(úúûıÿÿÿÿ8ôú¨åæ1
 G	java:S106#"+Replace this use of System.out by a logger.(ÿ‰ŞË8ƒû¨åæ1
@@ -15,10 +11,10 @@ L	java:S106?"+Replace this use of System.out by a logger.(œŞ°«ùÿÿÿÿ8†û¨åæ1
 L	java:S106Z"+Replace this use of System.out by a logger.(ì›‰üÿÿÿÿ8ˆû¨åæ1
 L	java:S106j"+Replace this use of System.out by a logger.(Ê›µ‰úÿÿÿÿ8‰û¨åæ1
 M	java:S106…"+Replace this use of System.out by a logger.(ª¯Å–üÿÿÿÿ8‹û¨åæ1
-M	java:S106—"+Replace this use of System.out by a logger.(™È—ıÿÿÿÿ8Œû¨åæ1
-H	java:S106£"+Replace this use of System.out by a logger.(Áæ¯8û¨åæ1
-H	java:S106¯"+Replace this use of System.out by a logger.(³º¡–8û¨åæ1
-M	java:S106Å"+Replace this use of System.out by a logger.(»Îãıÿÿÿÿ8û¨åæ1
-M	java:S106Ë"+Replace this use of System.out by a logger.(¨êÄÑşÿÿÿÿ8‘û¨åæ1
-H	java:S106Ñ"+Replace this use of System.out by a logger.(İŒ€Å8‘û¨åæ1
-H	java:S106â"+Replace this use of System.out by a logger.(İŒ€Å8˜û¨åæ1
+M	java:S106™"+Replace this use of System.out by a logger.(™È—ıÿÿÿÿ8Œû¨åæ1
+H	java:S106¦"+Replace this use of System.out by a logger.(Áæ¯8û¨åæ1
+H	java:S106³"+Replace this use of System.out by a logger.(³º¡–8û¨åæ1
+M	java:S106É"+Replace this use of System.out by a logger.(»Îãıÿÿÿÿ8û¨åæ1
+M	java:S106Ï"+Replace this use of System.out by a logger.(¨êÄÑşÿÿÿÿ8‘û¨åæ1
+H	java:S106Õ"+Replace this use of System.out by a logger.(İŒ€Å8‘û¨åæ1
+H	java:S106ç"+Replace this use of System.out by a logger.(İŒ€Å8˜û¨åæ1

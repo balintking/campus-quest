@@ -4,6 +4,7 @@ import items.Item;
 import map.Door;
 import map.Room;
 import utility.Entity;
+import utility.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +14,6 @@ public abstract class Person implements Entity {
     protected boolean stunned;
     protected Room room;
     protected List<Item> items = new ArrayList<>();
-
-    public Person(Room room){
-        this.room = room;
-    }
-
-    public Person(String n){
-        name=n;
-    }
 
     public void setRoom(Room r){
         room=r;
@@ -44,8 +37,10 @@ public abstract class Person implements Entity {
      * Drops all its items in its current room
      */
     public void dropAll() {
+        Logger.logCall("dropAll", "void");
         for (Item i : items)
             drop(i);
+        Logger.logReturn();
     }
 
     /**
@@ -123,6 +118,8 @@ public abstract class Person implements Entity {
     public void tick(){}
 
     public Room getRoom() {
+        Logger.logCall("getRoom", "Room");
+        Logger.logReturn();
         return room;
     }
 

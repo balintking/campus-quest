@@ -63,8 +63,8 @@ public class Skeleton {
         System.out.println("init3");
 
         Room r = new Room(1, 10, false, false); //1
-        Student s = new Student("student1");
-        Teacher t = new Teacher("teacher1");
+        Student s = new Student();
+        Teacher t = new Teacher();
         TVSZ tvsz = new TVSZ();
 
         r.addPerson(s); //2
@@ -90,7 +90,7 @@ public class Skeleton {
         System.out.println("init4");
 
         Room r = new Room(1, 10, false, false); //1
-        Teacher t = new Teacher("teacher1");
+        Teacher t = new Teacher();
 
         r.addPerson(t); //2
 
@@ -106,8 +106,8 @@ public class Skeleton {
         System.out.println("init5");
 
         Room r = new Room(1, 10, false, false); //1
-        Student s = new Student("student1");
-        Teacher t = new Teacher("teacher1");
+        Student s = new Student();
+        Teacher t = new Teacher();
         Cloth c = new Cloth();
 
         r.addPerson(s); //2
@@ -133,12 +133,14 @@ public class Skeleton {
         System.out.println("init6");
 
         Room r = new Room(1, 10, false, false);    //1
-        Student s = new Student(r);
-        Teacher t = new Teacher(r);
+        Student s = new Student();
+        Teacher t = new Teacher();
         Camembert c = new Camembert();
 
         r.addPerson(t); //2
         r.addPerson(s);
+        s.setRoom(r);
+        t.setRoom(r);
 
         s.pickup(c);    //3
 
@@ -151,9 +153,10 @@ public class Skeleton {
         System.out.println("init7");
 
         Room r = new Room(1, 10,false, false);    //1
-        Student s = new Student(r);
+        Student s = new Student();
         TVSZ t = new TVSZ();
         r.addPerson(s); //2
+        s.setRoom(r);
         s.pickup(t);    //3
         t.setOwner(s);  //4
         r.tick();
@@ -163,9 +166,10 @@ public class Skeleton {
         System.out.println("init8");
 
         Room r = new Room(1, 10, true, false);    //1
-        Student s = new Student(r);
+        Student s = new Student();
         Mask m = new Mask();
         r.addPerson(s); //2
+        s.setRoom(r);
         s.pickup(m);    //3
         m.setOwner(s);  //4
         r.tick();
@@ -175,8 +179,8 @@ public class Skeleton {
         System.out.println("init9");
 
         Room room = new Room(1,10,false,false);
-        Student student1 = new Student("student1");
-        Teacher teacher1 = new Teacher("teacher1");
+        Student student1 = new Student();
+        Teacher teacher1 = new Teacher();
         Beer beer = new Beer();
         TVSZ tvsz = new TVSZ();
 
@@ -210,9 +214,10 @@ public class Skeleton {
 
         SlideRule sr = new SlideRule();
         Room r = new Room(1,10, false, false);
-        Student s = new Student(r);
+        Student s = new Student();
 
         sr.changeRoom(r);
+        s.setRoom(r);
         r.addPerson(s);
         r.addItem(sr);
 
@@ -227,8 +232,9 @@ public class Skeleton {
 
         SlideRule sr = new SlideRule();
         Room r = new Room(1,10, false, false);
-        Teacher t = new Teacher(r);
+        Teacher t = new Teacher();
 
+        t.setRoom(r);
         sr.changeRoom(r);
         r.addPerson(t);
         r.addItem(sr);
@@ -248,11 +254,12 @@ public class Skeleton {
         Room r2 = new Room(2,10,false, false);
         Door d = new Door(r1, r2);
 
-        Student s = new Student(r1);
+        Student s = new Student();
 
         Transistor t1 = new Transistor();
         Transistor t2 = new Transistor();
 
+        s.setRoom(r1);
         r1.addPerson(s);
         s.addItem(t1);
         s.addItem(t2);
@@ -284,11 +291,12 @@ public class Skeleton {
     }
     private static void testCase15(){
         Room r = new Room(1,10, false, false);
-        Teacher t = new Teacher(r);
+        Teacher t = new Teacher();
 
         Transistor t1 = new Transistor();
         Transistor t2 = new Transistor();
 
+        t.setRoom(r);
         t1.changeRoom(r);
 
         t.pickup(t1);

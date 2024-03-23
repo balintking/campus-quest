@@ -1,24 +1,18 @@
 package characters;
 
 import items.Item;
-import map.Room;
+import utility.Logger;
 
 public class Teacher extends Person {
-
-    public Teacher(Room room) {
-        super(room);
-    }
-
-    public Teacher(String name) {
-        super(name);
-    }
 
     //A rongy hatására megbénul 3 körig.
     public void clothStun(){}
 
     //A gáz hatására megbénul 2 körig.
     public void gasStun(){
+        Logger.logCall("gasStun", "void");
         stunned = true;
+        Logger.logReturn();
     };
 
     //Megtámadja a vele egy szobában tartózkodó személyeket.

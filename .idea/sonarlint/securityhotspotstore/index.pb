@@ -33,3 +33,5 @@ P
  campus_quest/src/items/TVSZ.java,7\2\72f0ed87bea22dc92e9f2c5460d03d4c6cbaec9f
 N
 campus_quest/src/map/Room.java,6\0\605cfa3bfa529ec3240bbcaab3889ce373751c57
+X
+(campus_quest/src/characters/Teacher.java,f\3\f37e39ae49d9ca1bd256d0c58ae229f5c525c422

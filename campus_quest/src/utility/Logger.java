@@ -118,6 +118,7 @@ public class Logger {
             input = sc.nextLine();
             input.trim();
         }
+        sc.close();
         return input.equals("i");
     }
 

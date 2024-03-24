@@ -1,5 +1,8 @@
 package utility;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -11,6 +14,27 @@ public class Logger {
      * Indicating the depth of the call stack.
      */
     private static int depth = 0;
+    /**
+     * Storing the names of the object instances whose creation is logged.
+     */
+    private static final Map<Object,String> objectCatalog = new HashMap<>();
+
+    private static String logCollection(Object collectionObject) {
+        Iterable<?> collection = (Iterable<?>)collectionObject;
+        StringBuilder sb = new StringBuilder();
+        for(Object element: collection) {
+            if(element == null) {
+                sb.append("null");
+            } else if(objectCatalog.containsKey(element)) {
+                sb.append(objectCatalog.get(element));
+            } else {
+                sb.append(element.toString());
+            }
+            sb.append(',');
+        }
+        sb.deleteCharAt(sb.length()-1);
+        return sb.toString();
+    }
 
     /**
      * A static method for logging a method call. It increases the depth by 1.
@@ -18,7 +42,7 @@ public class Logger {
      * @param methodParameters The parameters of the called method.
      * @param returnType The return type of the called method.
      */
-    public static void logCall(String methodName,String[] methodParameters,String returnType) {
+    public static void logCall(String methodName,Object[] methodParameters,String returnType) {
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < depth; i++) {
             sb.append('\t');
@@ -26,7 +50,15 @@ public class Logger {
         sb.append("call: "); sb.append(methodName); sb.append('(');
         if(methodParameters != null) {
             for (int i = 0; i < methodParameters.length; i++) {
-                sb.append(methodParameters[i]);
+                if(methodParameters[i] == null) {
+                    sb.append("null");
+                } else if(methodParameters[i] instanceof Iterable<?>) {
+                    sb.append(logCollection(methodParameters[i]));
+                } else if(objectCatalog.containsKey(methodParameters[i])) {
+                    sb.append(objectCatalog.get(methodParameters[i]));
+                } else {
+                    sb.append(methodParameters[i].toString());
+                }
                 if (i != methodParameters.length - 1) {
                     sb.append(',');
                 }
@@ -51,16 +83,25 @@ public class Logger {
      * @param returnValue The returning value of the method.
      * @throws IllegalStateException It is thrown if the depth becomes less than 0, indicating that it is being called by mistake.
      */
-    public static void logReturn(String returnValue) throws IllegalStateException {
+    public static void logReturn(Object returnValue) throws IllegalStateException {
         StringBuilder sb = new StringBuilder();
         depth--;
-        if(depth < 0) {
+        if (depth < 0) {
             throw new IllegalStateException("You cannot return from a method you didn't call!");
         }
-        for(int i = 0; i < depth; i++) {
+        for (int i = 0; i < depth; i++) {
             sb.append('\t');
         }
-        sb.append("return: "); sb.append(returnValue);
+        sb.append("return: ");
+        if(returnValue == null) {
+            sb.append("null");
+        }  else if(returnValue instanceof Iterable<?>) {
+            sb.append(logCollection(returnValue));
+        } else if(objectCatalog.containsKey(returnValue)) {
+            sb.append(objectCatalog.get(returnValue));
+        } else {
+            sb.append(returnValue.toString());
+        }
         System.out.println(sb);
 
     }
@@ -75,10 +116,16 @@ public class Logger {
 
     /**
      * A static method for logging the creation of an object instance.
-     * @param objectType The type of the object.
-     * @param constructorParameters The parameters the constructor takes.
+     * @param objectReference The reference of the instance being created.
+     * @param objectType The type of the instance being created.
+     * @param instanceName The name of the instance being created.
+     * @param constructorParameters The array of the constructor parameters.
      */
-    public static void logCreate(String objectType,String[] constructorParameters) {
+    public static void logCreate(Object objectReference,String objectType,String instanceName,Object[] constructorParameters) {
+        if(objectCatalog.containsKey(objectReference)) {
+            throw new IllegalStateException("Ambigious constructor logging!");
+        }
+        objectCatalog.put(objectReference,instanceName);
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < depth; i++) {
             sb.append('\t');
@@ -86,16 +133,39 @@ public class Logger {
         sb.append("create: "); sb.append(objectType); sb.append('(');
         if(constructorParameters != null) {
             for (int i = 0; i < constructorParameters.length; i++) {
-                sb.append(constructorParameters[i]);
+                if(constructorParameters[i] == null) {
+                    sb.append("null");
+                } else if(constructorParameters[i] instanceof Iterable<?>) {
+                    sb.append(logCollection(constructorParameters[i]));
+                } else if(objectCatalog.containsKey(constructorParameters[i])) {
+                    sb.append(objectCatalog.get(constructorParameters[i]));
+                } else {
+                    sb.append(constructorParameters[i].toString());
+                }
                 if (i != constructorParameters.length - 1) {
                     sb.append(',');
                 }
             }
         }
-        sb.append(')');
+        sb.append("):"); sb.append(instanceName);
         System.out.println(sb);
     }
 
+    /**
+     * Overloading of the static method logCreate for the case if there are no constructor parameters.
+     * @param objectReference The reference of the instance being created.
+     * @param objectType The type of the instance being created.
+     * @param instanceName The name of the instance being created.
+     */
+    public static void logCreate(Object objectReference,String objectType,String instanceName) {logCreate(objectReference,objectType,instanceName,null);}
+
+    /**
+     * Resets the Logger to its default state.
+     */
+    public static void reset() {
+        objectCatalog.clear();
+        depth = 0;
+    }
     /**
      * Asks a question for the tester and they should answer it with eiter yes or no.
      * @param question The question to be asked.
@@ -119,6 +189,7 @@ public class Logger {
             input = input.trim().toLowerCase();
         }
         return input.equals("i");
+
     }
 
 

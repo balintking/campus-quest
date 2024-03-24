@@ -48,7 +48,6 @@ public class Skeleton {
             }
             number = scanner.nextInt();
         }
-        scanner.close();
         testCases.get(number - 1).execute();
     }
 
@@ -165,13 +164,18 @@ public class Skeleton {
     }
 
     private static void testCase9() {
-        System.out.println("init9");
+        System.out.println("init9---------------------------------");
 
         Room room = new Room(1,10,false,false);
+        Logger.logCreate(room,"Room","room",new Object[]{1,10,false,false});
         Student student1 = new Student();
+        Logger.logCreate(student1,"Student","student1");
         Teacher teacher1 = new Teacher();
+        Logger.logCreate(teacher1,"Teacher","teacher1");
         Beer beer = new Beer();
+        Logger.logCreate(beer,"Beer","beer");
         TVSZ tvsz = new TVSZ();
+        Logger.logCreate(tvsz,"TVSZ","tvsz");
 
         room.addPerson(student1);
         room.addPerson(teacher1);
@@ -181,20 +185,54 @@ public class Skeleton {
         teacher1.setRoom(room);
         beer.setOwner(student1);
         tvsz.setOwner(student1);
+        System.out.println("End of init9--------------------------");
 
+        if(Logger.testerInput("Would you like to activate the Beer you have?")) {
+            beer.activate();
+        }
         teacher1.initAttack();
 
     }
 
     private static void testCase10() {
-        System.out.println("init10");
+        System.out.println("init10--------------------------------");
+        Room r1 = new Room(1,10,false,false);
+        Logger.logCreate(r1,"Room","r1",new Object[]{1,10,false,false});
+        Room r3 = new Room(3,10,false,false);
+        Logger.logCreate(r3,"Room","r3",new Object[]{3,10,false,false});
+        Door d1 = new Door();
+        Logger.logCreate(d1,"Door","d1");
 
+        r1.addDoor(d1);
+        r3.addDoor(d1);
+        d1.setSrc(r1);
+        d1.setDest(r3);
+        System.out.println("End of init10-------------------------");
+
+        r1.divide();
 
     }
 
     private static void testCase11() {
-        System.out.println("init11");
+        System.out.println("init11--------------------------------");
+        Room r1 = new Room(1,10,false,false);
+        Logger.logCreate(r1,"Room","r1",new Object[]{1,10,false,false});
+        Room r2 = new Room(2,10,false,false);
+        Logger.logCreate(r2,"Room","r2",new Object[]{2,10,false,false});
+        Door d1 = new Door();
+        Logger.logCreate(d1,"Door","d1");
+        Door d2 = new Door();
+        Logger.logCreate(d2,"Door","d2");
 
+        r1.addDoor(d1);
+        r2.addDoor(d1);
+        r2.addDoor(d2);
+        d1.setSrc(r1);
+        d1.setDest(r2);
+
+        System.out.println("End of init11-------------------------");
+
+        r1.merge();
 
     }
 

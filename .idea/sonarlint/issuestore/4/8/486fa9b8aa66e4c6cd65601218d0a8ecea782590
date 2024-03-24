@@ -1,9 +1,11 @@
 
 \
-java:S1118	":Add a private constructor to hide the implicit public one.(ŸæÌıÿÿÿÿ8¨æÖçæ1
-L	java:S106$"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8¬æÖçæ1
-L	java:S106@"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8¯æÖçæ1
-L	java:S106`"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8±æÖçæ1
-G	java:S106j"+Replace this use of System.out by a logger.(‘³–8´æÖçæ1
-G	java:S106q"+Replace this use of System.out by a logger.(¯¼êÍ8µæÖçæ1
-G	java:S106s"+Replace this use of System.out by a logger.(¯¼êÍ8µæÖçæ1
+java:S1118":Add a private constructor to hide the implicit public one.(ŸæÌıÿÿÿÿ8§ŒÅ‡ç1
+L	java:S106D"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8¬ŒÅ‡ç1
+L	java:S106i"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8¯ŒÅ‡ç1
+M	java:S106—"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8³ŒÅ‡ç1
+H	java:S106°"+Replace this use of System.out by a logger.(‘³–8¾îÏ‡ç1
+H	java:S106·"+Replace this use of System.out by a logger.(¯¼êÍ8¿îÏ‡ç1
+H	java:S106¹"+Replace this use of System.out by a logger.(¯¼êÍ8ÉîÏ‡ç1
+S
+java:S1128"1Remove this unused import 'java.util.Collection'.(¹ÉĞšùÿÿÿÿ8¸ŒÅ‡ç1

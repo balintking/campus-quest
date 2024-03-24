@@ -14,23 +14,30 @@ public abstract class Item implements Entity {
     boolean active; //: Jelzi, hogy aktív-e az item.
     
     //A Characters.Person ezzel a hívással jelez ha elfogadja a tárgyvédelmi ajánlatát.
-    public void acceptProtection(){}
+    public void acceptProtection(){
+        Logger.logCall("acceptProtection","void");
+        Logger.logReturn();
+    }
 
     /**
      * Activates the item
      */
     public void activate() {
+        Logger.logCall("activate","void");
         active = true;
+        Logger.logReturn();
     }
 
     // Beállítja a tárgy szobáját.
     public void changeRoom(Room room){
-        Logger.logCall("changeRoom", new String[]{room.toString()}, "void");
+        Logger.logCall("changeRoom", new Object[]{room}, "void");
         this.room = room;
         Logger.logReturn();
     }
 
     public Room getRoom(){
+        Logger.logCall("getRoom","Room");
+        Logger.logReturn(room);
         return room;
     }
 
@@ -52,7 +59,9 @@ public abstract class Item implements Entity {
 
     //Beállítja a tárgy tulajdonosát és kezeli azt az eseményt, hogy a tárgyat felvették, utóbbi néhány implementációban lényeges.
     public void setOwner(Person owner){
+        Logger.logCall("setOwner",new Object[]{owner},"void");
         this.owner = owner;
+        Logger.logReturn();
     }
 
     //A Characters.Person ezzel a hívással jelez az összes általa birtokolt Items.Item felé ha egy oktató megtámadta őt.

@@ -16,7 +16,9 @@ public abstract class Person implements Entity {
     protected List<Item> items = new ArrayList<>();
 
     public void setRoom(Room r) {
+        Logger.logCall("setRoom",new Object[]{r},"void");
         room = r;
+        Logger.logReturn();
     }
 
     /**
@@ -30,7 +32,7 @@ public abstract class Person implements Entity {
      * @param item
      */
     public void drop(Item item) {
-        Logger.logCall("drop", new String[]{item.toString()}, "void");
+        Logger.logCall("drop", new Object[]{item}, "void");
         item.setOwner(null);
         item.changeRoom(room);
         Logger.logReturn();
@@ -75,11 +77,15 @@ public abstract class Person implements Entity {
      * @param item
      */
     public void pickup(Item item) {
+        Logger.logCall("pickup",new Object[]{item},"void");
         items.add(item);
+        Logger.logReturn();
     }
 
     public void addItem(Item item) {
+        Logger.logCall("addItem",new Object[]{item},"void");
         items.add(item);
+        Logger.logReturn();
     }
 
     /**
@@ -106,10 +112,7 @@ public abstract class Person implements Entity {
      * @param protectionProvider
      * @param priority
      */
-    public void teacherProtection(Item protectionProvider, int priority) {
-        Logger.logCall("teacherProtection", new String[]{"protectionProvider, priority"}, "void");
-        Logger.logReturn();
-    }
+    public void teacherProtection(Item protectionProvider, int priority) {}
 
     /**
      * Teleports Person to roomTo
@@ -128,6 +131,8 @@ public abstract class Person implements Entity {
         Logger.logReturn(room.toString());
         return room;
     }
-
-    public abstract void offerProtection(Item i, int priority);
+    @Override
+    public String toString() {
+        return name;
+    }
 }

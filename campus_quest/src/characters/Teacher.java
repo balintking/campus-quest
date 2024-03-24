@@ -42,7 +42,7 @@ public class Teacher extends Person {
      * @param item
      */
     public void pickup(Item item){
-        Logger.logCall("pickup", new String[]{item.toString()}, "void");
+        Logger.logCall("pickup", new Object[]{item}, "void");
         item.destroy();
         Logger.logReturn();
     }
@@ -53,10 +53,6 @@ public class Teacher extends Person {
         Logger.logReturn();
     }
 
-    @Override
-    public void offerProtection(Item i, int priority) {
-
-    }
 
 
 

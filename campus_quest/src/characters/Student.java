@@ -31,7 +31,7 @@ public class Student extends Person {
     }
 
     public void initActivate(Item i) {
-        Logger.logCall("initActivate", new String[]{i.toString()},"void");
+        Logger.logCall("initActivate", new Object[]{i},"void");
         i.activate();
 
         Logger.logReturn();
@@ -73,6 +73,7 @@ public class Student extends Person {
         if (protectiveItems.isEmpty()) {
             // the student dies
             room.removePerson(this);
+            System.out.println("penisz");
         } else {
             selectProtectionProvider();
         }
@@ -81,9 +82,17 @@ public class Student extends Person {
     }
 
     @Override
-    public void offerProtection(Item i, int priority) {
-        Logger.logCall("offerProtection", new String[]{i.toString(), Integer.toString(priority)}, "void");
-        protectiveItems.put(i, priority);
+    public void teacherProtection(Item protectionProvider,int priority) {
+        Logger.logCall("teacherProtection", new Object[]{protectionProvider,priority}, "void");
+        protectiveItems.put(protectionProvider,priority);
         Logger.logReturn();
     }
+    @Override
+    public void gasProtection(Item protectionProvider,int priority) {
+        Logger.logCall("gasProtection", new Object[]{protectionProvider,priority}, "void");
+        protectiveItems.put(protectionProvider,priority);
+        Logger.logReturn();
+    }
+
+
 }

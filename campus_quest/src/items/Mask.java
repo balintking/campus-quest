@@ -4,6 +4,11 @@ import utility.Logger;
 
 public class Mask extends Item {
 
+    public Mask() {
+        super();
+        life = 3;
+    }
+
     /**
      * Owner accepts Mask's protection offer
      */
@@ -17,7 +22,11 @@ public class Mask extends Item {
      */
     public void gasThreat(){
         Logger.logCall("gasThreat", "void");
-        owner.offerProtection(this, 0);
+        owner.gasProtection(this,life);
+        life--;
+        if(life == 0) {
+            super.destroy();
+        }
         Logger.logReturn();
     }
 

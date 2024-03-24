@@ -7,13 +7,28 @@ import utility.Logger;
 
 public abstract class Item implements Entity {
 
-    Person owner; //: Kinél van az adott tárgy. Ha szobában van, null.
-    Room room; //: Melyik szobában van az adott tárgy. Ha személynél van, null.
-    String name; //: A tárgy neve
-    int life; //: Hátralévő élettartam, ennyiszer használható még a tárgy.
-    boolean active; //: Jelzi, hogy aktív-e az item.
-    
-    //A Characters.Person ezzel a hívással jelez ha elfogadja a tárgyvédelmi ajánlatát.
+    /**
+     * who has the item. if it is in a room the value is null
+     */
+    Person owner;
+    /**
+     * in which room the item is. if it is at a person the value is null
+     */
+    Room room;
+    String name;
+    /**
+     * remaining lifetime of the item, it can be used this much more times
+     */
+    int life;
+    /**
+     *  shows that the item is active or not
+     */
+    boolean active;
+
+
+    /**
+     * a Person signals acceptance of the object's defense offer with this call
+     */
     public void acceptProtection(){
         Logger.logCall("acceptProtection","void");
         Logger.logReturn();

@@ -77,12 +77,19 @@ public class Room implements Entity {
         Logger.logReturn();
     }
 
-    //: A szoba elgázosodik.
+    /**
+     * the room becomes gased
+     */
     public void gas() {
+        Logger.logCall("gas","void");
         gassed = true;
+        Logger.logReturn();
     }
 
-    //: Összeolvad egy találomra kiválasztott szomszédjával. 
+    /**
+     * the room merges with a random neighbouring room
+     */
+    //: Összeolvad egy találomra kiválasztott szomszédjával.
     public void merge() {
         Logger.logCall("merge","void");
         Room neighbour = doors.get(0).getDest();

@@ -6,10 +6,12 @@ import java.util.List;
 
 public class Cloth extends Item{
 
-    // a Items.Cloth meghívja a szoba összes Personjének a clothStun() függvényét majd megsemmisül.
+    /**
+     * on every Person in the room this method calls the clothStun() method, then the Cloth destroys itself
+     */
     public void activate(){
         Logger.logCall("activate","void");
-        room=owner.getRoom(); //probably nem kell ha van Room valtozoja az Izemnek, de szekvencian rajta van
+        room=owner.getRoom();
         List<Person> targets=room.getPeople();
         for(Person p: targets){
             p.clothStun();

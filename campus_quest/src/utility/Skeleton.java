@@ -141,7 +141,7 @@ public class Skeleton {
     private static void testCase7(){
         System.out.println("init7");
 
-        Room r = new Room(1, 10,false, false);    //1
+        Room r = new Room(1, 10,true, false);    //1
         Student s = new Student();
         TVSZ t = new TVSZ();
         r.addPerson(s); //2

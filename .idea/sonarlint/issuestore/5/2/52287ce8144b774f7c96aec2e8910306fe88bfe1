@@ -1,0 +1,7 @@
+
+Q
+java:S2864"4Iterate over the "entrySet" instead of the "keySet".(Û³åÁ8Ú¼òç1
+\
+java:S1161)":Add the "@Override" annotation above this method signature(•³€şÿÿÿÿ8Ü¼òç1
+G
+java:S1128"%Remove this unused import 'map.Room'.(ÁÙÆ¯ûÿÿÿÿ8Ş¼òç1

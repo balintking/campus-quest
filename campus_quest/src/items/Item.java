@@ -24,7 +24,11 @@ public abstract class Item implements Entity {
     }
 
     // Beállítja a tárgy szobáját.
-    public void changeRoom(Room room){}
+    public void changeRoom(Room room){
+        Logger.logCall("changeRoom", new String[]{room.toString()}, "void");
+        this.room = room;
+        Logger.logReturn();
+    }
 
     public Room getRoom(){
         return room;

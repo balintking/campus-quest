@@ -7,21 +7,27 @@ import java.util.List;
 
 public class Teacher extends Person {
 
-    //Gets stun by cloth for 3 rounds
+    /**
+     * Gets stunned by cloth
+     */
     public void clothStun(){
         Logger.logCall("clothStun", "void");
         stunned = true;
         Logger.logReturn();
     }
 
-    //Gets stun by gas for 2 rounds
+    /**
+     * Gets stunned by gas
+     */
     public void gasStun(){
         Logger.logCall("gasStun", "void");
         stunned = true;
         Logger.logReturn();
-    };
+    }
 
-    //The Teacher attacks all the people in their room
+    /**
+     * The Teacher attacks all the people in their room
+     */
     public void initAttack(){
         Logger.logCall("initAttack","void");
         List<Person> targets = room.getPeople();
@@ -31,8 +37,15 @@ public class Teacher extends Person {
         Logger.logReturn();
     }
 
-    //The teacher destroys the picked up item
-    public void pickup(Item item){}
+    /**
+     * Pickes up item and destroys it
+     * @param item
+     */
+    public void pickup(Item item){
+        Logger.logCall("pickup", new String[]{item.toString()}, "void");
+        item.destroy();
+        Logger.logReturn();
+    }
 
     //Teachers are immune to attacks by teacher, in this case nothing happens
     public void teacherAttack(){

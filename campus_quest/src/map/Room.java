@@ -84,9 +84,11 @@ public class Room implements Entity {
     }
 
     public void tick() {
+        Logger.logCall("tick", "void");
         if (gassed){
             for (Person p : people)
                 p.gasStun();
         }
+        Logger.logReturn();
     }
 }

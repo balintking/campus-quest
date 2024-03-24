@@ -1,12 +1,13 @@
 
 \
-java:S1118	":Add a private constructor to hide the implicit public one.(ŸæÌıÿÿÿÿ8€ÎÏç1
+java:S1118
+":Add a private constructor to hide the implicit public one.(ŸæÌıÿÿÿÿ8€ÎÏç1
 t
-java:S37764"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(Œ¥õÈøÿÿÿÿ8„ÎÏç1
-L	java:S106N"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8†ÎÏç1
-L	java:S106x"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8‰ÎÏç1
-M	java:S106¨"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8‹ÎÏç1
-H	java:S106Â"+Replace this use of System.out by a logger.(‘³–8ÎÏç1
-H	java:S106É"+Replace this use of System.out by a logger.(¯¼êÍ8ÎÏç1
-H	java:S106Ë"+Replace this use of System.out by a logger.(¯¼êÍ8ÎÏç1
-M	java:S106â"+Replace this use of System.out by a logger.(Ğı¢‚ÿÿÿÿÿ8ÎÏç1
+java:S37767"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(Œ¥õÈøÿÿÿÿ8„ÎÏç1
+L	java:S106T"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8†ÎÏç1
+M	java:S106€"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8‰ÎÏç1
+M	java:S106µ"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8‹ÎÏç1
+H	java:S106Ô"+Replace this use of System.out by a logger.(‘³–8ÎÏç1
+H	java:S106Û"+Replace this use of System.out by a logger.(¯¼êÍ8ÎÏç1
+H	java:S106İ"+Replace this use of System.out by a logger.(¯¼êÍ8ÎÏç1
+M	java:S106õ"+Replace this use of System.out by a logger.(Ğı¢‚ÿÿÿÿÿ8ÎÏç1

@@ -8,7 +8,7 @@ import java.util.List;
 public class Teacher extends Person {
 
     /**
-     * Gets stunned by cloth
+     * Gets stunned by cloth.
      */
     public void clothStun(){
         Logger.logCall("clothStun", "void");
@@ -17,7 +17,7 @@ public class Teacher extends Person {
     }
 
     /**
-     * Gets stunned by gas
+     * Gets stunned by gas.
      */
     public void gasStun(){
         Logger.logCall("gasStun", "void");
@@ -26,7 +26,7 @@ public class Teacher extends Person {
     }
 
     /**
-     * The Teacher attacks all the people in their room
+     * The Teacher attacks all the people in their room.
      */
     public void initAttack(){
         Logger.logCall("initAttack","void");
@@ -38,7 +38,7 @@ public class Teacher extends Person {
     }
 
     /**
-     * Pickes up item and destroys it
+     * Pickes up item and destroys it.
      * @param item
      */
     public void pickup(Item item){
@@ -48,12 +48,18 @@ public class Teacher extends Person {
         Logger.logReturn();
     }
 
-    //Teachers are immune to attacks by teacher, in this case nothing happens
+    /**
+     * Teachers are immune to attacks by teacher, in this case nothing happens.
+     */
     public void teacherAttack(){
         Logger.logCall("teacherAttack","void");
         Logger.logReturn();
     }
 
+    /**
+     * SlideRule notifies the Teacher about being picked up, so the Teacher can drop it.
+     * @param slideRule
+     */
     @Override
     public void slideRuleNotification(Item slideRule) {
         Logger.logCall("slideRuleNotification",new Object[]{slideRule}, "void");

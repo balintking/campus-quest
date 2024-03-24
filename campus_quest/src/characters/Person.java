@@ -15,6 +15,11 @@ public abstract class Person implements Entity {
     protected Room room;
     protected List<Item> items = new ArrayList<>();
 
+
+    /**
+     * Sets Person's room to r
+     * @param r
+     */
     public void setRoom(Room r) {
         Logger.logCall("setRoom",new Object[]{r},"void");
         room = r;
@@ -24,8 +29,7 @@ public abstract class Person implements Entity {
     /**
      * Alerts the Person about a cloth threat
      */
-    public void clothStun() {
-    }
+    public void clothStun() {}
 
     /**
      * Drops item in its current room
@@ -34,7 +38,7 @@ public abstract class Person implements Entity {
     public void drop(Item item) {
         Logger.logCall("drop", new Object[]{item}, "void");
         items.remove(item);
-        item.changeRoom(room);
+        item.setRoom(room);
         item.setOwner(null);
         Logger.logReturn();
     }
@@ -52,7 +56,7 @@ public abstract class Person implements Entity {
     }
 
     /**
-     * An item offering protection against gas calls this function
+     * An Item offering protection against gas calls this function
      * @param protectionProvider
      * @param priority protectionProvider's protection's priority against other protecting items
      */
@@ -66,7 +70,6 @@ public abstract class Person implements Entity {
 
     /**
      * Tries to move through door into door's destination
-     *
      * @param door
      */
     public void move(Door door) {
@@ -76,7 +79,6 @@ public abstract class Person implements Entity {
 
     /**
      * Picks up item from its room
-     *
      * @param item
      */
     public void pickup(Item item) {
@@ -87,6 +89,11 @@ public abstract class Person implements Entity {
         Logger.logReturn();
     }
 
+
+    /**
+     * Adds item to the Person's list of Items
+     * @param item
+     */
     public void addItem(Item item) {
         Logger.logCall("addItem",new Object[]{item},"void");
         items.add(item);
@@ -95,7 +102,6 @@ public abstract class Person implements Entity {
 
     /**
      * SlideRule calls this function whenever it's picked up
-     *
      * @param slideRule
      */
     public void slideRuleNotification(Item slideRule) {
@@ -103,15 +109,13 @@ public abstract class Person implements Entity {
 
 
     /**
-     * Alerts the Person about teacher threat
+     * Alerts the Person about Teacher threat
      */
-    public void teacherAttack() {
-
-    }
+    public void teacherAttack() {}
 
 
     /**
-     * An item offering protection against teacher calls this function
+     * An Item offering protection against Teacher calls this function
      *
      * @param protectionProvider
      * @param priority
@@ -130,14 +134,19 @@ public abstract class Person implements Entity {
         Logger.logReturn();
     }
 
-    public void tick() {
-    }
+    public void tick() {}
 
+    /**
+     * It returns the room which the person is located in.
+     * @return room
+     */
     public Room getRoom() {
         Logger.logCall("getRoom", "Room");
         Logger.logReturn(room.toString());
         return room;
     }
+
+
     @Override
     public String toString() {
         return name;

@@ -1,22 +1,33 @@
 package characters;
 
 import items.Item;
-import map.Room;
 import utility.Logger;
 
 import java.util.HashMap;
 
 public class Student extends Person {
-
+    /**
+     * Offered protective items are stored here when protection is needed.
+     */
     private HashMap<Item, Integer> protectiveItems = new HashMap<>();
-
+    /**
+     * Constructor calls Person's constructor
+     */
     public Student(){
         super();
     }
 
-    // just to avoid copying code
+    /**
+     *
+     */
+    private boolean isInventoryFull() {
+        //TODO: kerdes
+    }
+
+    /**
+     * Here we select the protective item with the lowest priority and accept its offer.
+     */
     private void selectProtectionProvider() {
-        // here we select the protective item with the lowest prioirity and accept its offer
         int min = Integer.MAX_VALUE;
         Item minItem = null;
 
@@ -34,6 +45,12 @@ public class Student extends Person {
         }
     }
 
+
+    /**
+     * Activates the given item
+     *
+     * @param i
+     */
     public void initActivate(Item i) {
         Logger.logCall("initActivate", new Object[]{i},"void");
         i.activate();
@@ -69,6 +86,10 @@ public class Student extends Person {
         Logger.logReturn();
     }
 
+
+    /**
+     * Alerts the Student about Teacher threat
+     */
     @Override
     public void teacherAttack() {
         Logger.logCall("teacherAttack", "void");
@@ -85,21 +106,40 @@ public class Student extends Person {
         Logger.logReturn();
     }
 
+    /**
+     * An Item offering protection against Teacher calls this function
+     * @param protectionProvider
+     * @param priority
+     */
     @Override
     public void teacherProtection(Item protectionProvider,int priority) {
         Logger.logCall("teacherProtection", new Object[]{protectionProvider,priority}, "void");
         protectiveItems.put(protectionProvider,priority);
         Logger.logReturn();
     }
+
+    /**
+     * An Item offering protection against gas calls this function
+     * @param protectionProvider
+     * @param priority protectionProvider's protection's priority against other protecting items
+     */
     @Override
-    public void gasProtection(Item protectionProvider,int priority) {
+    public void gasProtection(Item protectionProvider, int priority) {
         Logger.logCall("gasProtection", new Object[]{protectionProvider,priority}, "void");
         protectiveItems.put(protectionProvider,priority);
         Logger.logReturn();
     }
+
+
+    /**
+     * SlideRule notifies the Student about being picked up, the Students win the game
+     * @param slideRule
+     */
     @Override
     public void slideRuleNotification(Item slideRule) {
         Logger.logCall("slideRuleNotification",new Object[]{slideRule}, "void");
+        Logger.logCall("win", "void");
+        Logger.logReturn();
         Logger.logReturn();
     }
 }

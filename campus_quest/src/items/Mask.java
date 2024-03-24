@@ -3,7 +3,9 @@ package items;
 import utility.Logger;
 
 public class Mask extends Item {
-
+    /**
+     * Creates the mask, sets its lifetime to 3.
+     */
     public Mask() {
         super();
         life = 3;
@@ -12,7 +14,7 @@ public class Mask extends Item {
     /**
      * Owner accepts Mask's protection offer
      */
-    public void acceptProtection(){
+    public void acceptProtection() {
         Logger.logCall("acceptProtection", "void");
         Logger.logReturn();
     }
@@ -20,11 +22,11 @@ public class Mask extends Item {
     /**
      * Owner informs Mask about gas threat, Mask offers it protection
      */
-    public void gasThreat(){
+    public void gasThreat() {
         Logger.logCall("gasThreat", "void");
-        owner.gasProtection(this,life);
+        owner.gasProtection(this, life);
         life--;
-        if(life == 0) {
+        if (life == 0) {
             super.destroy();
         }
         Logger.logReturn();

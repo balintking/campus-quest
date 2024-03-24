@@ -4,30 +4,40 @@ import characters.Person;
 import map.Room;
 import utility.Logger;
 
-public class Transistor extends Item{
-    int id;//: Ha felvesznek egy tranzisztort és aktiválják, kap egy id-t az aktiválásuk sorrendjében, és ezek szerint az id-k szerint fognak összekapcsolódni.
-    Transistor pair;//: Az összekapcsolt tranzisztor párja.
-    public Person lastOwner;
+public class Transistor extends Item {
+    int id;
+    Transistor pair;
+    Person lastOwner;
 
-    public Room getDestination(){
-        Logger.logCall("getDestination","Room");
+    /**
+     * Returns the pair's room if its active.
+     *
+     * @return Room
+     */
+    public Room getDestination() {
+        Logger.logCall("getDestination", "Room");
         Room ret;
-        if(!active){
+        if (!active) {
             ret = null;
-        } else{
+        } else {
             ret = room;
         }
         Logger.logReturn();
         return ret;
     }
 
+    /**
+     * Returns the pair's room if its active.
+     *
+     * @param roomInput
+     */
     @Override
-    public void changeRoom(Room roomInput){
+    public void changeRoom(Room roomInput) {
         Logger.logCall("changeRoom", new Object[]{room}, "void");
         room = roomInput;
         Room pairRoom = pair.getDestination();
-        if(pairRoom != null){
-            if(Logger.testerInput("Is the room not full?")){
+        if (pairRoom != null) {
+            if (Logger.testerInput("Is the room not full?")) {
                 lastOwner.teleport(pairRoom);
                 lastOwner = null;
                 deactivate();
@@ -37,37 +47,51 @@ public class Transistor extends Item{
         Logger.logReturn();
     }
 
-    public void setPair(Transistor t){
+    /**
+     * Sets the pair of the transistor
+     *
+     * @param t
+     */
+    public void setPair(Transistor t) {
         pair = t;
     }
 
-    //: A tranzisztor bekapcsolása. Ha még nincs párja akkor aktiváláskor id-t kap.
+    /**
+     * Activates the transistor and sets its last owner as the present owner.
+     */
     @Override
-    public void activate(){
-        Logger.logCall("activate","void");
+    public void activate() {
+        Logger.logCall("activate", "void");
         active = true;
         lastOwner = owner;
         Logger.logReturn();
     }
 
-    //: Ezt a függvényt hívja meg a tranzisztor magán és a párján, amikor a hallgató elteleportál.
-    public void deactivate(){
-        Logger.logCall("deactivate","void");
+    /**
+     * Deactivates the transistor.
+     */
+    public void deactivate() {
+        Logger.logCall("deactivate", "void");
         active = false;
         Logger.logReturn();
     }
+    /**
+     * Destroys the transistor and resets its pair.
+     */
     @Override
-    public void destroy(){
+    public void destroy() {
         Logger.logCall("destroy", "void");
-        Logger.logDestroy(this,"Transistor");
+        Logger.logDestroy(this, "Transistor");
         owner = null;
         room = null;
         pair.reset();
         Logger.logReturn();
     }
 
-    //: A párja hívja meg ezt a függvényt, amikor elpusztul (oktató megsemmisíti). Ekkor a tranzisztor deaktiválódik, amíg újra fel nem veszi egy hallgató és össze nem köti egy új tranzisztorral. 
-    public void reset(){
+    /**
+     * Deactivates the transistor
+     */
+    public void reset() {
         Logger.logCall("reset", "void");
         deactivate();
         Logger.logReturn();

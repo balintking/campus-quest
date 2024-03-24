@@ -4,45 +4,78 @@ import utility.Entity;
 import utility.Logger;
 
 public class Door implements Entity {
-    Room source;//: Szomszédos szoba, innen nyílik.
-    Room destination;//: Szomszédos szoba, ide vezet.
-    boolean hidden;//: Használható-e az adott ajtó. (eltűnt-e)
+    /**
+     * Neighbouring room, opens from here.
+     */
+    Room source;
+    /**
+     * Neighbouring room, opens to here.
+     */
+    Room destination;
 
-    public Door() {}
-    public Door(Room src, Room dst){
+    /**
+     *Is the given door usable? (Has it disappeared?)
+     */
+    boolean hidden;
+
+    public Door() {
+    }
+
+    public Door(Room src, Room dst) {
         source = src;
         destination = dst;
     }
 
-    //: Megsemmisíti az ajtót.
-    void destroy(){
-        Logger.logCall("destroy","void");
-        Logger.logDestroy(this,"Door");
+    /**
+     * Destroys the door.
+     */
+    void destroy() {
+        Logger.logCall("destroy", "void");
+        Logger.logDestroy(this, "Door");
         Logger.logReturn();
     }
 
-    public void tick(){}
+    public void tick() {
+    }
 
+    /**
+     *Getter for the sourceRoom
+     *
+     * @return source
+     */
     public Room getSrc() {
-        Logger.logCall("getSrc","Room");
+        Logger.logCall("getSrc", "Room");
         Logger.logReturn(source);
         return source;
     }
 
+    /**
+     * Setter for the sourceRoom
+     *
+     * @param source
+     */
     public void setSrc(Room source) {
-        Logger.logCall("setSrc",new Object[]{source},"void");
+        Logger.logCall("setSrc", new Object[]{source}, "void");
         Logger.logReturn();
         this.source = source;
     }
-
+    /**
+     * Gets destination of the door.
+     *
+     * @return destination
+     */
     public Room getDest() {
-        Logger.logCall("getDest","Room");
+        Logger.logCall("getDest", "Room");
         Logger.logReturn(destination);
         return destination;
     }
-
+    /**
+     * Sets the destination of the door.
+     *
+     * @param destination
+     */
     public void setDest(Room destination) {
-        Logger.logCall("setDest",new Object[]{destination},"void");
+        Logger.logCall("setDest", new Object[]{destination}, "void");
         Logger.logReturn();
         this.destination = destination;
     }

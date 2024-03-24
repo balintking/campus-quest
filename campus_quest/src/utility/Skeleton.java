@@ -13,7 +13,7 @@ public class Skeleton {
 
     private static ArrayList<TestCase> testCases = new ArrayList<>();
 
-    public void win(){
+    public void win() {
         Logger.logCall("win", "void");
         Logger.logReturn();
     }
@@ -34,10 +34,40 @@ public class Skeleton {
         testCases.add(Skeleton::testCase13);
         testCases.add(Skeleton::testCase14);
         testCases.add(Skeleton::testCase15);
+        testCases.add(Skeleton::testCase16);
+        testCases.add(Skeleton::testCase17);
 
-        while(true) {
+        while (true) {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Choose a testcase from below! Enter 0 for exit.");
+
+            //König
+            System.out.println("1. Student picks up a Beer item");
+            System.out.println("2. Teacher picks up a Beer item");
+            System.out.println("3. Teacher kills Student");
+            System.out.println("4. Teacher attacks another teacher");
+
+            //Lilla
+            System.out.println("5. TVSZ use");
+            System.out.println("6. Teacher in gassed room");
+            System.out.println("7. Cloth use");
+
+            //Miki
+            System.out.println("8. Camembert use");
+            System.out.println("9. Student in gassed room");
+            System.out.println("10. Mask use");
+
+            //Máté
+            System.out.println("11. Student with Beer and TVSZ is attacked by Teacher");
+            System.out.println("12. Room division");
+            System.out.println("13. Room merge");
+
+            //Jan
+            System.out.println("14. Student picks the SlideRule up");
+            System.out.println("15. Teacher picks the SlideRule up");
+            System.out.println("16. Transistor use");
+            System.out.println("17. Teacher picks up a Transistor item");
+
 
             while (!scanner.hasNextInt()) {
                 System.out.println("Choose a number between 1 and " + testCases.size());
@@ -56,7 +86,7 @@ public class Skeleton {
                 }
                 number = scanner.nextInt();
             }
-            if(number == 0) {
+            if (number == 0) {
                 break;
             }
             Logger.reset();
@@ -64,84 +94,140 @@ public class Skeleton {
         }
     }
 
-
+    /**
+     * Adds an item to the student's inventory and removes it from the room. In this case, the item is a beer glass.
+     * The behavior is consistent with other items, except for the slide rule.
+     */
     private static void testCase1() {
-        System.out.println("init1");
+        System.out.println("init1--------------------------------");
+        Room room = new Room(1, 10, false);
+        Logger.logCreate(room, "Room", "room", new Object[]{1, 10, false});
+        Student student = new Student();
+        Logger.logCreate(student, "Student", "student");
+        Teacher teacher = new Teacher();
+        Logger.logCreate(teacher, "Teacher", "teacher");
+        Beer beer = new Beer();
+        Logger.logCreate(beer, "Beer", "beer");
+
+        room.addPerson(student);
+        room.addPerson(teacher);
+        room.addItem(beer);
+        student.setRoom(room);
+        System.out.println("End of init1-------------------------");
+
+        student.pickup(beer);
+
+
     }
 
     private static void testCase2() {
-        System.out.println("init2");
+        System.out.println("init1");
     }
 
     private static void testCase3() {
-        System.out.println("init3");
-
-        Room r = new Room(1, 10, false); //1
-        Student s = new Student();
-        Teacher t = new Teacher();
-        TVSZ tvsz = new TVSZ();
-
-        r.addPerson(s); //2
-        r.addPerson(t);
-
-        s.setRoom(r);
-        t.setRoom(r);
-
-        s.pickup(tvsz); //3
-
-        tvsz.setOwner(s); //4
-        //end of init3
-
-        t.initAttack();
-
+        System.out.println("init1");
     }
 
     private static void testCase4() {
-        System.out.println("init4");
-
-        Room r = new Room(1, 10, false); //1
-        Teacher t = new Teacher();
-
-        r.addPerson(t); //2
-
-        t.setRoom(r);
-
-        r.gas(); //3
-        //end of init4
-
-        t.gasStun();
-
+        System.out.println("init2");
     }
 
+    /**
+     * A Teacher attacks a Student because they are in the same room,
+     * but since the Student has a TVSZ, it defends them against the Teacher.
+     */
     private static void testCase5() {
-        System.out.println("init5");
+        System.out.println("init3---------------------------------");
 
-        Room r = new Room(1, 10, false); //1
-        Student s = new Student();
-        Teacher t = new Teacher();
-        Cloth c = new Cloth();
+        Room room = new Room(1, 10, false); //1
+        Logger.logCreate(room, "Room", "room", new Object[]{1, 10, false});
+        Student student1 = new Student();
+        Logger.logCreate(student1, "Student", "student1");
+        Teacher teacher1 = new Teacher();
+        Logger.logCreate(teacher1, "Teacher", "teacher1");
+        TVSZ tvsz = new TVSZ();
+        Logger.logCreate(tvsz, "TVSZ", "tvsz");
 
-        r.addPerson(s); //2
-        r.addPerson(t);
+        room.addPerson(student1); //2
+        room.addPerson(teacher1);
 
-        s.setRoom(r);
-        t.setRoom(r);
+        student1.setRoom(room);
+        teacher1.setRoom(room);
 
-        s.pickup(c); //3
+        student1.pickup(tvsz); //3
 
-        c.setOwner(s); //4
-        //end of init5
+        tvsz.setOwner(student1); //4
 
-        s.initActivate(c);
+        System.out.println("End of init3-------------------------");
+
+        teacher1.initAttack();
     }
 
+
+    /**
+     * A Teacher is attacked by a gassed room. The Teacher gets gassed.
+     */
     private static void testCase6() {
-        System.out.println("init6");
+        System.out.println("init4---------------------------------");
+
+        Room room = new Room(1, 10, false); //1
+        Logger.logCreate(room, "Room", "r", new Object[]{1, 10, false});
+        Teacher teacher1 = new Teacher();
+        Logger.logCreate(teacher1, "Teacher", "teacher1");
+
+        room.addPerson(teacher1); //2
+
+        teacher1.setRoom(room);
+
+        room.gas(); //3
+
+        System.out.println("End of init4-------------------------");
+
+        teacher1.gasStun();
+
+    }
+
+    /**
+     * A Student activates the Cloth they have, which stuns the Teachers in the room.
+     */
+    private static void testCase7() {
+        System.out.println("init5---------------------------------");
+
+        Room room = new Room(1, 10, false); //1
+        Logger.logCreate(room, "Room", "r", new Object[]{1, 10, false});
+        Student student1 = new Student();
+        Logger.logCreate(student1, "Student", "student1");
+        Teacher teacher1 = new Teacher();
+        Logger.logCreate(teacher1, "Teacher", "teacher1");
+        Cloth cloth = new Cloth();
+        Logger.logCreate(cloth, "Cloth", "c");
+
+        room.addPerson(student1); //2
+        room.addPerson(teacher1);
+
+        student1.setRoom(room);
+        teacher1.setRoom(room);
+
+        student1.pickup(cloth); //3
+
+        cloth.setOwner(student1); //4
+
+        System.out.println("End of init5--------------------------");
+
+        student1.initActivate(cloth);
+    }
+
+    private static void testCase8() {
+        System.out.println("init6---------------------------------");
 
         Room r = new Room(1, 10, false);    //1
+        Logger.logCreate(r, "Room", "r", new Object[]{1, 10, false});
         Student s = new Student();
+        Logger.logCreate(s, "Student", "s");
         Teacher t = new Teacher();
+        Logger.logCreate(t, "Teacher", "t");
         Camembert c = new Camembert();
+        Logger.logCreate(c, "Camembert", "c");
 
         r.addPerson(t); //2
         r.addPerson(s);
@@ -151,39 +237,53 @@ public class Skeleton {
         s.pickup(c);    //3
 
         c.setOwner(s);  //4
-
+        System.out.println("End of init6--------------------------");
         s.initActivate(c);
     }
 
-    private static void testCase7() {
-        System.out.println("init7");
+    private static void testCase9() {
+        System.out.println("init7---------------------------------");
 
         Room r = new Room(1, 10, false);    //1
+        Logger.logCreate(r, "Room", "r", new Object[]{1, 10, false});
         r.gas();
         Student s = new Student();
+        Logger.logCreate(s, "Student", "s");
         TVSZ t = new TVSZ();
+        Logger.logCreate(t, "TVSZ", "t");
         r.addPerson(s); //2
         s.setRoom(r);
         s.pickup(t);    //3
         t.setOwner(s);  //4
+        System.out.println("End of init7--------------------------");
         r.tick();
     }
 
-    private static void testCase8() {
-        System.out.println("init8");
+    private static void testCase10() {
+        System.out.println("init8---------------------------------");
 
         Room r = new Room(1, 10, false);    //1
+        Logger.logCreate(r, "Room", "r", new Object[]{1, 10, false});
         r.gas();
         Student s = new Student();
+        Logger.logCreate(s, "Student", "s");
         Mask m = new Mask();
+        Logger.logCreate(m, "Mask", "m");
         r.addPerson(s); //2
         s.setRoom(r);
         s.pickup(m);    //3
         m.setOwner(s);  //4
+        System.out.println("End of init8--------------------------");
         r.tick();
     }
 
-    private static void testCase9() {
+    /**
+     * A teacher attacks a student because they are in the same room.
+     * The student has a Beer and a TVSZ with them.
+     * If the Beer is not activated, then the TVSZ will provide protection; however,
+     * if it is activated, then the Beer will provide defense because it always has higher priority.
+     */
+    private static void testCase11() {
         System.out.println("init9---------------------------------");
 
         Room room = new Room(1, 10, false);
@@ -214,12 +314,19 @@ public class Skeleton {
 
     }
 
-    private static void testCase10() {
+    /**
+     * In each round, rooms can randomly 'decide' to split.
+     * The splitting room divides into two rooms that become neighbors,
+     * and they share the properties and neighbors of the original room.
+     * After the split, a two-way door is created between the two 'new' rooms.
+     * The capacity of the two 'new' rooms will be equal to the capacity of the original room.
+     */
+    private static void testCase12() {
         System.out.println("init10--------------------------------");
         Room r1 = new Room(1, 10, false);
         Logger.logCreate(r1, "Room", "r1", new Object[]{1, 10, false});
-        Room r3 = new Room(3, 10, false);
-        Logger.logCreate(r3, "Room", "r3", new Object[]{3, 10, false});
+        Room r3 = new Room(2, 10, false);
+        Logger.logCreate(r3, "Room", "r3", new Object[]{2, 10, false});
         Door d1 = new Door();
         Logger.logCreate(d1, "Door", "d1");
 
@@ -229,13 +336,21 @@ public class Skeleton {
         d1.setDest(r3);
         System.out.println("End of init10-------------------------");
 
-        Logger.logCall("tick","void");
+        Logger.logCall("tick", "void");
         r1.divide();
         Logger.logReturn();
 
     }
 
-    private static void testCase11() {
+    /**
+     * In each round, rooms can randomly 'decide' to merge with one of their neighbors.
+     * The new room formed by the merger inherits the properties, neighbors, items, and entities of the two original rooms,
+     * but its capacity will be equal to the capacity of the larger room.
+     * Two rooms can only merge if the sum of entities in both rooms does not exceed the capacity of the larger room.
+     */
+
+//    BELSŐ DÖNTÉS A MERGE
+    private static void testCase13() {
         System.out.println("init11--------------------------------");
         Room r1 = new Room(1, 10, false);
         Logger.logCreate(r1, "Room", "r1", new Object[]{1, 10, false});
@@ -254,13 +369,16 @@ public class Skeleton {
 
         System.out.println("End of init11-------------------------");
 
-        Logger.logCall("tick","void");
+        Logger.logCall("tick", "void");
         r1.merge();
         Logger.logReturn();
 
     }
 
-    private static void testCase12() {
+    /**
+     * A Student picks up a slideRule in a room. The game is won.
+     */
+    private static void testCase14() {
         System.out.println("init12--------------------------------");
 
         SlideRule sr = new SlideRule();
@@ -269,7 +387,7 @@ public class Skeleton {
         Student s = new Student();
         Logger.logCreate(s, "Student", "s");
 
-        sr.changeRoom(r);
+        sr.setRoom(r);
         s.setRoom(r);
         r.addPerson(s);
         r.addItem(sr);
@@ -280,7 +398,10 @@ public class Skeleton {
 
     }
 
-    private static void testCase13() {
+    /**
+     * A teacher picks up a slideRule in a room. It immediately drops it thereafter.
+     */
+    private static void testCase15() {
         System.out.println("init13--------------------------------");
 
         SlideRule sr = new SlideRule();
@@ -291,7 +412,7 @@ public class Skeleton {
         Logger.logCreate(t, "Teacher", "t");
 
         t.setRoom(r);
-        sr.changeRoom(r);
+        sr.setRoom(r);
         r.addPerson(t);
         r.addItem(sr);
 
@@ -300,7 +421,12 @@ public class Skeleton {
         t.pickup(sr);
     }
 
-    private static void testCase14() {
+    /**
+     * A student is in a room and it has two transistors. It activates these.
+     * After this it goes to another room, where it drops the other one and with that it is teleported
+     * to the room it came from. The transistors are deactivated.
+     */
+    private static void testCase16() {
         System.out.println("init14--------------------------------");
 
         Room r1 = new Room(1, 10, false);
@@ -344,7 +470,11 @@ public class Skeleton {
         }
     }
 
-    private static void testCase15() {
+    /**
+     * A teacher picks up a dropped transistor, which is connected to another.
+     * The Teacher destroys it and with that the pair is reset.
+     */
+    private static void testCase17() {
         System.out.println("init15--------------------------------");
         Room r1 = new Room(1, 10, false);
         Logger.logCreate(r1, "Room", "r", new Object[]{1, 10, false});
@@ -361,8 +491,8 @@ public class Skeleton {
         Logger.logCreate(t2, "Transistor", "t2");
 
         t.setRoom(r1);
-        t1.changeRoom(r1);
-        t2.changeRoom(r2);
+        t1.setRoom(r1);
+        t2.setRoom(r2);
 
         t1.setPair(t2);
         t2.setPair(t1);

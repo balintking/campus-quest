@@ -3,11 +3,15 @@ package items;
 import characters.Person;
 import utility.Logger;
 
-public class SlideRule extends Item{
+public class SlideRule extends Item {
 
-    //Ha egy Characters.Person felveszi, akkor slideRuleNotification-t küld a számára.
-    public void setOwner(Person person){
-        Logger.logCall("setOwner",new Object[]{owner},"void");
+    /**
+     * Called whenever picked up.
+     * Notifies person that they picked the SlideRule up, so they can act accordingly.
+     * @param person
+     */
+    public void setOwner(Person person) {
+        Logger.logCall("setOwner", new Object[]{owner}, "void");
         this.owner = person;
         owner.slideRuleNotification(this);
         Logger.logReturn();

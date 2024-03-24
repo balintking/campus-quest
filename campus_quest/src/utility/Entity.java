@@ -1,5 +1,9 @@
 package utility;
 
 public interface Entity {
-    void tick(); //Indicates the passing of time
+
+    /**
+     * Indicates the passing of time.
+     */
+    void tick();
 }

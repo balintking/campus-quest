@@ -10,6 +10,10 @@ public class Student extends Person {
 
     private HashMap<Item, Integer> protectiveItems = new HashMap<>();
 
+    public Student(){
+        super();
+    }
+
     // just to avoid copying code
     private void selectProtectionProvider() {
         // here we select the protective item with the lowest prioirity and accept its offer
@@ -33,7 +37,6 @@ public class Student extends Person {
     public void initActivate(Item i) {
         Logger.logCall("initActivate", new Object[]{i},"void");
         i.activate();
-
         Logger.logReturn();
     }
 
@@ -73,7 +76,6 @@ public class Student extends Person {
         if (protectiveItems.isEmpty()) {
             // the student dies
             room.removePerson(this);
-            System.out.println("penisz");
         } else {
             selectProtectionProvider();
         }
@@ -93,6 +95,9 @@ public class Student extends Person {
         protectiveItems.put(protectionProvider,priority);
         Logger.logReturn();
     }
-
-
+    @Override
+    public void slideRuleNotification(Item slideRule) {
+        Logger.logCall("slideRuleNotification",new Object[]{slideRule}, "void");
+        Logger.logReturn();
+    }
 }

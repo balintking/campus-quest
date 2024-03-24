@@ -17,10 +17,9 @@ public class Room implements Entity {
     boolean gassed; //Is there gas in the room
     boolean cursed; //Is the room cursed
 
-    public Room(int id, int capacity, boolean gassed, boolean cursed) {
+    public Room(int id, int capacity, boolean cursed) {
         this.id = id;
         this.capacity = capacity;
-        this.gassed = gassed;
         this.cursed = cursed;
     }
 
@@ -38,9 +37,9 @@ public class Room implements Entity {
 
     //: A paraméterként kapott személyt hozzáadja a szobához.
     public void addPerson(Person person) {
-        Logger.logCall("addItem",new Object[]{person},"void");
-        Logger.logReturn();
+        Logger.logCall("addPerson",new Object[]{person},"void");
         people.add(person);
+        Logger.logReturn();
     }
 
     //: A szoba megszűnését jelentő függvény.

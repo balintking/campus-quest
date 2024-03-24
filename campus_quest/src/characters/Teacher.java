@@ -43,6 +43,7 @@ public class Teacher extends Person {
      */
     public void pickup(Item item){
         Logger.logCall("pickup", new Object[]{item}, "void");
+        room.removeItem(item);
         item.destroy();
         Logger.logReturn();
     }
@@ -53,7 +54,11 @@ public class Teacher extends Person {
         Logger.logReturn();
     }
 
-
-
+    @Override
+    public void slideRuleNotification(Item slideRule) {
+        Logger.logCall("slideRuleNotification",new Object[]{slideRule}, "void");
+        this.drop(slideRule);
+        Logger.logReturn();
+    }
 
 }

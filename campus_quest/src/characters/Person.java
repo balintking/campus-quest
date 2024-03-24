@@ -33,8 +33,9 @@ public abstract class Person implements Entity {
      */
     public void drop(Item item) {
         Logger.logCall("drop", new Object[]{item}, "void");
-        item.setOwner(null);
+        items.remove(item);
         item.changeRoom(room);
+        item.setOwner(null);
         Logger.logReturn();
     }
 
@@ -43,8 +44,10 @@ public abstract class Person implements Entity {
      */
     public void dropAll() {
         Logger.logCall("dropAll", "void");
-        for (Item i : items)
+        for (Item i : items){
             drop(i);
+            items.remove(i);
+        }
         Logger.logReturn();
     }
 
@@ -67,7 +70,7 @@ public abstract class Person implements Entity {
      * @param door
      */
     public void move(Door door) {
-
+        room = door.getDest();
     }
 
 
@@ -79,6 +82,8 @@ public abstract class Person implements Entity {
     public void pickup(Item item) {
         Logger.logCall("pickup",new Object[]{item},"void");
         items.add(item);
+        room.removeItem(item);
+        item.setOwner(this);
         Logger.logReturn();
     }
 
@@ -94,7 +99,6 @@ public abstract class Person implements Entity {
      * @param slideRule
      */
     public void slideRuleNotification(Item slideRule) {
-
     }
 
 
@@ -120,7 +124,10 @@ public abstract class Person implements Entity {
      * @param roomTo
      */
     public void teleport(Room roomTo) {
-
+        Logger.logCall("teleport", new Object[]{roomTo}, "void");
+        room.removePerson(this);
+        roomTo.addPerson(this);
+        Logger.logReturn();
     }
 
     public void tick() {

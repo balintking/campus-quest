@@ -40,7 +40,9 @@ public class Student extends Person {
         Logger.logReturn();
     }
 
-    //nothing happens
+    /**
+     * when clothStun is called on a Student, nothing happens
+     */
     public void clothStun(){
         Logger.logCall("clothStun", "void");
         Logger.logReturn();

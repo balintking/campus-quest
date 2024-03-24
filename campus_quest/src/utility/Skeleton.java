@@ -35,25 +35,33 @@ public class Skeleton {
         testCases.add(Skeleton::testCase14);
         testCases.add(Skeleton::testCase15);
 
+        while(true) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Choose a testcase from below! Enter 0 for exit.");
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Choose a testcase from below!");
-
-        while (!scanner.hasNextInt()) {
-            System.out.println("Choose a number between 1 and " + testCases.size());
-            scanner.next();
-        }
-
-        int number = scanner.nextInt();
-        while (number < 1 || number > testCases.size()) {
-            System.out.println("Choose a number between 1 and " + testCases.size());
             while (!scanner.hasNextInt()) {
                 System.out.println("Choose a number between 1 and " + testCases.size());
+                System.out.println("Enter 0 for exit");
                 scanner.next();
             }
-            number = scanner.nextInt();
+
+            int number = scanner.nextInt();
+            while (number < 0 || number > testCases.size()) {
+                System.out.println("Choose a number between 1 and " + testCases.size());
+                System.out.println("Enter 0 for exit");
+                while (!scanner.hasNextInt()) {
+                    System.out.println("Choose a number between 1 and " + testCases.size());
+                    System.out.println("Enter 0 for exit");
+                    scanner.next();
+                }
+                number = scanner.nextInt();
+            }
+            if(number == 0) {
+                break;
+            }
+            Logger.reset();
+            testCases.get(number - 1).execute();
         }
-        testCases.get(number - 1).execute();
     }
 
 
@@ -221,7 +229,9 @@ public class Skeleton {
         d1.setDest(r3);
         System.out.println("End of init10-------------------------");
 
+        Logger.logCall("tick","void");
         r1.divide();
+        Logger.logReturn();
 
     }
 
@@ -244,7 +254,9 @@ public class Skeleton {
 
         System.out.println("End of init11-------------------------");
 
+        Logger.logCall("tick","void");
         r1.merge();
+        Logger.logReturn();
 
     }
 

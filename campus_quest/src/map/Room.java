@@ -6,7 +6,9 @@ import utility.Entity;
 import utility.Logger;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Room implements Entity {
     List<Person> people = new ArrayList<>(); //Person objects in the room
@@ -26,12 +28,14 @@ public class Room implements Entity {
     //: A paraméterként kapott ajtót hozzáadja a szobához.
     public void addDoor(Door door) {
         Logger.logCall("addDoor",new Object[]{door},"void");
+        doors.add(door);
         Logger.logReturn();
     }
 
     //: A paraméterként kapott tárgyat hozzáadja a szobához.
     public void addItem(Item item) {
         Logger.logCall("addItem",new Object[]{item},"void");
+        items.add(item);
         Logger.logReturn();
     }
 
@@ -44,13 +48,32 @@ public class Room implements Entity {
 
     //: A szoba megszűnését jelentő függvény.
     public void destroy() {
-        Logger.logCall("destroy","void");
-        Logger.logReturn();
+        Logger.logDestroy(this,"Room");
     }
 
     //: A szoba két részre osztódik.
     public void divide() {
         Logger.logCall("divide","void");
+        Map<Room,Door> neighbors = new HashMap<>();
+        for(Door d : doors) {
+            neighbors.put(d.getDest(),d);
+        }
+        Room r2 = new Room(2,10,false);
+        Logger.logCreate(r2,"Room","r2",new Object[]{2,10,false});
+        Door d2 = new Door();
+        Logger.logCreate(d2,"Door","d2");
+        d2.setSrc(this);
+        d2.setDest(r2);
+        this.addDoor(d2);
+        r2.addDoor(d2);
+        if(Logger.testerInput("Is r2 getting r3 as its neighbor?")) {
+            for(Map.Entry<Room,Door> n : neighbors.entrySet()) {
+                Door d =  n.getValue();
+                d.setSrc(r2);
+                this.removeDoor(d);
+                r2.addDoor(d);
+            }
+        }
         Logger.logReturn();
     }
 
@@ -62,24 +85,33 @@ public class Room implements Entity {
     //: Összeolvad egy találomra kiválasztott szomszédjával. 
     public void merge() {
         Logger.logCall("merge","void");
+        Room neighbour = doors.get(0).getDest();
+        List<Door> neighbourDoors = neighbour.getDoors();
+        neighbour.destroy();
+        for(Door d : neighbourDoors) {
+            d.destroy();
+        }
         Logger.logReturn();
     }
 
     //): A paraméterként kapott ajtót eltávolítja a szobából.
     public void removeDoor(Door door) {
         Logger.logCall("removeDoor",new Object[]{door},"void");
+        doors.remove(door);
         Logger.logReturn();
     }
 
     // A paraméterként kapott tárgyat eltávolítja a szobából.
     public void removeItem(Item item) {
         Logger.logCall("removeItem",new Object[]{item},"void");
+        items.remove(item);
         Logger.logReturn();
     }
 
     //: A paraméterként kapott személyt kiveszi a szobából.
     public void removePerson(Person person) {
         Logger.logCall("removePerson",new Object[]{person},"void");
+        people.remove(person);
         Logger.logReturn();
     }
 
@@ -88,6 +120,12 @@ public class Room implements Entity {
         Logger.logCall("getPeople", "List<Person>");
         Logger.logReturn(people);
         return people;
+    }
+
+    public List<Door> getDoors() {
+        Logger.logCall("getDoors","List<Door>");
+        Logger.logReturn(doors);
+        return doors;
     }
 
     public boolean isFull(){

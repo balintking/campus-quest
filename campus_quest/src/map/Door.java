@@ -15,7 +15,9 @@ public class Door implements Entity {
     }
 
     //: Megsemmisíti az ajtót.
-    void destroy(){};
+    void destroy(){
+        Logger.logDestroy(this,"Door");
+    }
 
     public void tick(){}
 

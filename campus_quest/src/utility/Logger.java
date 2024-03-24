@@ -1,9 +1,6 @@
 package utility;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Implementation of a simple Logger class capable of writing to the console output.
@@ -18,7 +15,16 @@ public class Logger {
      * Storing the names of the object instances whose creation is logged.
      */
     private static final Map<Object,String> objectCatalog = new HashMap<>();
+    /**
+     * Storing the destroyed objects to make sure there are no inconsistencies.
+     */
+    private static final Set<Object> destroyedObjects = new HashSet<>();
 
+    /**
+     * Private static method for creating a loggable String from an iterable Collection.
+     * @param collectionObject The collection that must be logged.
+     * @return The String of the containers content listed.
+     */
     private static String logCollection(Object collectionObject) {
         Iterable<?> collection = (Iterable<?>)collectionObject;
         StringBuilder sb = new StringBuilder();
@@ -41,6 +47,7 @@ public class Logger {
      * @param methodName The name of the called method.
      * @param methodParameters The parameters of the called method.
      * @param returnType The return type of the called method.
+     * @throws IllegalStateException If the call has a parameter that already has been destroyed.
      */
     public static void logCall(String methodName,Object[] methodParameters,String returnType) {
         StringBuilder sb = new StringBuilder();
@@ -59,6 +66,9 @@ public class Logger {
                 } else {
                     sb.append(methodParameters[i].toString());
                 }
+                if(destroyedObjects.contains(methodParameters[i])) {
+                    throw new IllegalStateException("The call has a parameter that already has been destroyed.");
+                }
                 if (i != methodParameters.length - 1) {
                     sb.append(',');
                 }
@@ -73,6 +83,7 @@ public class Logger {
      * Overloading of the static method logCall for the case if parameters are absent.
      * @param methodName The name of the called method.
      * @param returnType The return type of the called method.
+     *  @throws IllegalStateException If the call has a parameter that already has been destroyed.
      */
     public static void logCall(String methodName,String returnType) {
         logCall(methodName,null,returnType);
@@ -82,8 +93,12 @@ public class Logger {
      * A static method for logging a return from a method. It decreases the depth by 1.
      * @param returnValue The returning value of the method.
      * @throws IllegalStateException It is thrown if the depth becomes less than 0, indicating that it is being called by mistake.
+     * @throws IllegalStateException If the return value has already been destroyed.
      */
     public static void logReturn(Object returnValue) throws IllegalStateException {
+        if(destroyedObjects.contains(returnValue)) {
+            throw new IllegalStateException("The return value has already been destroyed.");
+        }
         StringBuilder sb = new StringBuilder();
         depth--;
         if (depth < 0) {
@@ -109,6 +124,7 @@ public class Logger {
     /**
      * Overloading of the static method logReturn for the case if it is a void return.
      * @throws IllegalStateException It is thrown if the depth becomes less than 0, indicating that it is being called by mistake.
+     * @throws IllegalStateException If the return value has already been destroyed.
      */
     public static void logReturn() throws IllegalStateException {
         logReturn("void");
@@ -125,6 +141,7 @@ public class Logger {
         if(objectCatalog.containsKey(objectReference)) {
             throw new IllegalStateException("Ambigious constructor logging!");
         }
+        destroyedObjects.remove(objectReference);
         objectCatalog.put(objectReference,instanceName);
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < depth; i++) {
@@ -164,6 +181,7 @@ public class Logger {
      */
     public static void reset() {
         objectCatalog.clear();
+        destroyedObjects.clear();
         depth = 0;
     }
     /**
@@ -190,6 +208,24 @@ public class Logger {
         }
         return input.equals("i");
 
+    }
+
+    /**
+     * Marks the destroying of an object which must have been a logged creation.
+     * @param objectInstance The object being destroyed.
+     * @throws IllegalStateException If the object has not been created.
+     * @throws IllegalStateException If the object has already been destroyed.
+     */
+    public static void logDestroy(Object objectInstance,String objectType) {
+        if(!objectCatalog.containsKey(objectInstance)) {
+            throw new IllegalStateException("Cannot destroy an object that has not been created!");
+        }
+        if(destroyedObjects.contains(objectInstance)) {
+            throw new IllegalStateException("Cannot destroy an object that has already been destroyed!");
+        }
+        System.out.println("Destroyed " + objectCatalog.get(objectInstance) + " (" + objectType + ')' );
+        objectCatalog.remove(objectInstance);
+        destroyedObjects.add(objectInstance);
     }
 
 

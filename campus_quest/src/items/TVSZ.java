@@ -14,6 +14,7 @@ public class TVSZ extends Item {
     public void teacherThreat(){
         Logger.logCall("teacherThreat","void");
         owner.teacherProtection(this,life);
+        owner.offerProtection(this,life); //remelem ez igy jo
         Logger.logReturn();
     }
 

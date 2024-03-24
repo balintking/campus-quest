@@ -79,7 +79,6 @@ public class Skeleton {
         //end of init3
 
         t.initAttack();
-        //offerprotection nem hivodik be-> tvsz nem kerul be protectiveitemsbe->nem jon acceptprotection
 
     }
     private static void testCase4() {

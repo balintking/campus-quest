@@ -59,6 +59,7 @@ public class Transistor extends Item{
     @Override
     public void destroy(){
         Logger.logCall("destroy", "void");
+        Logger.logDestroy(this,"Transistor");
         owner = null;
         room = null;
         pair.reset();

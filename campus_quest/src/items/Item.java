@@ -46,6 +46,7 @@ public abstract class Item implements Entity {
      */
     public void destroy(){
         Logger.logCall("destroy", "void");
+        Logger.logDestroy(this,"Item");
         owner = null;
         room = null;
         Logger.logReturn();

@@ -48,7 +48,9 @@ public class Room implements Entity {
 
     //: A szoba megszűnését jelentő függvény.
     public void destroy() {
+        Logger.logCall("destroy","void");
         Logger.logDestroy(this,"Room");
+        Logger.logReturn();
     }
 
     //: A szoba két részre osztódik.

@@ -170,8 +170,29 @@ public class Skeleton {
         teacher.initAttack();
     }
 
+    /**
+     * Teachers attack other teachers present in the same room, although this has no effect on them.
+     */
     private static void testCase4() {
-        System.out.println("init2");
+        System.out.println("init2--------------------------------");
+        Room room = new Room(1, 10, false);
+        Logger.logCreate(room, "Room", "room", new Object[]{1, 10, false});
+        Student student = new Student();
+        Logger.logCreate(student, "Student", "student");
+        Teacher teacher1 = new Teacher();
+        Logger.logCreate(teacher1, "Teacher", "teacher1");
+        Teacher teacher2 = new Teacher();
+        Logger.logCreate(teacher2, "Teacher", "teacher2");
+
+        room.addPerson(student);
+        room.addPerson(teacher1);
+        room.addPerson(teacher2);
+        student.setRoom(room);
+        teacher1.setRoom(room);
+        teacher2.setRoom(room);
+        System.out.println("End of init2-------------------------");
+
+        teacher1.initAttack();
     }
 
     /**

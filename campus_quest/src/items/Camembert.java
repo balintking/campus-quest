@@ -13,10 +13,8 @@ public class Camembert extends Item {
     public void activate() {
         Logger.logCall("activate", "void");
         Room r = owner.getRoom();
-        for (Person p : r.getPeople()) {
-            p.gasStun();
-        }
-        super.destroy();
+        r.gas();
+        destroy();
         Logger.logReturn();
     }
 }

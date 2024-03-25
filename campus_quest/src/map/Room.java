@@ -115,7 +115,7 @@ public class Room implements Entity {
         d2.setDest(r2);
         this.addDoor(d2);
         r2.addDoor(d2);
-        if (Logger.testerInput("Is r2 getting r3 as its neighbor?")) {
+        if (Logger.testerInput("Is the new Room getting the old one's neighbour as its neighbour?")) {
             for (Map.Entry<Room, Door> n : neighbors.entrySet()) {
                 Door d = n.getValue();
                 d.setSrc(r2);
@@ -142,21 +142,23 @@ public class Room implements Entity {
      */
     public void merge() {
         Logger.logCall("merge", "void");
-        Room neighbour = doors.get(0).getDest();
-        this.capacity = Math.max(this.capacity, neighbour.capacity);
-        List<Person> neighbourPeople = neighbour.getPeople();
-        if (this.capacity < (people.size() + neighbourPeople.size())) {
-            return;
-        }
-        List<Item> neighbourItems = neighbour.getItems();
-        for (Item i : neighbourItems) {
-            this.addItem(i);
-            i.setRoom(this);
-        }
-        List<Door> neighbourDoors = neighbour.getDoors();
-        neighbour.destroy();
-        for (Door d : neighbourDoors) {
-            d.destroy();
+        if(!doors.isEmpty()){
+            Room neighbour = doors.get(0).getDest();
+            this.capacity = Math.max(this.capacity, neighbour.capacity);
+            List<Person> neighbourPeople = neighbour.getPeople();
+            if ((!Logger.testerInput("Can the rooms merge?")) || this.capacity < (people.size() + neighbourPeople.size())) {
+                return;
+            }
+            List<Item> neighbourItems = neighbour.getItems();
+            for (Item i : neighbourItems) {
+                this.addItem(i);
+                i.setRoom(this);
+            }
+            List<Door> neighbourDoors = neighbour.getDoors();
+            neighbour.destroy();
+            for (Door d : neighbourDoors) {
+                d.destroy();
+            }
         }
         Logger.logReturn();
     }

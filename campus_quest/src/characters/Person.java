@@ -48,10 +48,14 @@ public abstract class Person implements Entity {
      */
     public void dropAll() {
         Logger.logCall("dropAll", "void");
+        List<Item> tempItems = new ArrayList<>();
         for (Item i : items){
-            drop(i);
-            items.remove(i);
+            tempItems.add(i);
         }
+        for (Item i : tempItems){
+            drop(i);
+        }
+        tempItems.clear();
         Logger.logReturn();
     }
 
@@ -91,6 +95,12 @@ public abstract class Person implements Entity {
     public void addItem(Item item) {
         Logger.logCall("addItem",new Object[]{item},"void");
         items.add(item);
+        Logger.logReturn();
+    }
+
+    public void removeItem(Item item){
+        Logger.logCall("removeItem",new Object[]{item},"void");
+        items.remove(item);
         Logger.logReturn();
     }
 

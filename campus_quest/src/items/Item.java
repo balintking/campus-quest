@@ -10,7 +10,7 @@ public abstract class Item implements Entity {
     /**
      * Who has the item. if it is in a room the value is null.
      */
-    Person owner;
+    Person owner = null;
     /**
      * In which room the item is. if it is at a person the value is null.
      */
@@ -47,12 +47,9 @@ public abstract class Item implements Entity {
      * @param room
      */
     public void setRoom(Room room) {
-        Logger.logCall("changeRoom", new Object[]{room}, "void");
+        Logger.logCall("setRoom", new Object[]{room}, "void");
         this.room = room;
         Logger.logReturn();
-    }
-
-    public void changeRoom(Room roomInput) {
     }
 
     /**
@@ -71,9 +68,10 @@ public abstract class Item implements Entity {
      */
     public void destroy() {
         Logger.logCall("destroy", "void");
-        Logger.logDestroy(this, "Item");
+        owner.removeItem(this);
         owner = null;
         room = null;
+        Logger.logDestroy(this, "Item");
         Logger.logReturn();
     }
 
@@ -90,11 +88,11 @@ public abstract class Item implements Entity {
      * Sets the owner of the item and handles the event of the item
      * being picked up, which is significant in some implementations.
      *
-     * @param owner
+     * @param ownerInput
      */
-    public void setOwner(Person owner) {
-        Logger.logCall("setOwner", new Object[]{owner}, "void");
-        this.owner = owner;
+    public void setOwner(Person ownerInput) {
+        Logger.logCall("setOwner", new Object[]{ownerInput}, "void");
+        this.owner = ownerInput;
         Logger.logReturn();
     }
 

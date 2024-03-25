@@ -246,7 +246,7 @@ public class Skeleton {
 
         System.out.println("End of init4-------------------------");
 
-        teacher1.gasStun();
+        room.tick();
 
     }
 
@@ -273,8 +273,6 @@ public class Skeleton {
 
         student1.pickup(cloth); //3
 
-        cloth.setOwner(student1); //4
-
         System.out.println("End of init5--------------------------");
 
         student1.initActivate(cloth);
@@ -299,9 +297,9 @@ public class Skeleton {
 
         s.pickup(c);    //3
 
-        c.setOwner(s);  //4
         System.out.println("End of init6--------------------------");
         s.initActivate(c);
+        r.tick();
     }
 
     private static void testCase9() {
@@ -390,13 +388,12 @@ public class Skeleton {
         Logger.logCreate(r1, "Room", "r1", new Object[]{1, 10, false});
         Room r3 = new Room(2, 10, false);
         Logger.logCreate(r3, "Room", "r3", new Object[]{2, 10, false});
-        Door d1 = new Door();
-        Logger.logCreate(d1, "Door", "d1");
+        Door d1 = new Door(r1,r3);
+        Logger.logCreate(d1, "Door", "d1", new Object[]{r1,r3});
 
         r1.addDoor(d1);
         r3.addDoor(d1);
-        d1.setSrc(r1);
-        d1.setDest(r3);
+
         System.out.println("End of init10-------------------------");
 
         Logger.logCall("tick", "void");
@@ -419,8 +416,8 @@ public class Skeleton {
         Logger.logCreate(r1, "Room", "r1", new Object[]{1, 10, false});
         Room r2 = new Room(2, 10, false);
         Logger.logCreate(r2, "Room", "r2", new Object[]{2, 10, false});
-        Door d1 = new Door();
-        Logger.logCreate(d1, "Door", "d1");
+        Door d1 = new Door(r1,r2);
+        Logger.logCreate(d1, "Door", "d1", new Object[]{r1,r2});
         Door d2 = new Door();
         Logger.logCreate(d2, "Door", "d2");
 
@@ -499,7 +496,7 @@ public class Skeleton {
         Logger.logCreate(r2, "Room", "r2", new Object[]{2, 10, false});
 
         Door d = new Door(r1, r2);
-        Logger.logCreate(d, "Door", "d");
+        Logger.logCreate(d, "Door", "d", new Object[]{r1,r2});
 
         Student s = new Student();
         Logger.logCreate(s, "Student", "s");
@@ -527,7 +524,7 @@ public class Skeleton {
         t2.setPair(t1);
 
         s.drop(t1);
-        if (Logger.testerInput("Is the room not full?")) {
+        if (!Logger.testerInput("Is the room full?")) {
             s.move(d);
             s.drop(t2);
         }

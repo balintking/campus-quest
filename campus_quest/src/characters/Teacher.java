@@ -45,6 +45,7 @@ public class Teacher extends Person {
     public void pickup(Item item){
         Logger.logCall("pickup", new Object[]{item}, "void");
         room.removeItem(item);
+        item.setOwner(this);
         item.destroy();
         Logger.logReturn();
     }

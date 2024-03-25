@@ -32,16 +32,20 @@ public class Transistor extends Item {
      * @param roomInput
      */
     @Override
-    public void changeRoom(Room roomInput) {
-        Logger.logCall("changeRoom", new Object[]{room}, "void");
-        room = roomInput;
-        Room pairRoom = pair.getDestination();
-        if (pairRoom != null) {
-            if (Logger.testerInput("Is the room not full?")) {
-                lastOwner.teleport(pairRoom);
-                lastOwner = null;
-                deactivate();
-                pair.deactivate();
+    public void setRoom(Room roomInput) {
+        Logger.logCall("setRoom", new Object[]{roomInput}, "void");
+        if(owner == null){
+            room = roomInput;
+        } else{
+            room = roomInput;
+            Room pairRoom = pair.getDestination();
+            if (pairRoom != null) {
+                if (!Logger.testerInput("Is the room full?")) {
+                    lastOwner.teleport(pairRoom);
+                    lastOwner = null;
+                    deactivate();
+                    pair.deactivate();
+                }
             }
         }
         Logger.logReturn();
@@ -53,7 +57,9 @@ public class Transistor extends Item {
      * @param t
      */
     public void setPair(Transistor t) {
+        Logger.logCall("setPair",new Object[]{t},"void");
         pair = t;
+        Logger.logReturn();
     }
 
     /**
@@ -81,10 +87,11 @@ public class Transistor extends Item {
     @Override
     public void destroy() {
         Logger.logCall("destroy", "void");
-        Logger.logDestroy(this, "Transistor");
+        owner.removeItem(this);
         owner = null;
         room = null;
         pair.reset();
+        Logger.logDestroy(this, "Transistor");
         Logger.logReturn();
     }
 

@@ -18,10 +18,30 @@ public class Student extends Person {
     }
 
     /**
+     * Checks if there is still space available in the inventory.
      *
+     * @return true if the inventory is full.
      */
     private boolean isInventoryFull() {
-        //TODO: kerdes
+        Logger.logCall("isInventoryFull","boolean");
+        boolean result = Logger.testerInput("Is the inventory full?");
+        Logger.logReturn(result);
+        return result;
+    }
+
+    /**
+     * Overrides the pickup method of the base class. Before picking up an item it checks if the inventory is full.
+     *
+     * @param item Item to pick up
+     */
+    public void pickup(Item item) {
+        Logger.logCall("pickup",new Object[]{item},"void");
+        if (!isInventoryFull()) {
+            items.add(item);
+            item.setOwner(this);
+            room.removeItem(item);
+        }
+        Logger.logReturn();
     }
 
     /**

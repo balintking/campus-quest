@@ -116,8 +116,6 @@ public class Skeleton {
         System.out.println("End of init1-------------------------");
 
         student.pickup(beer);
-
-
     }
 
     private static void testCase2() {

@@ -145,8 +145,29 @@ public class Skeleton {
         teacher.pickup(beer);
     }
 
+    /**
+     * Instructors "suck out the soul" of, i.e., attack, any students present in the same room with them.
+     * Without defense, this results in the death of the student, signifying the end of the game for that player.
+     */
     private static void testCase3() {
-        System.out.println("init1");
+        System.out.println("init1--------------------------------");
+        Room room = new Room(1, 10, false);
+        Logger.logCreate(room, "Room", "room", new Object[]{1, 10, false});
+        Student student = new Student();
+        Logger.logCreate(student, "Student", "student");
+        Teacher teacher = new Teacher();
+        Logger.logCreate(teacher, "Teacher", "teacher");
+        Beer beer = new Beer();
+        Logger.logCreate(beer, "Beer", "beer");
+
+        room.addPerson(student);
+        room.addPerson(teacher);
+        room.addItem(beer);
+        student.setRoom(room);
+        teacher.setRoom(room);
+        System.out.println("End of init1-------------------------");
+
+        teacher.initAttack();
     }
 
     private static void testCase4() {

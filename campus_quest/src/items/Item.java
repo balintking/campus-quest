@@ -24,7 +24,6 @@ public abstract class Item implements Entity {
      */
     boolean active;
 
-
     /**
      * A Person signals acceptance of the item's defense offer with this call.
      */
@@ -102,8 +101,7 @@ public abstract class Item implements Entity {
     /**
      * The item gets notified about a teacher threat, and it offers its protection againts it.
      */
-    public void teacherThreat() {
-    }
+    public void teacherThreat() {}
 
 
     public void tick() {

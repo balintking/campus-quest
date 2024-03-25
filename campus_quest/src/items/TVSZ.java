@@ -12,7 +12,7 @@ public class TVSZ extends Item {
     }
 
     /**
-     * The item gets notified about a teacher threat, and it offers its protection againts it
+     * The item gets notified about a teacher threat, and it offers its protection against it
      */
     @Override
     public void teacherThreat() {

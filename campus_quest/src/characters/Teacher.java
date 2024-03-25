@@ -3,6 +3,7 @@ package characters;
 import items.Item;
 import utility.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Teacher extends Person {
@@ -26,11 +27,11 @@ public class Teacher extends Person {
     }
 
     /**
-     * The Teacher attacks all the people in their room.
+     * Attacks all the people in the room.
      */
     public void initAttack(){
         Logger.logCall("initAttack","void");
-        List<Person> targets = room.getPeople();
+        List<Person> targets =new ArrayList<>(room.getPeople());
         for(Person p:targets){
             p.teacherAttack();
         }
@@ -51,7 +52,7 @@ public class Teacher extends Person {
     /**
      * Teachers are immune to attacks by teacher, in this case nothing happens.
      */
-    public void teacherAttack(){
+    public void teacherAttack() {
         Logger.logCall("teacherAttack","void");
         Logger.logReturn();
     }

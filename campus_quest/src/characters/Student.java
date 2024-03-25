@@ -119,6 +119,7 @@ public class Student extends Person {
         if (protectiveItems.isEmpty()) {
             // the student dies
             room.removePerson(this);
+            Logger.logDestroy(this, "Student");
         } else {
             selectProtectionProvider();
         }

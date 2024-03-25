@@ -105,7 +105,7 @@ public abstract class Person implements Entity {
     /**
      * Alerts the Person about Teacher threat
      */
-    public void teacherAttack() {}
+    public abstract void teacherAttack();
 
 
     /**

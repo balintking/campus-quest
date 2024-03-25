@@ -81,13 +81,7 @@ public abstract class Person implements Entity {
      * Picks up item from its room
      * @param item
      */
-    public void pickup(Item item) {
-        Logger.logCall("pickup",new Object[]{item},"void");
-        items.add(item);
-        room.removeItem(item);
-        item.setOwner(this);
-        Logger.logReturn();
-    }
+    public abstract void pickup(Item item);
 
 
     /**

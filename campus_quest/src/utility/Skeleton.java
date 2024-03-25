@@ -95,7 +95,8 @@ public class Skeleton {
     }
 
     /**
-     * Adds an item to the student's inventory and removes it from the room. In this case, the item is a beer glass.
+     * The student picks up an item. If the inventory is not full it adds the item to the student's inventory
+     * and removes it from the room. In this case, the item is a beer glass.
      * The behavior is consistent with other items, except for the slide rule.
      */
     private static void testCase1() {
@@ -113,13 +114,35 @@ public class Skeleton {
         room.addPerson(teacher);
         room.addItem(beer);
         student.setRoom(room);
+        teacher.setRoom(room);
         System.out.println("End of init1-------------------------");
 
         student.pickup(beer);
     }
 
+    /**
+     * When a teacher picks up an item, it is destroyed immediately. In this case, the item is a beer glass.
+     * This behavior is consistent with other items, except for the slide rule.
+     */
     private static void testCase2() {
-        System.out.println("init1");
+        System.out.println("init1--------------------------------");
+        Room room = new Room(1, 10, false);
+        Logger.logCreate(room, "Room", "room", new Object[]{1, 10, false});
+        Student student = new Student();
+        Logger.logCreate(student, "Student", "student");
+        Teacher teacher = new Teacher();
+        Logger.logCreate(teacher, "Teacher", "teacher");
+        Beer beer = new Beer();
+        Logger.logCreate(beer, "Beer", "beer");
+
+        room.addPerson(student);
+        room.addPerson(teacher);
+        room.addItem(beer);
+        student.setRoom(room);
+        teacher.setRoom(room);
+        System.out.println("End of init1-------------------------");
+
+        teacher.pickup(beer);
     }
 
     private static void testCase3() {

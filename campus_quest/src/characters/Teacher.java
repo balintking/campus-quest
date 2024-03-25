@@ -38,7 +38,7 @@ public class Teacher extends Person {
     }
 
     /**
-     * Pickes up item and destroys it.
+     * Picks up item and destroys it.
      * @param item
      */
     public void pickup(Item item){

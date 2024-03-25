@@ -1,0 +1,13 @@
+
+U
+java:S1118
+":Add a private constructor to hide the implicit public one.(ŸæÌıÿÿÿÿ
+m
+java:S37769"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(Œ¥õÈøÿÿÿÿ
+E	java:S106V"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ
+F	java:S106‚"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ
+F	java:S106·"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ
+A	java:S106Ö"+Replace this use of System.out by a logger.(‘³–
+A	java:S106İ"+Replace this use of System.out by a logger.(¯¼êÍ
+A	java:S106ß"+Replace this use of System.out by a logger.(¯¼êÍ
+F	java:S106÷"+Replace this use of System.out by a logger.(Ğı¢‚ÿÿÿÿÿ

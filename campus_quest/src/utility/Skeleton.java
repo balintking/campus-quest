@@ -41,28 +41,23 @@ public class Skeleton {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Choose a testcase from below! Enter 0 for exit.");
 
-            //König
             System.out.println("1. Student picks up a Beer item");
             System.out.println("2. Teacher picks up a Beer item");
             System.out.println("3. Teacher kills Student");
             System.out.println("4. Teacher attacks another teacher");
 
-            //Lilla
             System.out.println("5. TVSZ use");
             System.out.println("6. Teacher in gassed room");
             System.out.println("7. Cloth use");
 
-            //Miki
             System.out.println("8. Camembert use");
             System.out.println("9. Student in gassed room");
             System.out.println("10. Mask use");
 
-            //Máté
             System.out.println("11. Student with Beer and TVSZ is attacked by Teacher");
             System.out.println("12. Room division");
             System.out.println("13. Room merge");
 
-            //Jan
             System.out.println("14. Student picks the SlideRule up");
             System.out.println("15. Teacher picks the SlideRule up");
             System.out.println("16. Transistor use");
@@ -277,7 +272,9 @@ public class Skeleton {
 
         student1.initActivate(cloth);
     }
-
+    /**
+     * A Student activates the Camembert they have, which gasses the Room and attacks the people.
+     */
     private static void testCase8() {
         System.out.println("init6---------------------------------");
 
@@ -301,7 +298,9 @@ public class Skeleton {
         s.initActivate(c);
         r.tick();
     }
-
+    /**
+     * Room gasses the Student in it.
+     */
     private static void testCase9() {
         System.out.println("init7---------------------------------");
 
@@ -319,7 +318,9 @@ public class Skeleton {
         System.out.println("End of init7--------------------------");
         r.tick();
     }
-
+    /**
+     * A Student uses its mask to protect it from the gas
+     */
     private static void testCase10() {
         System.out.println("init8---------------------------------");
 
@@ -408,8 +409,6 @@ public class Skeleton {
      * but its capacity will be equal to the capacity of the larger room.
      * Two rooms can only merge if the sum of entities in both rooms does not exceed the capacity of the larger room.
      */
-
-//    BELSŐ DÖNTÉS A MERGE
     private static void testCase13() {
         System.out.println("init11--------------------------------");
         Room r1 = new Room(1, 10, false);

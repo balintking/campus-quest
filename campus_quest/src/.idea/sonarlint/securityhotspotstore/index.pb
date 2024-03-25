@@ -29,3 +29,5 @@ D
 items/SlideRule.java,f\5\f5afcec88d82d7524088319d6b99de6e5616d5f4
 E
 utility/TestCase.java,6\7\671f7794517b37d2c545a4f90fc327386b32f8b8
+?
+items/Beer.java,7\a\7ad7584e07fd50bcd9a3c94e2072dd1446fa7c46

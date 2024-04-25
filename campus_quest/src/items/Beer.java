@@ -6,7 +6,7 @@ public class Beer extends Item {
 
     public Beer() {
         super();
-        life = 2;
+        lifetime = 2;
     }
 
     /**
@@ -15,7 +15,7 @@ public class Beer extends Item {
     @Override
     public void teacherThreat() {
         Logger.logCall("teacherThreat", "void");
-        if (active) {
+        if (isActive) {
             owner.teacherProtection(this, 0);
         }
         Logger.logReturn();
@@ -27,10 +27,10 @@ public class Beer extends Item {
     @Override
     public void tick() {
         Logger.logCall("tick", "void");
-        if (active) {
-            life--;
+        if (isActive) {
+            lifetime--;
         }
-        if (life == 0) {
+        if (lifetime == 0) {
             destroy();
         }
         Logger.logReturn();

@@ -9,7 +9,7 @@ import map.Room;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Skeleton {
+public class  Skeleton {
 
     private static ArrayList<TestCase> testCases = new ArrayList<>();
 
@@ -36,9 +36,9 @@ public class Skeleton {
         testCases.add(Skeleton::testCase15);
         testCases.add(Skeleton::testCase16);
         testCases.add(Skeleton::testCase17);
-
+        Scanner scanner = new Scanner(System.in);
+        Logger.enableLogging();
         while (true) {
-            Scanner scanner = new Scanner(System.in);
             System.out.println("Choose a testcase from below! Enter 0 for exit.");
 
             System.out.println("1. Student picks up a Beer item");
@@ -440,7 +440,7 @@ public class Skeleton {
     private static void testCase14() {
         System.out.println("init12--------------------------------");
 
-        SlideRule sr = new SlideRule();
+        Sliderule sr = new Sliderule();
         Room r = new Room(1, 10, false);
         Logger.logCreate(r, "Room", "r", new Object[]{1, 10, false});
         Student s = new Student();
@@ -463,7 +463,7 @@ public class Skeleton {
     private static void testCase15() {
         System.out.println("init13--------------------------------");
 
-        SlideRule sr = new SlideRule();
+        Sliderule sr = new Sliderule();
         Logger.logCreate(sr, "SlideRule", "sr");
         Room r = new Room(1, 10, false);
         Logger.logCreate(r, "Room", "r", new Object[]{1, 10, false});

@@ -18,11 +18,16 @@ public abstract class Item implements Entity {
     /**
      * Remaining lifetime of the item, it can be used this much more times.
      */
-    int life;
+    int lifetime;
     /**
      * shows that the item is active or not
      */
-    boolean active;
+    boolean isActive;
+
+    /**
+     * Indicates whether the item is fake or not. Fake items can't do anything.
+     */
+    boolean fake;
 
     /**
      * A Person signals acceptance of the item's defense offer with this call.
@@ -37,7 +42,7 @@ public abstract class Item implements Entity {
      */
     public void activate() {
         Logger.logCall("activate", "void");
-        active = true;
+        isActive = true;
         Logger.logReturn();
     }
 
@@ -49,6 +54,7 @@ public abstract class Item implements Entity {
     public void setRoom(Room room) {
         Logger.logCall("setRoom", new Object[]{room}, "void");
         this.room = room;
+        this.owner = null;
         Logger.logReturn();
     }
 
@@ -93,6 +99,7 @@ public abstract class Item implements Entity {
     public void setOwner(Person ownerInput) {
         Logger.logCall("setOwner", new Object[]{ownerInput}, "void");
         this.owner = ownerInput;
+        this.room = null;
         Logger.logReturn();
     }
 
@@ -103,5 +110,13 @@ public abstract class Item implements Entity {
 
 
     public void tick() {
+    }
+
+    /**
+     * Returns the items owner.
+     * @return
+     */
+    public Person getOwner() {
+        return owner;
     }
 }

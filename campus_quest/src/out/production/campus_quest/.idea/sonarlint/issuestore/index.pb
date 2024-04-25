@@ -31,3 +31,15 @@ E
 utility/TestCase.java,6\7\671f7794517b37d2c545a4f90fc327386b32f8b8
 ?
 items/Beer.java,7\a\7ad7584e07fd50bcd9a3c94e2072dd1446fa7c46
+C
+utility/Entity.java,0\2\0225b8aeee6d356a5410881ba0c90a8538ec5582
+D
+utility/Command.java,4\d\4d77e2b88b27e96d2c1e15a73b83eebc8d85266d
+F
+utility/Prototype.java,3\6\3699e91ef3bf3ec27ba6bb16d263eab197d4bbeb
+F
+utility/GameState.java,0\b\0bfa9f4fd3075794f593e8fde9c7a498eb587c57
+G
+utility/GameObject.java,a\b\ab168c39cc656e7883e9944244ef40257061fc1a
+G
+characters/Cleaner.java,d\2\d2b7d02d01ba83a2bb80da51745e7ba230a55bbd

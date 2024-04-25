@@ -1,0 +1,24 @@
+
+b	java:S112X"FDefine and throw a dedicated exception instead of using a generic one.(ìäºÖ8®àù¯ñ1
+g	java:S112c"FDefine and throw a dedicated exception instead of using a generic one.(¯åÕøÿÿÿÿ8®àù¯ñ1
+h	java:S112ˆ"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8®àù¯ñ1
+h	java:S112›"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8®àù¯ñ1
+h	java:S112©"FDefine and throw a dedicated exception instead of using a generic one.(¯åÕøÿÿÿÿ8®àù¯ñ1
+V
+java:S2864"4Iterate over the "entrySet" instead of the "keySet".(•œ†‰üÿÿÿÿ8¸áù¯ñ1
+N
+java:S30117",This accessibility update should be removed.(Í”úÆùÿÿÿÿ8ºáù¯ñ1
+N
+java:S3011=",This accessibility update should be removed.(Í”úÆùÿÿÿÿ8ºáù¯ñ1
+N
+java:S3011N",This accessibility bypass should be removed.(÷³Õ…ûÿÿÿÿ8¼áù¯ñ1
+t
+java:S3776V"RRefactor this method to reduce its Cognitive Complexity from 25 to the 15 allowed.(ÍĞıüÿÿÿÿ8½áù¯ñ1
+D
+java:S2175g"'A "List<Door>" cannot contain a "Room".(¾Äú8Àáù¯ñ1
+I
+java:S2175j"'A "List<Door>" cannot contain a "Room".(üŒïñùÿÿÿÿ8Ááù¯ñ1
+I
+java:S2175n"'A "List<Door>" cannot contain a "Room".(áúèÜüÿÿÿÿ8Ááù¯ñ1
+D
+java:S2175q"'A "List<Door>" cannot contain a "Room".(§îÄ8Ááù¯ñ1

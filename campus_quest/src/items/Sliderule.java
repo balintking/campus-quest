@@ -3,7 +3,7 @@ package items;
 import characters.Person;
 import utility.Logger;
 
-public class SlideRule extends Item {
+public class Sliderule extends Item {
 
     /**
      * Called whenever picked up.

@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="aa99cb8e-aa8e-4e9e-8e97-23514a02a4c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +38,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Cardinael Jan/Desktop/BME/projlab/campus-quest/campus_quest/src",
+    "last_opened_file_path": "C:/Users/Máté/projlab/campus-quest/campus_quest/src",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -81,6 +80,7 @@
       <workItem from="1711354487359" duration="92000" />
       <workItem from="1711354606618" duration="21000" />
       <workItem from="1711354738718" duration="78000" />
+      <workItem from="1713866993365" duration="21000" />
     </task>
     <servers />
   </component>

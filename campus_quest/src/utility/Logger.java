@@ -21,6 +21,8 @@ public class Logger {
      */
     private static final Set<Object> destroyedObjects = new HashSet<>();
 
+    private static boolean isEnabled = false;
+
     /**
      * Private static method for creating a loggable String from an iterable Collection.
      *
@@ -55,36 +57,38 @@ public class Logger {
      * @throws IllegalStateException If the call has a parameter that already has been destroyed.
      */
     public static void logCall(String methodName, Object[] methodParameters, String returnType) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < depth; i++) {
-            sb.append('\t');
-        }
-        sb.append("call: ");
-        sb.append(methodName);
-        sb.append('(');
-        if (methodParameters != null) {
-            for (int i = 0; i < methodParameters.length; i++) {
-                if (methodParameters[i] == null) {
-                    sb.append("null");
-                } else if (methodParameters[i] instanceof Iterable<?>) {
-                    sb.append(logCollection(methodParameters[i]));
-                } else if (objectCatalog.containsKey(methodParameters[i])) {
-                    sb.append(objectCatalog.get(methodParameters[i]));
-                } else {
-                    sb.append(methodParameters[i].toString());
-                }
-                if (destroyedObjects.contains(methodParameters[i])) {
-                    throw new IllegalStateException("The call has a parameter that already has been destroyed.");
-                }
-                if (i != methodParameters.length - 1) {
-                    sb.append(',');
+        if(isEnabled) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < depth; i++) {
+                sb.append('\t');
+            }
+            sb.append("call: ");
+            sb.append(methodName);
+            sb.append('(');
+            if (methodParameters != null) {
+                for (int i = 0; i < methodParameters.length; i++) {
+                    if (methodParameters[i] == null) {
+                        sb.append("null");
+                    } else if (methodParameters[i] instanceof Iterable<?>) {
+                        sb.append(logCollection(methodParameters[i]));
+                    } else if (objectCatalog.containsKey(methodParameters[i])) {
+                        sb.append(objectCatalog.get(methodParameters[i]));
+                    } else {
+                        sb.append(methodParameters[i].toString());
+                    }
+                    if (destroyedObjects.contains(methodParameters[i])) {
+                        throw new IllegalStateException("The call has a parameter that already has been destroyed.");
+                    }
+                    if (i != methodParameters.length - 1) {
+                        sb.append(',');
+                    }
                 }
             }
+            sb.append("): ");
+            sb.append(returnType);
+            System.out.println(sb);
+            depth++;
         }
-        sb.append("): ");
-        sb.append(returnType);
-        System.out.println(sb);
-        depth++;
     }
 
     /**
@@ -106,28 +110,30 @@ public class Logger {
      * @throws IllegalStateException If the return value has already been destroyed.
      */
     public static void logReturn(Object returnValue) throws IllegalStateException {
-        if (destroyedObjects.contains(returnValue)) {
-            throw new IllegalStateException("The return value has already been destroyed.");
+        if(isEnabled) {
+            if (destroyedObjects.contains(returnValue)) {
+                throw new IllegalStateException("The return value has already been destroyed.");
+            }
+            StringBuilder sb = new StringBuilder();
+            depth--;
+            if (depth < 0) {
+                throw new IllegalStateException("You cannot return from a method you didn't call!");
+            }
+            for (int i = 0; i < depth; i++) {
+                sb.append('\t');
+            }
+            sb.append("return: ");
+            if (returnValue == null) {
+                sb.append("null");
+            } else if (returnValue instanceof Iterable<?>) {
+                sb.append(logCollection(returnValue));
+            } else if (objectCatalog.containsKey(returnValue)) {
+                sb.append(objectCatalog.get(returnValue));
+            } else {
+                sb.append(returnValue.toString());
+            }
+            System.out.println(sb);
         }
-        StringBuilder sb = new StringBuilder();
-        depth--;
-        if (depth < 0) {
-            throw new IllegalStateException("You cannot return from a method you didn't call!");
-        }
-        for (int i = 0; i < depth; i++) {
-            sb.append('\t');
-        }
-        sb.append("return: ");
-        if (returnValue == null) {
-            sb.append("null");
-        } else if (returnValue instanceof Iterable<?>) {
-            sb.append(logCollection(returnValue));
-        } else if (objectCatalog.containsKey(returnValue)) {
-            sb.append(objectCatalog.get(returnValue));
-        } else {
-            sb.append(returnValue.toString());
-        }
-        System.out.println(sb);
 
     }
 
@@ -150,37 +156,39 @@ public class Logger {
      * @param constructorParameters The array of the constructor parameters.
      */
     public static void logCreate(Object objectReference, String objectType, String instanceName, Object[] constructorParameters) {
-        if (objectCatalog.containsKey(objectReference)) {
-            throw new IllegalStateException("Ambigious constructor logging!");
-        }
-        destroyedObjects.remove(objectReference);
-        objectCatalog.put(objectReference, instanceName);
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < depth; i++) {
-            sb.append('\t');
-        }
-        sb.append("create: ");
-        sb.append(objectType);
-        sb.append('(');
-        if (constructorParameters != null) {
-            for (int i = 0; i < constructorParameters.length; i++) {
-                if (constructorParameters[i] == null) {
-                    sb.append("null");
-                } else if (constructorParameters[i] instanceof Iterable<?>) {
-                    sb.append(logCollection(constructorParameters[i]));
-                } else if (objectCatalog.containsKey(constructorParameters[i])) {
-                    sb.append(objectCatalog.get(constructorParameters[i]));
-                } else {
-                    sb.append(constructorParameters[i].toString());
-                }
-                if (i != constructorParameters.length - 1) {
-                    sb.append(',');
+        if(isEnabled) {
+            if (objectCatalog.containsKey(objectReference)) {
+                throw new IllegalStateException("Ambigious constructor logging!");
+            }
+            destroyedObjects.remove(objectReference);
+            objectCatalog.put(objectReference, instanceName);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < depth; i++) {
+                sb.append('\t');
+            }
+            sb.append("create: ");
+            sb.append(objectType);
+            sb.append('(');
+            if (constructorParameters != null) {
+                for (int i = 0; i < constructorParameters.length; i++) {
+                    if (constructorParameters[i] == null) {
+                        sb.append("null");
+                    } else if (constructorParameters[i] instanceof Iterable<?>) {
+                        sb.append(logCollection(constructorParameters[i]));
+                    } else if (objectCatalog.containsKey(constructorParameters[i])) {
+                        sb.append(objectCatalog.get(constructorParameters[i]));
+                    } else {
+                        sb.append(constructorParameters[i].toString());
+                    }
+                    if (i != constructorParameters.length - 1) {
+                        sb.append(',');
+                    }
                 }
             }
+            sb.append("):");
+            sb.append(instanceName);
+            System.out.println(sb);
         }
-        sb.append("):");
-        sb.append(instanceName);
-        System.out.println(sb);
     }
 
     /**
@@ -210,23 +218,27 @@ public class Logger {
      * @return Wether the user input was yes or no.
      */
     public static boolean testerInput(String question) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Tester intervention needed: " + question + "\n Press i (for yes) or n (for no)!");
-        while (!sc.hasNextLine()) {
-            sc.next();
-        }
-        String input = sc.nextLine();
-        input = input.trim().toLowerCase();
-        while (!(input.equals("i") || input.equals("n"))) {
-            System.out.println("Please enter a valid input! i for yes or n for no!");
+        if(isEnabled) {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Tester intervention needed: " + question + "\n Press i (for yes) or n (for no)!");
             while (!sc.hasNextLine()) {
-                System.out.println("Please enter a valid input! i for yes or n for no!");
                 sc.next();
             }
-            input = sc.nextLine();
+            String input = sc.nextLine();
             input = input.trim().toLowerCase();
+            while (!(input.equals("i") || input.equals("n"))) {
+                System.out.println("Please enter a valid input! i for yes or n for no!");
+                while (!sc.hasNextLine()) {
+                    System.out.println("Please enter a valid input! i for yes or n for no!");
+                    sc.next();
+                }
+                input = sc.nextLine();
+                input = input.trim().toLowerCase();
+            }
+            return input.equals("i");
+        } else {
+            return false;
         }
-        return input.equals("i");
 
     }
 
@@ -238,16 +250,25 @@ public class Logger {
      * @throws IllegalStateException If the object has already been destroyed.
      */
     public static void logDestroy(Object objectInstance, String objectType) {
-        if (!objectCatalog.containsKey(objectInstance)) {
-            throw new IllegalStateException("Cannot destroy an object that has not been created!");
+        if(isEnabled) {
+            if (!objectCatalog.containsKey(objectInstance)) {
+                throw new IllegalStateException("Cannot destroy an object that has not been created!");
+            }
+            if (destroyedObjects.contains(objectInstance)) {
+                throw new IllegalStateException("Cannot destroy an object that has already been destroyed!");
+            }
+            System.out.println("Destroyed " + objectCatalog.get(objectInstance) + " (" + objectType + ')');
+            objectCatalog.remove(objectInstance);
+            destroyedObjects.add(objectInstance);
         }
-        if (destroyedObjects.contains(objectInstance)) {
-            throw new IllegalStateException("Cannot destroy an object that has already been destroyed!");
-        }
-        System.out.println("Destroyed " + objectCatalog.get(objectInstance) + " (" + objectType + ')');
-        objectCatalog.remove(objectInstance);
-        destroyedObjects.add(objectInstance);
     }
 
+    public static void enableLogging() {
+        isEnabled = true;
+    }
+
+    public static void disableLogging() {
+        isEnabled = false;
+    }
 
 }

@@ -17,7 +17,7 @@ public class Transistor extends Item {
     public Room getDestination() {
         Logger.logCall("getDestination", "Room");
         Room ret;
-        if (!active) {
+        if (!isActive) {
             ret = null;
         } else {
             ret = room;
@@ -68,7 +68,7 @@ public class Transistor extends Item {
     @Override
     public void activate() {
         Logger.logCall("activate", "void");
-        active = true;
+        isActive = true;
         lastOwner = owner;
         Logger.logReturn();
     }
@@ -78,7 +78,7 @@ public class Transistor extends Item {
      */
     public void deactivate() {
         Logger.logCall("deactivate", "void");
-        active = false;
+        isActive = false;
         Logger.logReturn();
     }
     /**

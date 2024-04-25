@@ -1,0 +1,18 @@
+
+g	java:S112M"FDefine and throw a dedicated exception instead of using a generic one.(Àéø÷şÿÿÿÿ8î®ñ1
+g	java:S112S"FDefine and throw a dedicated exception instead of using a generic one.(¯åÕøÿÿÿÿ8î®ñ1
+g	java:S112c"FDefine and throw a dedicated exception instead of using a generic one.(¯åÕøÿÿÿÿ8î®ñ1
+b	java:S112s"FDefine and throw a dedicated exception instead of using a generic one.(ƒ—ÇÙ8î®ñ1
+b	java:S112u"FDefine and throw a dedicated exception instead of using a generic one.(Òäç8î®ñ1
+b	java:S112y"FDefine and throw a dedicated exception instead of using a generic one.(œÑàˆ8î®ñ1
+g	java:S112|"FDefine and throw a dedicated exception instead of using a generic one.(ùå˜ùÿÿÿÿ8î®ñ1
+h	java:S112…"FDefine and throw a dedicated exception instead of using a generic one.(¯åÕøÿÿÿÿ8î®ñ1
+h	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(±¡±²øÿÿÿÿ8î®ñ1
+t
+java:S3776D"RRefactor this method to reduce its Cognitive Complexity from 81 to the 15 allowed.(ù¦šøÿÿÿÿ8—î®ñ1
+J
+java:S1481J"(Remove this unused "obj" local variable.(—í„Àúÿÿÿÿ8šî®ñ1
+W
+java:S2864§"4Iterate over the "entrySet" instead of the "keySet".(¢‡Èˆÿÿÿÿÿ8 î®ñ1
+è
+java:S6541D"ÅA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 93 to 64, Complexity from 30 to 14, Nesting Level from 6 to 2, Number of Variables from 31 to 6.(ù¦šøÿÿÿÿ8¤î®ñ1

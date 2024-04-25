@@ -41,6 +41,12 @@ public class Room implements Entity {
     boolean cursed;
 
     /**
+     * Default constructor to help testing
+     */
+    public Room() {
+
+    }
+    /**
      * Constructor.
      *
      * @param id

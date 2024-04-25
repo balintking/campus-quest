@@ -8,7 +8,7 @@ public class Mask extends Item {
      */
     public Mask() {
         super();
-        life = 3;
+        lifetime = 3;
     }
 
     /**
@@ -24,9 +24,9 @@ public class Mask extends Item {
      */
     public void gasThreat() {
         Logger.logCall("gasThreat", "void");
-        owner.gasProtection(this, life);
-        life--;
-        if (life == 0) {
+        owner.gasProtection(this, lifetime);
+        lifetime--;
+        if (lifetime == 0) {
             super.destroy();
         }
         Logger.logReturn();

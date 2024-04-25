@@ -8,7 +8,7 @@ public class TVSZ extends Item {
      */
     public TVSZ() {
         super();
-        life = 3;
+        lifetime = 3;
     }
 
     /**
@@ -17,7 +17,7 @@ public class TVSZ extends Item {
     @Override
     public void teacherThreat() {
         Logger.logCall("teacherThreat", "void");
-        owner.teacherProtection(this, life);
+        owner.teacherProtection(this, lifetime);
         Logger.logReturn();
     }
 
@@ -27,8 +27,8 @@ public class TVSZ extends Item {
     @Override
     public void acceptProtection() {
         Logger.logCall("acceptProtection", "void");
-        life--;
-        if (life == 0) {
+        lifetime--;
+        if (lifetime == 0) {
             destroy();
         }
         Logger.logReturn();

@@ -1,13 +1,15 @@
 
-U
+\
 java:S1118
-":Add a private constructor to hide the implicit public one.(ŸæÌıÿÿÿÿ
-m
-java:S37769"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(Œ¥õÈøÿÿÿÿ
-E	java:S106V"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ
-F	java:S106‚"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ
-F	java:S106·"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ
-A	java:S106Ö"+Replace this use of System.out by a logger.(‘³–
-A	java:S106İ"+Replace this use of System.out by a logger.(¯¼êÍ
-A	java:S106ß"+Replace this use of System.out by a logger.(¯¼êÍ
-F	java:S106÷"+Replace this use of System.out by a logger.(Ğı¢‚ÿÿÿÿÿ
+":Add a private constructor to hide the implicit public one.(ŸæÌıÿÿÿÿ8‡Ş£§ñ1
+t
+java:S3776;"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(Œ¥õÈøÿÿÿÿ8‘Ş£§ñ1
+L	java:S106Y"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8—Ş£§ñ1
+M	java:S106‡"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8Ş£§ñ1
+p
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(æ‰Èà8ŸŞ£§ñ1
+M	java:S106¾"+Replace this use of System.out by a logger.(­ËÖşÿÿÿÿ8¤Ş£§ñ1
+H	java:S106ß"+Replace this use of System.out by a logger.(‘³–8«Ş£§ñ1
+H	java:S106æ"+Replace this use of System.out by a logger.(¯¼êÍ8¬Ş£§ñ1
+H	java:S106è"+Replace this use of System.out by a logger.(¯¼êÍ8­Ş£§ñ1
+M	java:S106„"+Replace this use of System.out by a logger.(Ğı¢‚ÿÿÿÿÿ8¯Ş£§ñ1

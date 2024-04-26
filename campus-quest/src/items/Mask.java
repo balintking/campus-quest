@@ -1,35 +1,47 @@
 package items;
 
-import utility.Logger;
+import characters.Person;
+import map.Room;
 
+/**
+ * Represents a Mask item that protects its owner when in a gassed room.
+ */
 public class Mask extends Item {
     /**
-     * Creates the mask, sets its lifetime to 3.
+     * Indicates whether the item is a fake or a genuine version.
      */
-    public Mask() {
-        super();
-        lifetime = 3;
+    private final boolean fake;
+
+    /**
+     * Constructor for Mask. Sets life to 3 and active to false by default.
+     */
+    public Mask(Person owner, Room room, boolean fake) {
+        super(owner, room, 3, false);
+        this.fake = fake;
     }
 
     /**
-     * Owner accepts Mask's protection offer
+     * The item gets notified about gas threat, and it offers its protection against it
+     * with a priority equivalent to its lifetime if the item is not fake.
      */
-    public void acceptProtection() {
-        Logger.logCall("acceptProtection", "void");
-        Logger.logReturn();
-    }
-
-    /**
-     * Owner informs Mask about gas threat, Mask offers it protection
-     */
+    @Override
     public void gasThreat() {
-        Logger.logCall("gasThreat", "void");
-        owner.gasProtection(this, lifetime);
-        lifetime--;
-        if (lifetime == 0) {
-            super.destroy();
+        if (!fake && (owner != null)) {
+            owner.gasProtection(this, life);
         }
-        Logger.logReturn();
     }
 
+    /**
+     * The mask deactivates itself after every use, because every protection for a round costs one life only.
+     */
+    @Override
+    public void tick() {
+        if (active) {
+            life--;
+            deactivate();
+        }
+        if (life <= 0) {
+            destroy();
+        }
+    }
 }

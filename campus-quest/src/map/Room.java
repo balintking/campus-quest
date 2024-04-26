@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class Room implements Entity {
     /**
@@ -31,6 +32,8 @@ public class Room implements Entity {
      * Amount of Person objects allowed in the room at a certain time.
      */
     int capacity;
+
+    int cleanliness = 10;
     /**
      * Is there gas in the room.
      */
@@ -39,6 +42,8 @@ public class Room implements Entity {
      * Is the room cursed.
      */
     boolean cursed;
+
+    boolean isFull;
 
     /**
      * Default constructor to help testing
@@ -89,12 +94,15 @@ public class Room implements Entity {
     public void addPerson(Person person) {
         Logger.logCall("addPerson", new Object[]{person}, "void");
         people.add(person);
+        cleanliness--;
         Logger.logReturn();
     }
 
 
     /**
      * Function indicating the termination of the room.
+     *
+     * Practically no use
      */
     public void destroy() {
         Logger.logCall("destroy", "void");
@@ -141,6 +149,12 @@ public class Room implements Entity {
         Logger.logReturn();
     }
 
+    public void unGas(){
+        Logger.logCall("unGas", "void");
+        gassed = false;
+        Logger.logReturn();
+    }
+
 
     /**
      * The room merges with a random neighbouring room.
@@ -152,7 +166,7 @@ public class Room implements Entity {
             Room neighbour = doors.get(0).getDest();
             this.capacity = Math.max(this.capacity, neighbour.capacity);
             List<Person> neighbourPeople = neighbour.getPeople();
-            if ((!Logger.testerInput("Can the rooms merge?")) || this.capacity < (people.size() + neighbourPeople.size())) {
+            if (this.capacity < (people.size() + neighbourPeople.size())) {
                 return;
             }
             List<Item> neighbourItems = neighbour.getItems();
@@ -243,11 +257,16 @@ public class Room implements Entity {
     public boolean isFull() {
         Logger.logCall("isFull", "boolean");
         Logger.logReturn(people.size() >= capacity);
+        isFull = people.size() >= capacity;
         return people.size() >= capacity;
     }
 
     /**
      * With a tick passing the Room gasses all the people in it.
+     * If the room is cursed it ticks its doors where the door decides if it disappears
+     * or not based on chance.
+     *
+     * What happens if there are two-way doors ?!
      */
     public void tick() {
         Logger.logCall("tick", "void");
@@ -255,6 +274,23 @@ public class Room implements Entity {
             for (Person p : people)
                 p.gasStun();
         }
+        if(cursed){
+            for(Door d : doors) {
+                d.tick();
+            }
+        }
         Logger.logReturn();
     }
+
+    public void evacuate(){
+        for(Person p : people){
+            for(Door d : doors){
+            }
+        }
+    }
+
+    public void clean(){
+        cleanliness = 10;
+    }
+
 }

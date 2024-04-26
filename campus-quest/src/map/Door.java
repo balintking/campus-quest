@@ -2,6 +2,7 @@ package map;
 
 import utility.Entity;
 import utility.Logger;
+import java.util.Random;
 
 public class Door implements Entity {
     /**
@@ -16,7 +17,7 @@ public class Door implements Entity {
     /**
      *Is the given door usable? (Has it disappeared?)
      */
-    boolean hidden;
+    private boolean hidden;
 
     public Door() {
     }
@@ -32,10 +33,25 @@ public class Door implements Entity {
     void destroy() {
         Logger.logCall("destroy", "void");
         Logger.logDestroy(this, "Door");
+        source.removeDoor(this);
+        destination.removeDoor(this);
         Logger.logReturn();
     }
 
+    /**
+     * If called this function makes the door disappear with a 10% chance
+     */
     public void tick() {
+        Random rand = new Random();
+        int value = rand.nextInt(10);
+        value++;
+        if(value == 1){
+            if(hidden){
+                hidden = false;
+            } else {
+                hidden = true;
+            }
+        }
     }
 
     /**
@@ -79,4 +95,5 @@ public class Door implements Entity {
         Logger.logReturn();
         this.destination = destination;
     }
+
 }

@@ -9,11 +9,6 @@ import map.Room;
  */
 public class Beer extends Item {
 
-    public Beer() {
-        super(null, null, 3, false);
-
-    }
-
     /**
      * Constructor for Beer. Sets life to 3 and active to false by default.
      */

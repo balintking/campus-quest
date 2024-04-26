@@ -1,22 +1,57 @@
 
-**Határidők:** https://www.iit.bme.hu/targyak/BMEVIIIAB02/%C3%BCtemterv-hat%C3%A1rid%C5%91k
+# Campus Quest: A Java Game Project
 
-**Feladat:**
+This repository contains the "Campus Quest" game, developed as part of the Software Project Laboratory course at Budapest University of Technology and Economics (BME).
 
-A Logarléc
+> **Group:** Mumbai IT Solution.
+> 
+> **Authors:** Cardinael Jan, Görömbey Lilla, Király Bálint, Riba Miklós, Szakos Máté
 
-A Műegyetem Központi épületének alagsora alatt egy elátkozott labirintus rejtőzik. A mérnökhallgatók dolga fellelni a Logarléc nevű mágikus képességű ereklyét. A labirintus szobáit ajtók választják el egymástól, ezeken átlépve lehet az egyik szobából a másikba átjutni. Egy-egy szobából legalább egy, de esetenként sok másik szobába is nyílhat ajtó. Vannak ráadásul ajtók, amelyek csak egy irányban használhatók.
+# Overview
 
-A szobákban különféle tárgyak lehetnek (ilyen a Logarléc is), amiket a hallgatók magukhoz vehetnek, de egy hallgatónál egy időben legfeljebb öt tárgy lehet. A tárgyakat a hallgatók le is tudják tenni.
+- [About the Game](#About-the-Game)
+- [Getting Started](#Getting-Started)
+- [Documentation](#Documentation)
 
-A labirintusban oktatók próbálják megakadályozni a hallgatókat abban, hogy sikerrel járjanak. Ha egy oktató egy szobába kerül egy vagy több hallgatóval, akkor elveszi a lelkét és a hallgató kibukik az egyetemről. A tárgyak között azonban vannak olyanok, amik adott ideig védettséget nyújtanak az oktatók ellen (pl. a TVSZ denevérbőrre nyomtatott példányai három alkalommal mentik meg a hallgató életét, utána elveszítik a varázserejüket, a szent söröspoharak pedig csak adott ideig hatnak). Van olyan tárgy is, a nedves táblatörlő rongy, amely adott ideig működik (amíg ki nem szárad), és a vele egy szobában lévő oktatókat megbénítja. A dobozolt káposztás camembert felbontáskor mérges gázt bocsát ki (lásd lejjebb a gázos szobákat). A tárgyakat az oktatók is fel tudják venni!
+# About the Game
+*(Our task was to design and implement the game based on this given description)*
 
-A szobákban elvétve tranzisztorok is találhatók. A hallgatónál levő tranzisztorokat páronként össze lehet kapcsolni, majd a pár egyik tagját menet közben egy másik szobában le lehet tenni. Az így összekapcsolt tranzisztorok varázserővel bírnak: ha a hallgató a nála maradó tranzisztort bekapcsolja és leteszi, akkor a másik tranzisztor szobájába kerül, a bekapcsolt tranzisztor pedig kikapcsol. A tranzisztorok korlátlan ideig használhatók.
+### Description
 
-Minden szobának van egy (a szobára jellemző) befogadóképessége. Ennél több hallgató és oktató a szobában nem tartózkodhat. Ezen kívül a szobáknak több fajtája is ismert. Vannak szobák, amikben mérgező gáz van. Az ide belépő hallgatók és oktatók egy rövid időre eszméletüket vesztik és a náluk lévő tárgyakat elejtik. Ha valakinél van FFP2-es maszk, akkor ezekben a szobákban adott időre védettséget kap, de a maszk egyre rövidebb ideig képes a védelem nyújtására. Vannak olyan elátkozott szobák, amiknek az ajtajai időnként eltűnnek, majd később újra előtűnnek.
+In the sprawling basement of the BME Central Building lies a cursed labyrinth. Engineering students are tasked with finding the magical artifact known as the Logarléc. The labyrinth consists of various rooms separated by doors that allow passage from one room to another, with some doors being one-way only.
 
-:))
+Rooms may contain various objects, including the Logarléc, that students can pick up. However, a student can carry no more than five objects at a time. These objects can also be dropped. Professors roam the labyrinth attempting to thwart the students' progress. If a professor enters a room with one or more students, they claim the students' souls, effectively expelling them from the university. Some objects, like printed copies of the TVSZ on bat leather, offer temporary protection against professors, saving the student's life three times before losing their magic. Other items, such as the sacred beer mugs, offer protection for a limited time, and a wet chalkboard cloth that paralyzes professors in the same room until it dries.
 
-A szobák egy korábbi (félresikerült) gráfelméleti tételbizonyítás eredményeként meghazudtolják a fizika törvényeit: képesek egyesülni és osztódni. Két szomszédos szoba egyesülésével létrejövő szoba a korábbi két szoba tulajdonságaival és szomszédaival rendelelkezik, de a befogadóképessége a nagyobb szoba befogadóképességével lesz azonos. Az osztódó szoba két olyan szobára válik szét, amelyek egymás szomszédai lesznek, és megosztoznak a korábbi szoba képességein és szomszédain (a korábbi szomszédok vagy csak az egyik, vagy csak a másik “új” szobának lesznek szomszédai).
+Additionally, rooms may contain transistors that can be paired and used to teleport the student to the other transistor's location. Each room has a specific capacity, and there are rooms with toxic gas where students and professors lose consciousness temporarily and drop their objects unless they have an FFP2 mask, which offers limited-time protection. Some enchanted rooms have doors that disappear and reappear randomly.
 
-A játékot egyszerre több játékos játssza, akik a hallgatókat irányítják, és akkor nyernek, ha megadott időn belül megtalálták és magukhoz vették a Logarlécet.
+The labyrinth's rooms can merge or divide, altering their properties and capacities. The game is played by multiple players controlling the students, aiming to find and secure the Logarléc within a set time.
+
+Recent updates to the game have introduced new items and characters, such as air fresheners that neutralize gas effects in rooms and a janitor character who can expel all mobile persons from a room and end its gaseous state. Some objects now have fake versions with no beneficial properties, adding further challenges to the game.
+
+# Getting Started
+
+### Prerequisites
+To run this game, you'll need:
+- Java JDK 11 or higher
+- An IDE that supports Java (such as IntelliJ IDEA, Eclipse, or VS Code)
+
+### Running the Game
+1. **Clone the repository**
+2. **Navigate to the source directory**
+   ```bash
+   cd campus-quest/src
+   ```
+3. Compile the Java files
+   ```bash
+   javac *.java
+   ```
+4. Run the main Java class
+   ```bash
+   java Main
+   ```
+
+# Documentation
+
+**Project Documents:** Find all written documents related to the project in the `documents` directory.
+
+**Diagrams:** Architectural and other related diagrams can be found in the `diagrams` directory.

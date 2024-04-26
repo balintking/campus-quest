@@ -1,6 +1,0 @@
-status
-Room room
-Teacher teacher room
-SlideRule sr room
-endstatus
-

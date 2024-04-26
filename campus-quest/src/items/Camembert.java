@@ -2,19 +2,38 @@ package items;
 
 import characters.Person;
 import map.Room;
-import utility.Logger;
 
+/**
+ * Represents a Camembert item that, when activated, gasses the room it is located in.
+ * It signals to the room that it has been gassed.
+ */
 public class Camembert extends Item {
 
+    /**
+     * Constructor for Camembert. Sets life to 1 and active to false by default.
+     */
+    public Camembert(Person owner, Room room) {
+        super(owner, room, 1, false);
+    }
 
     /**
-     * Calls gasStun() on all Person objects in its owner's room.
+     * Sets the state of the room it's located in to gassed, and destroys itself.
      */
+    @Override
     public void activate() {
-        Logger.logCall("activate", "void");
-        Room r = owner.getRoom();
-        r.gas();
+        active = true;
+
+        Room currentRoom = null;
+        if (owner != null) {
+            currentRoom = owner.getRoom();
+        } else if (room != null){
+            currentRoom = room;
+        }
+
+        if (currentRoom != null) {
+            currentRoom.gas();
+        }
+
         destroy();
-        Logger.logReturn();
     }
 }

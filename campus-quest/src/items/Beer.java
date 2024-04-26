@@ -21,9 +21,11 @@ public class Beer extends Item {
      */
     @Override
     public void activate() {
-        active = true;
-        if (owner != null) {
-            owner.dropRandomItem();
+        if (life > 0) {
+            active = true;
+            if (owner != null) {
+                owner.dropRandomItem();
+            }
         }
     }
 

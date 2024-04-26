@@ -23,23 +23,25 @@ public class Cloth extends Item {
      */
     @Override
     public void activate() {
-        active = true;
+        if (life > 0) {
+            active = true;
 
-        Room currentRoom = null;
-        if (owner != null) {
-            currentRoom = owner.getRoom();
-        } else if (room != null){
-            currentRoom = room;
-        }
-
-        if (currentRoom != null) {
-            List<Person> targets = currentRoom.getPeople();
-            for (Person p : targets) {
-                p.clothStun();
+            Room currentRoom = null;
+            if (owner != null) {
+                currentRoom = owner.getRoom();
+            } else if (room != null) {
+                currentRoom = room;
             }
-        }
 
-        this.destroy();
+            if (currentRoom != null) {
+                List<Person> targets = currentRoom.getPeople();
+                for (Person p : targets) {
+                    p.clothStun();
+                }
+            }
+
+            this.destroy();
+        }
     }
 
 }

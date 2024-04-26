@@ -51,7 +51,9 @@ public abstract class Item implements Entity {
      * Activates the item
      */
     public void activate() {
-        active = true;
+        if (life > 0) {
+            active = true;
+        }
     }
 
     /**

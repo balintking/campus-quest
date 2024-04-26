@@ -21,19 +21,21 @@ public class Camembert extends Item {
      */
     @Override
     public void activate() {
-        active = true;
+        if (life > 0) {
+            active = true;
 
-        Room currentRoom = null;
-        if (owner != null) {
-            currentRoom = owner.getRoom();
-        } else if (room != null){
-            currentRoom = room;
+            Room currentRoom = null;
+            if (owner != null) {
+                currentRoom = owner.getRoom();
+            } else if (room != null) {
+                currentRoom = room;
+            }
+
+            if (currentRoom != null) {
+                currentRoom.gas();
+            }
+
+            destroy();
         }
-
-        if (currentRoom != null) {
-            currentRoom.gas();
-        }
-
-        destroy();
     }
 }

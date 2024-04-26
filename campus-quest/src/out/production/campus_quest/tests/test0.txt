@@ -1,6 +1,0 @@
-init
-	Room room
-Teacher teacher room
-SlideRule sr room
-endinit
-act teacher pickup sr

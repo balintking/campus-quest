@@ -1,23 +1,0 @@
-
-}
-java:S3923:"[Remove this conditional structure or edit its code blocks so that they're not all the same.(Ä—ôƒÿÿÿÿÿ8ü‘Â…ñ1
-J	java:S108:")Either remove or fill this block of code.(Ä—ôƒÿÿÿÿÿ8ü–Á…ñ1
-E	java:S108<")Either remove or fill this block of code.(å¥ž‡8«óÁ…ñ1
-J	java:S108A")Either remove or fill this block of code.(Ä—ôƒÿÿÿÿÿ8ý‘Â…ñ1
-G	java:S106H"+Replace this use of System.out by a logger.(›€þä8Ö¢À…ñ1
-R
-java:S1068"0Remove this unused "currentState" private field.(–ñ¿€þÿÿÿÿ8çãÄ…ñ1
-N
-java:S1068"1Remove this unused "expectedState" private field.(©Àñ8ƒ¦Æ…ñ1
-P
-java:S1068".Remove this unused "parameters" private field.(Èúæðüÿÿÿÿ8Ö¢À…ñ1
-M
-java:S1068"+Remove this unused "options" private field.(¾ÙÜªýÿÿÿÿ8×¢À…ñ1
-L
-java:S1068"/Remove this unused "inputBuffer" private field.(öÞ‹§8×¢À…ñ1
-L
-java:S1068"0Remove this unused "outputBuffer" private field.( ©Õ8×¢À…ñ1
-K
-java:S1068"/Remove this unused "inputStream" private field.(±ú£<8×¢À…ñ1
-R
-java:S1068"0Remove this unused "outputStream" private field.(…š’”üÿÿÿÿ8×¢À…ñ1

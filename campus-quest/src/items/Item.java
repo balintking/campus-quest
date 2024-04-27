@@ -3,120 +3,149 @@ package items;
 import characters.*;
 import map.*;
 import utility.Entity;
-import utility.Logger;
 
+/**
+ * Represents the abstract base class for items within the game.
+ * This class stores an item's name and lifetime, and manages its active state.
+ * It provides mechanisms to activate an item and to self-destroy when necessary.
+ * <p>
+ * This class is designed to be extended by other specific item types which
+ * implement the specific behaviors of those items in the system.
+ * </p>
+ */
 public abstract class Item implements Entity {
 
     /**
-     * Who has the item. if it is in a room the value is null.
+     * Who has the item? If it is in a room the value is null.
      */
-    Person owner = null;
+    protected Person owner;
+
     /**
-     * In which room the item is. if it is at a person the value is null.
+     * In which room the item is. If it is at a person the value is null.
      */
-    Room room;
+    protected Room room;
+
     /**
      * Remaining lifetime of the item, it can be used this much more times.
      */
-    int lifetime;
-    /**
-     * shows that the item is active or not
-     */
-    boolean isActive;
+    protected int life;
 
     /**
-     * Indicates whether the item is fake or not. Fake items can't do anything.
+     * Tells that the item is active or not
      */
-    boolean fake;
+    protected boolean active;
+
 
     /**
-     * A Person signals acceptance of the item's defense offer with this call.
+     * Initializer constructor
      */
-    public void acceptProtection() {
-        Logger.logCall("acceptProtection", "void");
-        Logger.logReturn();
+    protected Item(Person owner, Room room, int life, boolean active) {
+        this.owner = owner;
+        this.room = room;
+        this.life = life;
+        this.active = active;
     }
+
 
     /**
      * Activates the item
      */
     public void activate() {
-        Logger.logCall("activate", "void");
-        isActive = true;
-        Logger.logReturn();
+        if (life > 0) {
+            active = true;
+        }
     }
 
     /**
-     * Sets the room
-     *
-     * @param room
+     * Activates the item
      */
-    public void setRoom(Room room) {
-        Logger.logCall("setRoom", new Object[]{room}, "void");
-        this.room = room;
-        this.owner = null;
-        Logger.logReturn();
+    public void deactivate() {
+        active = false;
+    }
+
+    /**
+     * Returns the items owner.
+     * @return owner
+     */
+    public Person getOwner() {
+        return owner;
+    }
+
+    /**
+     * Sets the owner of the item and handles the event of the item
+     * when it is picked up and sets the room to null.
+     */
+    public void setOwner(Person owner) {
+        this.owner = owner;
+        if (owner != null) {
+            this.room = null;
+        }
     }
 
     /**
      * Returns the room where the item is.
-     *
      * @return room
      */
     public Room getRoom() {
-        Logger.logCall("getRoom", "Room");
-        Logger.logReturn(room);
         return room;
+    }
+
+    /**
+     * Sets the room of the item when it is dropped or placed in a room,
+     * and sets the owner to null.
+     */
+    public void setRoom(Room room) {
+        this.room = room;
+        if (room != null) {
+            this.owner = null;
+        }
+    }
+
+    /**
+     * With this call, a Person signals a gas threat to all items they possess
+     * if they are in a gas-filled room.
+     * The implementation is empty by default, items with capability override this.
+     */
+    public void gasThreat() {}
+
+    /**
+     * With this call, a Person signals a gas threat to all items they possess
+     * if they are in a gas-filled room.
+     * The implementation is empty by default, items with capability override this.
+     */
+    public void teacherThreat() {}
+
+    /**
+     * A Person signals acceptance of the item's defense offer with this call.
+     * Activates the item.
+     */
+    public void acceptProtection() {
+        activate();
     }
 
     /**
      * Destroys the item
      */
     public void destroy() {
-        Logger.logCall("destroy", "void");
-        owner.removeItem(this);
-        owner = null;
-        room = null;
-        Logger.logDestroy(this, "Item");
-        Logger.logReturn();
+        life = 0;
+        deactivate();
+        if (owner != null) {
+            owner.removeItem(this);
+            owner = null;
+        }
+        if (room != null) {
+            room.removeItem(this);
+            room = null;
+        }
     }
-
-    /**
-     * With this call, a Person signals a gas threat to all items they possess if they are in a gas-filled room.
-     */
-    public void gasThreat() {
-        Logger.logCall("gasThreat", "void");
-        Logger.logReturn();
-    }
-
-
-    /**
-     * Sets the owner of the item and handles the event of the item
-     * being picked up, which is significant in some implementations.
-     *
-     * @param ownerInput
-     */
-    public void setOwner(Person ownerInput) {
-        Logger.logCall("setOwner", new Object[]{ownerInput}, "void");
-        this.owner = ownerInput;
-        this.room = null;
-        Logger.logReturn();
-    }
-
-    /**
-     * The item gets notified about a teacher threat, and it offers its protection againts it.
-     */
-    public void teacherThreat() {}
 
 
     public void tick() {
-    }
-
-    /**
-     * Returns the items owner.
-     * @return
-     */
-    public Person getOwner() {
-        return owner;
+        if (active) {
+            life--;
+        }
+        if (life <= 0) {
+            destroy();
+        }
     }
 }

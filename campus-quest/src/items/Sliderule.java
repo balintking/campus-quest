@@ -1,26 +1,50 @@
 package items;
 
 import characters.Person;
-import utility.Logger;
+import map.Room;
 
+/**
+ * Represents the Slide rule artifact, the central objective in the game.
+ */
 public class Sliderule extends Item {
 
     /**
-     * Called whenever picked up.
-     * Notifies person that they picked the SlideRule up, so they can act accordingly.
-     * @param ownerInput
+     * Indicates whether the item is a fake or a genuine version.
+     */
+    private final boolean fake;
+
+    /**
+     * Constructor for SlideRule. Sets life to 1 and active to false by default.
+     */
+    public Sliderule(Person owner, Room room, boolean fake) {
+        super(owner, room, 1, false);
+        this.fake = fake;
+    }
+
+    /**
+     * Sends a notification to its owner about the possession of the slide rule, if it is not fake.
      */
     @Override
-    public void setOwner(Person ownerInput) {
-        Logger.logCall("setOwner", new Object[]{ownerInput}, "void");
-        owner = ownerInput;
-        if(owner != null){
-            owner.slideRuleNotification(this);
+    public void activate() {
+        if (life > 0) {
+            active = true;
+            if (!fake) {
+                owner.slideRuleNotification(this);
+            }
         }
-        Logger.logReturn();
     }
-    @Override
-    public void destroy(){
 
+    /**
+     * Whenever picked up, activates the item immediately.
+     */
+    @Override
+    public void setOwner(Person owner) {
+        this.owner = owner;
+        if (owner != null) {
+            this.room = null;
+        }
+        if(owner != null){
+            activate();
+        }
     }
 }

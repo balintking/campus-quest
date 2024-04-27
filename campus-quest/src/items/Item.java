@@ -91,7 +91,8 @@ public abstract class Item implements Entity {
     }
 
     /**
-     * Sets the room of the item when it is dropped or placed in a room.
+     * Sets the room of the item when it is dropped or placed in a room,
+     * and sets the owner to null.
      */
     public void setRoom(Room room) {
         this.room = room;

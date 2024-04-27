@@ -2,9 +2,12 @@ package characters;
 
 import items.Item;
 import utility.Logger;
+import map.Door;
+import map.Room;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Teacher extends Person {
 
@@ -42,12 +45,13 @@ public class Teacher extends Person {
      * Picks up item and destroys it.
      * @param item
      */
-    public void pickup(Item item){
+    public boolean pickup(Item item){
         Logger.logCall("pickup", new Object[]{item}, "void");
         room.removeItem(item);
         item.setOwner(this);
         item.destroy();
-        Logger.logReturn();
+        Logger.logReturn(true);
+        return true;
     }
 
     /**
@@ -67,6 +71,30 @@ public class Teacher extends Person {
         Logger.logCall("slideRuleNotification",new Object[]{slideRule}, "void");
         this.drop(slideRule);
         Logger.logReturn();
+    }
+
+    /**
+     * if stunned, the teacher doesn't attack or move and the stuntimer goes down,
+     * else it attacks and then moves to a random neighbouring room with a chance of 1/3
+     */
+    public void tick(){
+        if(stunned){
+            stunTimer--;
+        }
+        if (stunTimer == 0) {
+            stunned=false;
+        }
+        if(!stunned){
+            initAttack();
+            List<Door> reachableDoors=this.getRoom().getDoors();
+            Random random1=new Random();
+            Random random2=new Random();
+            int y=random1.nextInt(3);
+            if (y == 1) {
+                int x=random2.nextInt(reachableDoors.size());
+                this.move(reachableDoors.get(x-1));
+            }
+        }
     }
 
 }

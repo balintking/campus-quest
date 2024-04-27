@@ -10,6 +10,7 @@ public class Student extends Person {
      * Offered protective items are stored here when protection is needed.
      */
     private HashMap<Item, Integer> protectiveItems = new HashMap<>();
+
     /**
      * Constructor calls Person's constructor
      */
@@ -22,14 +23,17 @@ public class Student extends Person {
      *
      * @param item Item to pick up
      */
-    public void pickup(Item item) {
+    public boolean pickup(Item item) {
         Logger.logCall("pickup",new Object[]{item},"void");
-        if (!Logger.testerInput("Is the inventory full?")) {
+        if(this.items.size()<5){
             items.add(item);
             item.setOwner(this);
             room.removeItem(item);
+            Logger.logReturn(true);
+            return true;
         }
-        Logger.logReturn();
+        Logger.logReturn(false);
+        return false;
     }
 
     /**
@@ -150,5 +154,16 @@ public class Student extends Person {
         Logger.logCall("win", "void");
         Logger.logReturn();
         Logger.logReturn();
+    }
+
+
+    public void tick(){
+        if(stunned){
+            stunTimer--;
+        }
+        if (stunTimer == 0) {
+            stunned=false;
+        }
+        //todo:kapott parameter szerinti mozgas
     }
 }

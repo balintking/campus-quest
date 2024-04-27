@@ -14,6 +14,11 @@ public abstract class Person implements Entity {
     protected boolean stunned;
     protected Room room;
     protected List<Item> items = new ArrayList<>();
+    public int stunTimer;
+    /**
+     * The first activated transistor of the student from a pair
+     */
+    protected Item transistorToPair;
 
 
     /**
@@ -40,6 +45,7 @@ public abstract class Person implements Entity {
         items.remove(item);
         item.setRoom(room);
         item.setOwner(null);
+        item.getRoom().addItem(item);
         Logger.logReturn();
     }
 
@@ -76,8 +82,21 @@ public abstract class Person implements Entity {
      * Tries to move through door into door's destination
      * @param door
      */
-    public void move(Door door) {
-        room = door.getDest();
+    public boolean move(Door door) {
+        Logger.logCall("move",new Object[]{door},"void");
+        Room r = door.getDest();
+        if (stunned) {
+            Logger.logReturn(false);
+            return false;
+        }
+        if(r.addPerson(this)){
+            this.getRoom().removePerson(this);
+            this.setRoom(r);
+            Logger.logReturn(true);
+            return true;
+        }
+        Logger.logReturn(false);
+        return false;
     }
 
 
@@ -85,7 +104,7 @@ public abstract class Person implements Entity {
      * Picks up item from its room
      * @param item
      */
-    public abstract void pickup(Item item);
+    public abstract boolean pickup(Item item);
 
 
     /**
@@ -138,7 +157,8 @@ public abstract class Person implements Entity {
         Logger.logReturn();
     }
 
-    public void tick() {}
+    public void tick() {
+    }
 
     /**
      * It returns the room which the person is located in.

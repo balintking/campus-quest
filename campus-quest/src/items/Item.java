@@ -77,7 +77,9 @@ public abstract class Item implements Entity {
      */
     public void setOwner(Person owner) {
         this.owner = owner;
-        this.room = null;
+        if (owner != null) {
+            this.room = null;
+        }
     }
 
     /**
@@ -93,7 +95,9 @@ public abstract class Item implements Entity {
      */
     public void setRoom(Room room) {
         this.room = room;
-        this.owner = null;
+        if (room != null) {
+            this.owner = null;
+        }
     }
 
     /**

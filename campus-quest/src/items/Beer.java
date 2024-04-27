@@ -35,7 +35,7 @@ public class Beer extends Item {
      */
     @Override
     public void teacherThreat() {
-        if (active) {
+        if (active && (owner != null)) {
             owner.teacherProtection(this, 0);
         }
     }

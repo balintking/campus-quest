@@ -7,6 +7,7 @@ import map.Room;
  * Represents a Mask item that protects its owner when in a gassed room.
  */
 public class Mask extends Item {
+
     /**
      * Indicates whether the item is a fake or a genuine version.
      */
@@ -32,7 +33,7 @@ public class Mask extends Item {
     }
 
     /**
-     * The mask deactivates itself after every use, because every protection for a round costs one life only.
+     * The item deactivates itself after every use, because every protection for a round costs one life only.
      */
     @Override
     public void tick() {

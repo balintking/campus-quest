@@ -1,1 +1,4 @@
-
+status
+Room room gassed: true
+Teacher teacher room stunned: true
+endstatus

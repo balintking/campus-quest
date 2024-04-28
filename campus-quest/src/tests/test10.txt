@@ -1,0 +1,8 @@
+init
+	Room room
+	Student student room
+    Teacher teacher room
+	TVSZ tvsz student
+Beer beer student isActive: true
+endinit
+tick

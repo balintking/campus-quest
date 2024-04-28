@@ -203,10 +203,10 @@ public class GameObject {
             sb.append(' ');
         } else if (obj instanceof Item i) {
             if (i.getRoom() != null) {
-                sb.append(state.getObjectName(i.getOwner()));
+                sb.append(state.getObjectName(i.getRoom()));
                 sb.append(' ');
             } else if (i.getOwner() != null) {
-                sb.append(state.getObjectName(i.getRoom()));
+                sb.append(state.getObjectName(i.getOwner()));
                 sb.append(' ');
             } else
                 throw new RuntimeException();

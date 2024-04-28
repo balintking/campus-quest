@@ -1,0 +1,6 @@
+init
+	Room room
+	Teacher teacher room
+	Beer beer room
+endinit
+act teacher pickup beer

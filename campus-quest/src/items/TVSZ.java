@@ -23,13 +23,20 @@ public class TVSZ extends Item {
     }
 
     /**
+     * Default constructor
+     */
+    public TVSZ() {
+        fake = false;
+    }
+
+    /**
      * The item gets notified about a teacher threat, and it offers its protection against it
      * with a priority equivalent to its lifetime if it is not fake.
      */
     @Override
     public void teacherThreat() {
         if (!fake && (owner != null)) {
-            owner.teacherProtection(this, life);
+            owner.teacherProtection(this, lifetime);
         }
     }
 
@@ -39,10 +46,10 @@ public class TVSZ extends Item {
     @Override
     public void tick() {
         if (active) {
-            life--;
+            lifetime--;
             deactivate();
         }
-        if (life <= 0) {
+        if (lifetime <= 0) {
             destroy();
         }
     }

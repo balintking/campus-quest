@@ -1,0 +1,6 @@
+status
+Room room1
+Room room2
+Teacher teacher room1
+Transistor t2 room2 isActive: false
+endstatus

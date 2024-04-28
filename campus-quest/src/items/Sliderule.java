@@ -22,11 +22,18 @@ public class Sliderule extends Item {
     }
 
     /**
+     * Default constructor
+     */
+    public Sliderule() {
+        fake = false;
+    }
+
+    /**
      * Sends a notification to its owner about the possession of the slide rule, if it is not fake.
      */
     @Override
     public void activate() {
-        if (life > 0) {
+        if (lifetime > 0) {
             active = true;
             if (!fake) {
                 owner.slideRuleNotification(this);

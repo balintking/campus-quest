@@ -1,0 +1,5 @@
+init
+	Room room
+	Student student room
+	Mask m student lifetime: 3
+endinit

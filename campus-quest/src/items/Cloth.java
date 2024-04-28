@@ -19,29 +19,33 @@ public class Cloth extends Item {
     }
 
     /**
+     * Default constructor
+     */
+    public Cloth() {
+    }
+
+    /**
      * On every Person in the room this method calls the clothStun method, then the Cloth destroys itself.
      */
     @Override
     public void activate() {
-        if (life > 0) {
-            active = true;
+        active = true;
 
-            Room currentRoom = null;
-            if (owner != null) {
-                currentRoom = owner.getRoom();
-            } else if (room != null) {
-                currentRoom = room;
-            }
-
-            if (currentRoom != null) {
-                List<Person> targets = currentRoom.getPeople();
-                for (Person p : targets) {
-                    p.clothStun();
-                }
-            }
-
-            this.destroy();
+        Room currentRoom = null;
+        if (owner != null) {
+            currentRoom = owner.getRoom();
+        } else if (room != null) {
+            currentRoom = room;
         }
+
+        if (currentRoom != null) {
+            List<Person> targets = currentRoom.getPeople();
+            for (Person p : targets) {
+                p.clothStun();
+            }
+        }
+
+        this.destroy();
     }
 
 }

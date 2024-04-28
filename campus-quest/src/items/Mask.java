@@ -22,13 +22,20 @@ public class Mask extends Item {
     }
 
     /**
+     * Default constructor
+     */
+    public Mask() {
+        fake = false;
+    }
+
+    /**
      * The item gets notified about gas threat, and it offers its protection against it
      * with a priority equivalent to its lifetime if the item is not fake.
      */
     @Override
     public void gasThreat() {
         if (!fake && (owner != null)) {
-            owner.gasProtection(this, life);
+            owner.gasProtection(this, lifetime);
         }
     }
 
@@ -38,10 +45,10 @@ public class Mask extends Item {
     @Override
     public void tick() {
         if (active) {
-            life--;
+            lifetime--;
             deactivate();
         }
-        if (life <= 0) {
+        if (lifetime <= 0) {
             destroy();
         }
     }

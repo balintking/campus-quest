@@ -1,0 +1,5 @@
+init
+	Room room gassed: true
+	Teacher teacher room
+endinit
+tick

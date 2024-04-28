@@ -8,6 +8,7 @@ import exceptions.NonexistentOperationException;
 import exceptions.UnexpectedErrorException;
 import items.*;
 import map.Door;
+import map.Room;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
@@ -52,31 +53,59 @@ public class Prototype {
             currentState.tick();
         });
         commands.put("act", param -> {
-            if (parameters.size() < 3) throw new RuntimeException();
+            if (parameters.size() < 3)
+                throw new NecessaryParamsMissingException();
             Object oagent = (readingExpected) ? expectedState.getObject(parameters.get(0)) : currentState.getObject(parameters.get(0));
-            if (!(oagent instanceof Person pagent)) throw new RuntimeException();
+            if (!(oagent instanceof Person pagent))
+                throw new NonexistentObjectException();
             agent = pagent;
             GameState stat = (readingExpected) ? expectedState : currentState;
             commands.get(parameters.get(1)).execute(stat.getObject(parameters.get(2)));
+        });
+        commands.put("divide", param -> {
+            if (parameters.size() < 2)
+                throw new NecessaryParamsMissingException();
+            Object obj1 = currentState.getObject(parameters.get(0));
+            if (!(obj1 instanceof Room room))
+                throw new NonexistentObjectException();
+            room.divide();
+            for (Door d : room.getDoors()){
+                Object neighbor = d.getDest();
+                if (!currentState.objects.containsValue(neighbor)){
+                    currentState.objects.put(parameters.get(1), new GameObject(parameters.get(1), (Entity) neighbor, currentState));
+                }
+            }
+        });
+        commands.put("merge", param -> {
+            if (parameters.size() < 2)
+                throw new NecessaryParamsMissingException();
+            Object obj1 = currentState.getObject(parameters.get(0));
+            Object obj2 = currentState.getObject(parameters.get(1));
+            if (!(obj1 instanceof Room room1))
+                throw new NonexistentObjectException();
+            if (!(obj2 instanceof Room room2))
+                throw new NonexistentObjectException();
+            room1.merge();
+            currentState.removeObject(room2);
         });
         commands.put("0", param -> {
             System.exit(0);
         });
         commands.put("1", param -> {
             testMode = true;
-            System.out.println("Please specifiy the test directory (working dir: " + System.getProperty("user.dir")+ "\\)!");
+            System.out.println("Please specifiy the test directory (working dir: " + System.getProperty("user.dir") + "\\)!");
             Scanner scanner = new Scanner(System.in);
             while (!scanner.hasNextLine()) {
                 scanner.next();
             }
             String path = System.getProperty("user.dir") + "\\" + scanner.next();
             path = path.replace("/", "\\");
-            int i = 0;
+            int i = 1;
             while (true) {
                 File testf = new File(path + "\\test" + i + ".txt");
                 File outputf = new File(path + "\\output" + i + ".txt");
                 if (!testf.exists() || !outputf.exists()) {
-                    if (i == 0) System.out.println("Cannot find any tests in the directory \"" + path + "\"");
+                    if (i == 1) System.out.println("Cannot find any tests in the directory \"" + path + "\"");
                     break;
                 }
                 readInputFromScanner(new Scanner(new FileInputStream(testf)), true);
@@ -126,7 +155,8 @@ public class Prototype {
             return true;
         }
         String[] splittedLine = line.split(" ");
-        if (!commands.containsKey(splittedLine[0])) return false;
+        if (!commands.containsKey(splittedLine[0]))
+            return false;
         parameters.addAll(Arrays.asList(splittedLine).subList(1, splittedLine.length));
         commands.get(splittedLine[0]).execute(null);
         return true;
@@ -154,15 +184,15 @@ public class Prototype {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NecessaryParamsMissingException, NonexistentObjectException, FileNotFoundException, UnexpectedErrorException, NonexistentOperationException {
         System.out.println("Welcome to the Campus Quest prototype program! \nType in any command to use shell or press 1 to run tests. Press 0 to exit.");
         Scanner scanner = new Scanner(System.in);
-        try {
-            readInputFromScanner(scanner, false);
-
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
+        readInputFromScanner(scanner, false);
+//        try {
+//
+//        } catch (Exception e) {
+//            System.err.println(e.getMessage());
+//        }
     }
 }
 

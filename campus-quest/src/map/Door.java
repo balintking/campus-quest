@@ -14,6 +14,8 @@ public class Door implements Entity {
      */
     Room destination;
 
+    private boolean destroyed = false;
+
     /**
      *Is the given door usable? (Has it disappeared?)
      */
@@ -35,6 +37,7 @@ public class Door implements Entity {
         Logger.logDestroy(this, "Door");
         source.removeDoor(this);
         destination.removeDoor(this);
+        destroyed = true;
         Logger.logReturn();
     }
 
@@ -47,6 +50,11 @@ public class Door implements Entity {
         if(value == 1){
             hidden = !hidden;
         }
+    }
+
+    @Override
+    public boolean isDestroyed() {
+        return destroyed;
     }
 
     /**

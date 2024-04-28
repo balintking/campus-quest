@@ -5,7 +5,7 @@ import characters.Person;
 import characters.Student;
 import characters.Teacher;
 import exceptions.*;
-import items.Item;
+import items.*;
 import map.Door;
 import map.Room;
 
@@ -26,11 +26,19 @@ public class GameState {
         types.put("student", Student.class);
         types.put("teacher", Teacher.class);
         types.put("cleaner", Cleaner.class);
+        types.put("airfreshener", AirFreshener.class);
+        types.put("beer", Beer.class);
+        types.put("camembert", Camembert.class);
+        types.put("cloth", Cloth.class);
+        types.put("mask", Mask.class);
+        types.put("sliderule", Sliderule.class);
+        types.put("transistor", Transistor.class);
+        types.put("tvsz", TVSZ.class);
     }
 
     private enum finalState {WIN, LOSE, PENDING}
 
-    private Map<String, GameObject> objects;
+    Map<String, GameObject> objects;
     private finalState fstate = finalState.PENDING;
 
     public GameState() {
@@ -49,6 +57,14 @@ public class GameState {
         objects.remove(n);
     }
 
+    private void updateObjects(){
+        Map<String, GameObject> objectsTemp = new HashMap<>(objects);
+        objects.clear();
+        for (Map.Entry<String, GameObject> entry : objectsTemp.entrySet())
+            if (!entry.getValue().getObj().isDestroyed())
+                objects.put(entry.getKey(), entry.getValue());
+    }
+
     public void removeObject(Object o) {
         for (Map.Entry<String, GameObject> e : objects.entrySet()) {
             if (e.getValue() == o) {
@@ -60,6 +76,7 @@ public class GameState {
 
     @Override
     public String toString() {
+        updateObjects();
         List<GameObject> sorted = new ArrayList<>(objects.values());
         sorted.sort(Comparator.comparing(GameObject::getOrder));
         StringBuilder sb = new StringBuilder();
@@ -120,22 +137,18 @@ public class GameState {
                 } else {
                     Class<?> newObjType;
                     String typename = splitted[0];
-                    String typenameU = Character.toUpperCase(splitted[0].charAt(0)) + splitted[0].substring(1);
-                    try {
-                        newObjType = Class.forName("items." + typenameU);
-                    } catch (ClassNotFoundException e) {
-                        newObjType = types.get(typename);
-                    }
+                    newObjType = types.get(typename);
                     if (newObjType == null) throw new NonexistentObjectException();
 
                     Object constructed = null;
                     try {
                         constructed = newObjType.getConstructor().newInstance();
                     } catch (Exception e) {
-                        throw new UnexpectedErrorException();
+                        throw new RuntimeException();
                     }
 
-                    if (!(constructed instanceof Entity newObj)) throw new NonexistentObjectException();
+                    if (!(constructed instanceof Entity newObj))
+                        throw new NonexistentObjectException();
                     GameObject gameObject = new GameObject(splitted[1], newObj, this);
                     // if it is not a Room an owner specifier comes after the name
                     if (newObjType != Room.class) {
@@ -144,13 +157,16 @@ public class GameState {
                         if (newObj instanceof Person p) {
                             Object roomObj = getObject(splitted[2]);
                             if (!(roomObj instanceof Room room)) throw new NonexistentObjectException();
+                            room.addPerson(p);
                             p.setRoom(room);
                         } else if (newObj instanceof Item i) {
                             Object oobj = getObject(splitted[2]);
                             if (oobj instanceof Person p) {
                                 i.setOwner(p);
+                                p.addItem(i);
                             } else if (oobj instanceof Room r) {
                                 i.setRoom(r);
+                                r.addItem(i);
                             } else {
                                 throw new NonexistentObjectException();
                             }
@@ -176,7 +192,8 @@ public class GameState {
                         propertyName = !propertyName;
                     }
                     // we check whether the last property had a value
-                    if (!propertyName) throw new NecessaryParamsMissingException();
+                    if (!propertyName)
+                        throw new NecessaryParamsMissingException();
                     objects.put(splitted[1], gameObject);
                 }
             }
@@ -184,6 +201,7 @@ public class GameState {
     }
 
     public List<String> testCompare(GameState expected) throws NonexistentObjectException, UnexpectedErrorException {
+        updateObjects();
         List<String> ret = new ArrayList<>();
         for (String key : objects.keySet()) {
             if (!expected.objects.containsKey(key)) {

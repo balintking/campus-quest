@@ -1,0 +1,6 @@
+init
+Room room1
+Room room2
+door1: room2 <> room1
+endinit
+merge room1 room2

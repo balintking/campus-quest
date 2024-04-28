@@ -1,12 +1,13 @@
 package characters;
 
 import items.Item;
+import utility.Entity;
 import utility.Logger;
 
 import java.util.HashMap;
 import java.util.Random;
 
-public class Student extends Person {
+public class Student extends Person implements Entity {
     /**
      * Offered protective items are stored here when protection is needed.
      */
@@ -15,7 +16,7 @@ public class Student extends Person {
     /**
      * Constructor calls Person's constructor
      */
-    public Student(){
+    public Student() {
         super();
     }
 
@@ -25,8 +26,8 @@ public class Student extends Person {
      * @param item Item to pick up
      */
     public boolean pickup(Item item) {
-        Logger.logCall("pickup",new Object[]{item},"void");
-        if(this.items.size()<5){
+        Logger.logCall("pickup", new Object[]{item}, "void");
+        if (this.items.size() < 5) {
             items.add(item);
             item.setOwner(this);
             room.removeItem(item);
@@ -54,14 +55,14 @@ public class Student extends Person {
         int min = Integer.MAX_VALUE;
         Item minItem = null;
 
-        for(Item i : protectiveItems.keySet()) {
+        for (Item i : protectiveItems.keySet()) {
             int val = protectiveItems.get(i);
-            if(val < min) {
+            if (val < min) {
                 min = val;
                 minItem = i;
             }
         }
-        if(minItem != null) {
+        if (minItem != null) {
             minItem.acceptProtection();
         } else {
             throw new NullPointerException("The protectiveItems list contains a null reference!");
@@ -73,7 +74,7 @@ public class Student extends Person {
      * Activates the given item
      */
     public void initActivate(Item i) {
-        Logger.logCall("initActivate", new Object[]{i},"void");
+        Logger.logCall("initActivate", new Object[]{i}, "void");
         i.activate();
         Logger.logReturn();
     }
@@ -82,7 +83,7 @@ public class Student extends Person {
      * when clothStun is called on a Student, nothing happens
      */
     @Override
-    public void clothStun(){
+    public void clothStun() {
         Logger.logCall("clothStun", "void");
         Logger.logReturn();
     }
@@ -90,6 +91,7 @@ public class Student extends Person {
     /**
      * An event handler for gas stun. It checks if there are protective items available and if yes
      * it selects the one with the lowest(min check) priority. If there is no protection then it suffers gas attack.
+     *
      * @throws NullPointerException If the protectiveItems list has a null reference inside by mistake.
      */
     @Override
@@ -121,6 +123,7 @@ public class Student extends Person {
         if (protectiveItems.isEmpty()) {
             // the student dies
             room.removePerson(this);
+            destroyed = true;
             Logger.logDestroy(this, "Student");
         } else {
             selectProtectionProvider();
@@ -133,20 +136,21 @@ public class Student extends Person {
      * An Item offering protection against Teacher calls this function
      */
     @Override
-    public void teacherProtection(Item protectionProvider,int priority) {
-        Logger.logCall("teacherProtection", new Object[]{protectionProvider,priority}, "void");
-        protectiveItems.put(protectionProvider,priority);
+    public void teacherProtection(Item protectionProvider, int priority) {
+        Logger.logCall("teacherProtection", new Object[]{protectionProvider, priority}, "void");
+        protectiveItems.put(protectionProvider, priority);
         Logger.logReturn();
     }
 
     /**
      * An Item offering protection against gas calls this function
+     *
      * @param priority protectionProvider's protection's priority against other protecting items
      */
     @Override
     public void gasProtection(Item protectionProvider, int priority) {
-        Logger.logCall("gasProtection", new Object[]{protectionProvider,priority}, "void");
-        protectiveItems.put(protectionProvider,priority);
+        Logger.logCall("gasProtection", new Object[]{protectionProvider, priority}, "void");
+        protectiveItems.put(protectionProvider, priority);
         Logger.logReturn();
     }
 
@@ -156,7 +160,7 @@ public class Student extends Person {
      */
     @Override
     public void slideRuleNotification(Item slideRule) {
-        Logger.logCall("slideRuleNotification",new Object[]{slideRule}, "void");
+        Logger.logCall("slideRuleNotification", new Object[]{slideRule}, "void");
         Logger.logCall("win", "void");
         Logger.logReturn();
         Logger.logReturn();
@@ -164,12 +168,12 @@ public class Student extends Person {
 
 
     @Override
-    public void tick(){
-        if(stunned){
+    public void tick() {
+        if (stunned) {
             setStunTimer(getStunTimer() - 1);
         }
         if (getStunTimer() == 0) {
-            stunned=false;
+            stunned = false;
         }
         //todo:kapott parameter szerinti mozgas
     }

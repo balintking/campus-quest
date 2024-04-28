@@ -1,0 +1,4 @@
+init
+	Room room1
+endinit
+divide room1 room2

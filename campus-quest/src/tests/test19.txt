@@ -14,3 +14,4 @@ endinit
 act student move door12
 act cleaner move door13
 act teacher move door14
+tick

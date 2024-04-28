@@ -205,7 +205,7 @@ public class GameState {
         List<String> ret = new ArrayList<>();
         for (String key : objects.keySet()) {
             if (!expected.objects.containsKey(key)) {
-                ret.add("EXISTENTIAL: " + key + " (" + objects.get(key).getClass().getSimpleName() + ") EXISTS CONTRARY TO THE EXPECTED STATE");
+                ret.add("EXISTENTIAL: " + key + " (" + objects.get(key).getObj().getClass().getSimpleName() + ") EXISTS CONTRARY TO THE EXPECTED STATE");
             }
         }
         for (Map.Entry<String, GameObject> go : expected.objects.entrySet()) {

@@ -20,6 +20,7 @@ public class Camembert extends Item {
      * Default constructor
      */
     public Camembert() {
+        lifetime = 1;
     }
 
     /**

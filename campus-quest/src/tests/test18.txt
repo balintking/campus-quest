@@ -5,3 +5,4 @@ door1: room1 > room2
 Student student room1
 Cleaner cleaner room1
 endinit
+tick

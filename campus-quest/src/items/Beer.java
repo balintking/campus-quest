@@ -20,6 +20,7 @@ public class Beer extends Item {
      * Default constructor
      */
     public Beer() {
+        lifetime = 3;
     }
 
     /**

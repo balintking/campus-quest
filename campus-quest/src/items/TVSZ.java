@@ -26,7 +26,7 @@ public class TVSZ extends Item {
      * Default constructor
      */
     public TVSZ() {
-        fake = false;
+        fake = false; lifetime = 3;
     }
 
     /**

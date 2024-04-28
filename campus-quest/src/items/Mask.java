@@ -25,7 +25,7 @@ public class Mask extends Item {
      * Default constructor
      */
     public Mask() {
-        fake = false;
+        fake = false; lifetime = 3;
     }
 
     /**

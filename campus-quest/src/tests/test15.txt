@@ -12,3 +12,4 @@ act student activate t2
 act student drop t1
 act student move door1
 act student drop t2
+tick

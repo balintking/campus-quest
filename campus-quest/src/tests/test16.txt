@@ -6,3 +6,4 @@ Transistor t1 room1 isActive: false pair: t2
 Transistor t2 room2 isActive: true
 endinit
 act teacher pickup t1
+tick

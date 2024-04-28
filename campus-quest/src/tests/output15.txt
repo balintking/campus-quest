@@ -2,7 +2,7 @@ status
 Room room1
 Room room2
 door1: room1 > room2
-Student student room1
+Student student room2
 Transistor t1 room1 isActive: false pair: t2
 Transistor t2 room2 isActive: false pair: t1
 endstatus

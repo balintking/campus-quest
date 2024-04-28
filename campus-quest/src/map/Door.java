@@ -46,11 +46,7 @@ public class Door implements Entity {
         int value = rand.nextInt(10);
         value++;
         if(value == 1){
-            if(hidden){
-                hidden = false;
-            } else {
-                hidden = true;
-            }
+            hidden = !hidden;
         }
     }
 
@@ -67,8 +63,6 @@ public class Door implements Entity {
 
     /**
      * Setter for the sourceRoom
-     *
-     * @param source
      */
     public void setSrc(Room source) {
         Logger.logCall("setSrc", new Object[]{source}, "void");
@@ -87,8 +81,6 @@ public class Door implements Entity {
     }
     /**
      * Sets the destination of the door.
-     *
-     * @param destination
      */
     public void setDest(Room destination) {
         Logger.logCall("setDest", new Object[]{destination}, "void");

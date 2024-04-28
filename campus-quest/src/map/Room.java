@@ -50,10 +50,6 @@ public class Room implements Entity {
     }
     /**
      * Constructor.
-     *
-     * @param id
-     * @param capacity
-     * @param cursed
      */
     public Room(int id, int capacity, boolean cursed) {
         this.id = id;
@@ -63,8 +59,6 @@ public class Room implements Entity {
 
     /**
      * Adds the Door received as a parameter to the room.
-     *
-     * @param door
      */
     public void addDoor(Door door) {
         Logger.logCall("addDoor", new Object[]{door}, "void");
@@ -74,8 +68,6 @@ public class Room implements Entity {
 
     /**
      * Adds the Item received as a parameter to the room.
-     *
-     * @param item
      */
     public void addItem(Item item) {
         Logger.logCall("addItem", new Object[]{item}, "void");
@@ -85,8 +77,6 @@ public class Room implements Entity {
 
     /**
      * Adds the Person received as a parameter to the room.
-     *
-     * @param person
      */
     public boolean addPerson(Person person) {
         Logger.logCall("addPerson", new Object[]{person}, "boolean");
@@ -104,7 +94,6 @@ public class Room implements Entity {
 
     /**
      * Function indicating the termination of the room.
-     *
      * Practically no use
      */
     public void destroy() {
@@ -166,7 +155,7 @@ public class Room implements Entity {
     public void merge() {
         Logger.logCall("merge", "void");
         if(!doors.isEmpty()){
-            Room neighbour = doors.get(0).getDest();
+            Room neighbour = doors.getFirst().getDest();
             this.capacity = Math.max(this.capacity, neighbour.capacity);
             List<Person> neighbourPeople = neighbour.getPeople();
             if (this.capacity < (people.size() + neighbourPeople.size())) {
@@ -188,8 +177,6 @@ public class Room implements Entity {
 
     /**
      * Removes the door received as a parameter from the room.
-     *
-     * @param door
      */
     public void removeDoor(Door door) {
         Logger.logCall("removeDoor", new Object[]{door}, "void");
@@ -199,8 +186,6 @@ public class Room implements Entity {
 
     /**
      * Removes the item received as a parameter from the room.
-     *
-     * @param item
      */
     public void removeItem(Item item) {
         Logger.logCall("removeItem", new Object[]{item}, "void");
@@ -210,8 +195,6 @@ public class Room implements Entity {
 
     /**
      * Removes the person received as a parameter from the room.
-     *
-     * @param person
      */
     public void removePerson(Person person) {
         Logger.logCall("removePerson", new Object[]{person}, "void");
@@ -256,7 +239,6 @@ public class Room implements Entity {
      * With a tick passing the Room gasses all the people in it.
      * If the room is cursed it ticks its doors where the door decides if it disappears
      * or not based on chance.
-     *
      * What happens if there are two-way doors ?!
      */
     public void tick() {
@@ -278,7 +260,7 @@ public class Room implements Entity {
             int value = 0;
             boolean moved = false;
             while(!moved){
-//                moved = p.move(doors.get(value));
+                    moved = p.move(doors.get(value));
                 if(value == doors.size()-1){
                     moved = true;
                 }

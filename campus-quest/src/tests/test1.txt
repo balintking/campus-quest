@@ -1,5 +1,0 @@
-init
-	Room room1
-	Room room4
-    door14: room4 <> room1
-endinit

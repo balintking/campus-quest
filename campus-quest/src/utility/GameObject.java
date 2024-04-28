@@ -135,25 +135,21 @@ public class GameObject {
                 }
             }
 
+            realDir.append(this.state.getObjectName(thisDoor.getSrc()));
             if (thisDoorIsBidirectional) {
-                realDir.append(this.state.getObjectName(thisDoor.getSrc()));
                 realDir.append(" <> ");
-                realDir.append(this.state.getObjectName(thisDoor.getDest()));
             } else {
-                realDir.append(this.state.getObjectName(thisDoor.getSrc()));
                 realDir.append(" > ");
-                realDir.append(this.state.getObjectName(thisDoor.getDest()));
             }
+            realDir.append(this.state.getObjectName(thisDoor.getDest()));
 
+            expectedDir.append(expected.state.getObjectName(expDoor.getSrc()));
             if (expectedDoorIsBidirectional) {
-                expectedDir.append(expected.state.getObjectName(expDoor.getSrc()));
                 expectedDir.append(" <> ");
-                expectedDir.append(expected.state.getObjectName(expDoor.getDest()));
             } else {
-                expectedDir.append(expected.state.getObjectName(expDoor.getSrc()));
                 expectedDir.append(" > ");
-                expectedDir.append(expected.state.getObjectName(expDoor.getDest()));
             }
+            expectedDir.append(expected.state.getObjectName(expDoor.getDest()));
 
             String realDirString = realDir.toString();
             String expectedDirString = expectedDir.toString();

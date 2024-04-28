@@ -1,7 +1,7 @@
 package exceptions;
 
-public class NonexistentObjectException extends RuntimeException {
-    NonexistentObjectException(){
-        super("352 Nonexistent Object");
+public class NonexistentOperationException extends Exception {
+    public NonexistentOperationException(){
+        super("353 Nonexistent operation");
     }
 }

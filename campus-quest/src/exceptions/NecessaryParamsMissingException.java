@@ -1,7 +1,7 @@
 package exceptions;
 
-public class OperationProhibitedException extends RuntimeException {
-    OperationProhibitedException(){
-        super("350 Operation prohibited");
+public class NecessaryParamsMissingException extends Exception {
+    public NecessaryParamsMissingException(){
+        super("354 Necessary parameter(s) missing");
     }
 }

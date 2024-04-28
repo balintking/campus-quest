@@ -1,7 +1,7 @@
 package exceptions;
 
-public class IllegalOperationException extends Exception {
-    IllegalOperationException(){
-        super("351 Illegal operation");
+public class UnexpectedErrorException extends Exception {
+    public UnexpectedErrorException(){
+        super("401 Unexpected error");
     }
 }

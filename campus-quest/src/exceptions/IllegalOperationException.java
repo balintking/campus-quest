@@ -1,7 +1,7 @@
 package exceptions;
 
-public class OperationProhibitedException extends RuntimeException {
-    OperationProhibitedException(){
-        super("350 Operation Prohibited");
+public class IllegalOperationException extends Exception {
+    public IllegalOperationException(){
+        super("351 Illegal operation");
     }
 }

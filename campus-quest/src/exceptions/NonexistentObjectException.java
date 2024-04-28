@@ -1,7 +1,7 @@
 package exceptions;
 
-public class IllegalOperationException extends RuntimeException {
-    IllegalOperationException(){
-        super("351 Illegal Operation");
+public class NonexistentObjectException extends Exception {
+    public NonexistentObjectException(){
+        super("352 Nonexistent object");
     }
 }

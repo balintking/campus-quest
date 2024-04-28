@@ -1,6 +1,5 @@
 status
-Room room
-Teacher teacher room
-SlideRule sr room
+    Room room1
+    Room room4
+    door14: room1 <> room4
 endstatus
-

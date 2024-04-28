@@ -92,7 +92,7 @@ public class Teacher extends Person implements Entity {
             int y = random.nextInt(3);
             if (y == 1 && !reachableDoors.isEmpty()) {
                 int x = random.nextInt(reachableDoors.size());
-                this.move(reachableDoors.get(x - 1));
+                this.move(reachableDoors.get(x));
             }
         }
     }

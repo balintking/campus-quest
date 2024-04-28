@@ -46,9 +46,7 @@ public class AirFreshener extends Item {
         this.room = room;
         if (room != null) {
             this.owner = null;
-            if (room.isGassed()) {
-                activate();
-            }
+            activate();
         }
     }
 }

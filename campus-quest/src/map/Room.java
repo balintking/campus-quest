@@ -120,11 +120,14 @@ public class Room implements Entity {
         }
         Room r2 = new Room(2, capacity, cursed);
         Logger.logCreate(r2, "Room", "r2", new Object[]{2, 10, false});
+        Door d1 = new Door();
         Door d2 = new Door();
         Logger.logCreate(d2, "Door", "d2");
-        d2.setSrc(this);
-        d2.setDest(r2);
-        this.addDoor(d2);
+        d1.setSrc(this);
+        d1.setDest(r2);
+        d2.setSrc(r2);
+        d2.setDest(this);
+        this.addDoor(d1);
         r2.addDoor(d2);
         if (Logger.testerInput("Is the new Room getting the old one's neighbour as its neighbour?")) {
             for (Map.Entry<Room, Door> n : neighbors.entrySet()) {
@@ -173,12 +176,17 @@ public class Room implements Entity {
                 this.addItem(i);
                 i.setRoom(this);
             }
+            for(Door d : doors) {
+                if(d.getDest() == neighbour) {
+                    d.destroy();
+                    break;
+                }
+            }
             List<Door> neighbourDoors = new ArrayList<>(neighbour.getDoors());
             neighbour.destroy();
-            for (int i = 0; i < neighbourDoors.size(); i++) {
+            for (int i = 0; i < neighbour.getDoors().size(); i++) {
                 neighbourDoors.get(i).destroy();
             }
-
         }
         Logger.logReturn();
     }
@@ -273,7 +281,7 @@ public class Room implements Entity {
         for (Person p : people) {
             int value = 0;
             boolean moved = false;
-            while (!moved) {
+            while (!moved && !doors.isEmpty()) {
                 moved = p.move(doors.get(value));
                 if (value == doors.size() - 1) {
                     moved = true;

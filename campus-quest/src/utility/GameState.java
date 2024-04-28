@@ -92,6 +92,13 @@ public class GameState {
             String line;
             while (sc.hasNextLine()) {
                 line = sc.nextLine();
+                if(line.equals("Players won")) {
+                    fstate = finalState.WIN;
+                    continue;
+                } else if(line.equals("Players lost")) {
+                    fstate = finalState.LOSE;
+                    continue;
+                }
                 GameObject obj;
                 String[] splitted = line.split(" ");
                 if (splitted.length == 0) continue;
@@ -115,10 +122,6 @@ public class GameState {
                             srcRoom.addDoor(newDoor);
                             break;
                         case ">":
-                            srcRoom.addDoor(newDoor);
-                            break;
-                        case "<>":
-                            destRoom.addDoor(newDoor);
                             srcRoom.addDoor(newDoor);
                             break;
                         default:

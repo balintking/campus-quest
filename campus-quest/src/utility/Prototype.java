@@ -69,9 +69,21 @@ public class Prototype {
             if (!(obj1 instanceof Room room))
                 throw new NonexistentObjectException();
             room.divide();
+            int i = 1;
             for (Door d : room.getDoors()){
+                if(!currentState.objects.containsValue(d)) {
+                    String doorname = "door" + (i++);
+                    currentState.objects.put(doorname,new GameObject(doorname,d,currentState));
+                }
                 Object neighbor = d.getDest();
                 if (!currentState.objects.containsValue(neighbor)){
+                    Room r2 = (Room) neighbor;
+                    for(Door d2 : r2.getDoors()) {
+                        if(!currentState.objects.containsValue(d2)) {
+                            String doorname = "door" + (i++);
+                            currentState.objects.put(doorname,new GameObject(doorname,d2,currentState));
+                        }
+                    }
                     currentState.objects.put(parameters.get(1), new GameObject(parameters.get(1), (Entity) neighbor, currentState));
                 }
             }

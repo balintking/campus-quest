@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class Room implements Entity {
     /**
@@ -42,8 +41,6 @@ public class Room implements Entity {
      * Is the room cursed.
      */
     boolean cursed;
-
-    boolean isFull;
 
     /**
      * Default constructor to help testing
@@ -91,11 +88,17 @@ public class Room implements Entity {
      *
      * @param person
      */
-    public void addPerson(Person person) {
-        Logger.logCall("addPerson", new Object[]{person}, "void");
-        people.add(person);
-        cleanliness--;
-        Logger.logReturn();
+    public boolean addPerson(Person person) {
+        Logger.logCall("addPerson", new Object[]{person}, "boolean");
+        if(capacity == people.size()){
+            Logger.logReturn(false);
+            return false;
+        } else{
+            people.add(person);
+            cleanliness--;
+            Logger.logReturn(true);
+            return true;
+        }
     }
 
 
@@ -250,18 +253,6 @@ public class Room implements Entity {
     }
 
     /**
-     * Checks if the room is full
-     *
-     * @return people.size() >= capacity
-     */
-    public boolean isFull() {
-        Logger.logCall("isFull", "boolean");
-        Logger.logReturn(people.size() >= capacity);
-        isFull = people.size() >= capacity;
-        return people.size() >= capacity;
-    }
-
-    /**
      * With a tick passing the Room gasses all the people in it.
      * If the room is cursed it ticks its doors where the door decides if it disappears
      * or not based on chance.
@@ -284,7 +275,14 @@ public class Room implements Entity {
 
     public void evacuate(){
         for(Person p : people){
-            for(Door d : doors){
+            int value = 0;
+            boolean moved = false;
+            while(!moved){
+//                moved = p.move(doors.get(value));
+                if(value == doors.size()-1){
+                    moved = true;
+                }
+                value++;
             }
         }
     }

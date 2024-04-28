@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class Room implements Entity {
     /**
@@ -155,7 +156,9 @@ public class Room implements Entity {
     public void merge() {
         Logger.logCall("merge", "void");
         if(!doors.isEmpty()){
-            Room neighbour = doors.getFirst().getDest();
+            Random rand = new Random();
+            int value = rand.nextInt(doors.size());
+            Room neighbour = doors.get(value).getDest();
             this.capacity = Math.max(this.capacity, neighbour.capacity);
             List<Person> neighbourPeople = neighbour.getPeople();
             if (this.capacity < (people.size() + neighbourPeople.size())) {

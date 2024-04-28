@@ -44,7 +44,6 @@ public class Door implements Entity {
     public void tick() {
         Random rand = new Random();
         int value = rand.nextInt(10);
-        value++;
         if(value == 1){
             hidden = !hidden;
         }

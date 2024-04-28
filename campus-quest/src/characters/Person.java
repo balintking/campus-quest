@@ -1,6 +1,7 @@
 package characters;
 
 import items.Item;
+import items.Transistor;
 import map.Door;
 import map.Room;
 import utility.Entity;
@@ -20,7 +21,7 @@ public abstract class Person implements Entity {
     /**
      * The first activated transistor of the student from a pair
      */
-    protected Item transistorToPair;
+    protected Transistor transistorToPair;
 
 
     /**
@@ -160,6 +161,14 @@ public abstract class Person implements Entity {
         Logger.logCall("getRoom", "Room");
         Logger.logReturn(room.toString());
         return room;
+    }
+
+    public Transistor getTransistorToPair(){
+        return transistorToPair;
+    }
+
+    public void setTransistorToPair(Transistor t){
+        transistorToPair = t;
     }
 
 

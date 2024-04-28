@@ -1,0 +1,6 @@
+init
+	Room room
+	Student student room
+	Teacher teacher room
+endinit
+tick

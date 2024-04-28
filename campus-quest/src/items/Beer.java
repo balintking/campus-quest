@@ -17,11 +17,18 @@ public class Beer extends Item {
     }
 
     /**
+     * Default constructor
+     */
+    public Beer() {
+        lifetime = 3;
+    }
+
+    /**
      * Activates the item and calls dropRandomItem on owner.
      */
     @Override
     public void activate() {
-        if (life > 0) {
+        if (lifetime > 0) {
             active = true;
             if (owner != null) {
                 owner.dropRandomItem();

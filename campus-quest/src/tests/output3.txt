@@ -1,0 +1,4 @@
+status
+Room room
+Teacher teacher room
+endstatus

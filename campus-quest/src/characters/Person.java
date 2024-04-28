@@ -23,6 +23,11 @@ public abstract class Person implements Entity {
      */
     protected Transistor transistorToPair;
 
+    protected boolean destroyed = false;
+
+    public Person(){
+
+    }
 
     /**
      * Sets Person's room to r
@@ -45,8 +50,8 @@ public abstract class Person implements Entity {
         Logger.logCall("drop", new Object[]{item}, "void");
         items.remove(item);
         item.setRoom(room);
+        room.addItem(item);
         item.setOwner(null);
-        item.getRoom().addItem(item);
         Logger.logReturn();
     }
 
@@ -150,7 +155,13 @@ public abstract class Person implements Entity {
         Logger.logReturn();
     }
 
+    @Override
     public void tick() {
+    }
+
+    @Override
+    public boolean isDestroyed(){
+        return destroyed;
     }
 
     /**

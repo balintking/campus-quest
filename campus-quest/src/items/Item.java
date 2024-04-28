@@ -18,17 +18,17 @@ public abstract class Item implements Entity {
     /**
      * Who has the item? If it is in a room the value is null.
      */
-    protected Person owner;
+    protected Person owner = null;
 
     /**
      * In which room the item is. If it is at a person the value is null.
      */
-    protected Room room;
+    protected Room room = null;
 
     /**
      * Remaining lifetime of the item, it can be used this much more times.
      */
-    protected int life;
+    protected int lifetime;
 
     /**
      * Tells that the item is active or not
@@ -36,22 +36,28 @@ public abstract class Item implements Entity {
     protected boolean active;
 
 
+    private boolean destroyed = false;
+
     /**
      * Initializer constructor
      */
-    protected Item(Person owner, Room room, int life, boolean active) {
+    protected Item(Person owner, Room room, int lifetime, boolean active) {
         this.owner = owner;
         this.room = room;
-        this.life = life;
+        this.lifetime = lifetime;
         this.active = active;
     }
 
+    /**
+     * Default constructor
+     */
+    protected Item(){}
 
     /**
      * Activates the item
      */
     public void activate() {
-        if (life > 0) {
+        if (lifetime > 0) {
             active = true;
         }
     }
@@ -127,7 +133,7 @@ public abstract class Item implements Entity {
      * Destroys the item
      */
     public void destroy() {
-        life = 0;
+        lifetime = 0;
         deactivate();
         if (owner != null) {
             owner.removeItem(this);
@@ -137,15 +143,22 @@ public abstract class Item implements Entity {
             room.removeItem(this);
             room = null;
         }
+        destroyed = true;
     }
 
 
+    @Override
     public void tick() {
         if (active) {
-            life--;
+            lifetime--;
         }
-        if (life <= 0) {
+        if (lifetime <= 0) {
             destroy();
         }
+    }
+
+    @Override
+    public boolean isDestroyed(){
+        return destroyed;
     }
 }

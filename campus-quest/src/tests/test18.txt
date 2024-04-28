@@ -1,0 +1,9 @@
+init
+	Room room1 gassed: true
+Room room2
+door1: room1 > room2
+door2: room2 > room1
+Student student room1
+Cleaner cleaner room1
+endinit
+tick

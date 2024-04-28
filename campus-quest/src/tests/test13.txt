@@ -1,6 +1,6 @@
 init
 Room room
 Student student room
-Beer beer room
+SlideRule sr room
 endinit
-act student pickup beer
+act student pickup sr

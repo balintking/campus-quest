@@ -36,6 +36,12 @@ enum TransistorState {
     }
 
     /**
+     * Default constructor
+     */
+    public Transistor() {
+    }
+
+    /**
      * Activates the transistor. Prepares to pair or pairs the transistor with owner's
      * transistorToPair depending on its state.
      */

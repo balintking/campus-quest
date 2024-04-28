@@ -1,5 +1,6 @@
 status
 Room room
 Student student room
-Beer beer student
+Teacher teacher room
+SlideRule sr room
 endstatus

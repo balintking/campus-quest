@@ -1,0 +1,3 @@
+status
+Room room1
+endstatus

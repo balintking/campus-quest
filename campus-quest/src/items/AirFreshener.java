@@ -11,8 +11,15 @@ public class AirFreshener extends Item {
     /**
      * Initializer constructor.
      */
-    protected AirFreshener(Person owner, Room room) {
+    public AirFreshener(Person owner, Room room) {
         super(owner, room, 1, false);
+    }
+
+    /**
+     * Default constructor
+     */
+    public AirFreshener() {
+
     }
 
     /**
@@ -20,7 +27,7 @@ public class AirFreshener extends Item {
      */
     @Override
     public void activate() {
-        if (life > 0) {
+        if (lifetime > 0) {
             active = true;
 
             Room currentRoom = null;

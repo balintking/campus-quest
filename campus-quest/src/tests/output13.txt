@@ -1,5 +1,6 @@
+Players won
 status
 Room room
 Student student room
-Beer beer student
+SlideRule sr student
 endstatus

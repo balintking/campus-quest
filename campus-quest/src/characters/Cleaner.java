@@ -68,9 +68,9 @@ public class Cleaner extends Person{
         Random random1=new Random();
         Random random2=new Random();
         int y=random1.nextInt(2);
-        if (y == 1) {
+        if (y == 1 && !reachableDoors.isEmpty()) {
             int x=random2.nextInt(reachableDoors.size());
-            this.move(reachableDoors.get(x-1));
+            this.move(reachableDoors.get(x));
         }
     }
 }

@@ -42,13 +42,16 @@ public class Room implements Entity {
      * Is the room cursed.
      */
     boolean cursed;
+    private boolean destroyed = false;
 
     /**
      * Default constructor to help testing
      */
     public Room() {
-
+        capacity = 10;
+        cursed = false;
     }
+
     /**
      * Constructor.
      */
@@ -81,10 +84,10 @@ public class Room implements Entity {
      */
     public boolean addPerson(Person person) {
         Logger.logCall("addPerson", new Object[]{person}, "boolean");
-        if(capacity == people.size()){
+        if (capacity == people.size()) {
             Logger.logReturn(false);
             return false;
-        } else{
+        } else {
             people.add(person);
             cleanliness--;
             Logger.logReturn(true);
@@ -100,6 +103,7 @@ public class Room implements Entity {
     public void destroy() {
         Logger.logCall("destroy", "void");
         Logger.logDestroy(this, "Room");
+        destroyed = true;
         Logger.logReturn();
     }
 
@@ -116,11 +120,14 @@ public class Room implements Entity {
         }
         Room r2 = new Room(2, capacity, cursed);
         Logger.logCreate(r2, "Room", "r2", new Object[]{2, 10, false});
+        Door d1 = new Door();
         Door d2 = new Door();
         Logger.logCreate(d2, "Door", "d2");
-        d2.setSrc(this);
-        d2.setDest(r2);
-        this.addDoor(d2);
+        d1.setSrc(this);
+        d1.setDest(r2);
+        d2.setSrc(r2);
+        d2.setDest(this);
+        this.addDoor(d1);
         r2.addDoor(d2);
         if (Logger.testerInput("Is the new Room getting the old one's neighbour as its neighbour?")) {
             for (Map.Entry<Room, Door> n : neighbors.entrySet()) {
@@ -142,7 +149,7 @@ public class Room implements Entity {
         Logger.logReturn();
     }
 
-    public void unGas(){
+    public void unGas() {
         Logger.logCall("unGas", "void");
         gassed = false;
         Logger.logReturn();
@@ -155,7 +162,7 @@ public class Room implements Entity {
      */
     public void merge() {
         Logger.logCall("merge", "void");
-        if(!doors.isEmpty()){
+        if (!doors.isEmpty()) {
             Random rand = new Random();
             int value = rand.nextInt(doors.size());
             Room neighbour = doors.get(value).getDest();
@@ -169,10 +176,16 @@ public class Room implements Entity {
                 this.addItem(i);
                 i.setRoom(this);
             }
-            List<Door> neighbourDoors = neighbour.getDoors();
+            for(Door d : doors) {
+                if(d.getDest() == neighbour) {
+                    d.destroy();
+                    break;
+                }
+            }
+            List<Door> neighbourDoors = new ArrayList<>(neighbour.getDoors());
             neighbour.destroy();
-            for (Door d : neighbourDoors) {
-                d.destroy();
+            for (int i = 0; i < neighbour.getDoors().size(); i++) {
+                neighbourDoors.get(i).destroy();
             }
         }
         Logger.logReturn();
@@ -216,6 +229,7 @@ public class Room implements Entity {
         Logger.logReturn(people);
         return people;
     }
+
     /**
      * Returns the list of doors in the room.
      *
@@ -250,21 +264,26 @@ public class Room implements Entity {
             for (Person p : people)
                 p.gasStun();
         }
-        if(cursed){
-            for(Door d : doors) {
+        if (cursed) {
+            for (Door d : doors) {
                 d.tick();
             }
         }
         Logger.logReturn();
     }
 
-    public void evacuate(){
-        for(Person p : people){
+    @Override
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
+    public void evacuate() {
+        for (Person p : people) {
             int value = 0;
             boolean moved = false;
-            while(!moved){
-                    moved = p.move(doors.get(value));
-                if(value == doors.size()-1){
+            while (!moved && !doors.isEmpty()) {
+                moved = p.move(doors.get(value));
+                if (value == doors.size() - 1) {
                     moved = true;
                 }
                 value++;
@@ -272,7 +291,7 @@ public class Room implements Entity {
         }
     }
 
-    public void clean(){
+    public void clean() {
         cleanliness = 10;
     }
 

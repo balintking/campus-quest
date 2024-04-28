@@ -1,0 +1,7 @@
+init
+	Room room gassed: true
+Student student room
+Airfreshener a student
+endinit
+act student activate a
+tick

@@ -1,0 +1,12 @@
+status
+Room room1 gassed: false
+Room room2
+Room room3
+Room room4
+Cleaner cleaner room1
+Teacher teacher room1
+Camembert camembert room1
+door21: room2 > room1
+door31: room3 > room1
+door41: room4 > room1
+endstatus

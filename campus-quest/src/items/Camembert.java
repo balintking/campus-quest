@@ -17,11 +17,18 @@ public class Camembert extends Item {
     }
 
     /**
+     * Default constructor
+     */
+    public Camembert() {
+        lifetime = 1;
+    }
+
+    /**
      * Sets the state of the room it's located in to gassed, and destroys itself.
      */
     @Override
     public void activate() {
-        if (life > 0) {
+        if (lifetime > 0) {
             active = true;
 
             Room currentRoom = null;

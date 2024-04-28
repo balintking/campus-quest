@@ -237,7 +237,7 @@ public class Logger {
             }
             return input.equals("i");
         } else {
-            return false;
+            return true;
         }
 
     }

@@ -1,0 +1,6 @@
+status
+Room room1
+Room room2
+door1: room1 > room2
+door2: room2 > room1
+endstatus

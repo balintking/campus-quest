@@ -51,10 +51,9 @@ public class Cleaner extends Person{
      */
     public void initClean(){
         cleaning = true;
-//      Code can come here if the impl/map branch is merged
-        /*this.getRoom().clean();
+        this.getRoom().clean();
         this.getRoom().evacuate();
-        this.getRoom().unGas();*/
+        this.getRoom().unGas();
         cleaning = false;
     }
 
@@ -62,6 +61,7 @@ public class Cleaner extends Person{
      * It cleans the room, evacuates it and ungas it, after the Cleaner moves
      * to a neighbouring room with a chance of 1/2, if the chosen room isnt full
      */
+    @Override
     public void tick(){
         initClean();
         List<Door> reachableDoors=this.getRoom().getDoors();

@@ -3,7 +3,6 @@ package characters;
 import items.Item;
 import utility.Logger;
 import map.Door;
-import map.Room;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +13,7 @@ public class Teacher extends Person {
     /**
      * Gets stunned by cloth.
      */
+    @Override
     public void clothStun(){
         Logger.logCall("clothStun", "void");
         stunned = true;
@@ -23,6 +23,7 @@ public class Teacher extends Person {
     /**
      * Gets stunned by gas.
      */
+    @Override
     public void gasStun(){
         Logger.logCall("gasStun", "void");
         stunned = true;
@@ -43,7 +44,6 @@ public class Teacher extends Person {
 
     /**
      * Picks up item and destroys it.
-     * @param item
      */
     public boolean pickup(Item item){
         Logger.logCall("pickup", new Object[]{item}, "void");
@@ -64,7 +64,6 @@ public class Teacher extends Person {
 
     /**
      * SlideRule notifies the Teacher about being picked up, so the Teacher can drop it.
-     * @param slideRule
      */
     @Override
     public void slideRuleNotification(Item slideRule) {
@@ -77,21 +76,21 @@ public class Teacher extends Person {
      * if stunned, the teacher doesn't attack or move and the stuntimer goes down,
      * else it attacks and then moves to a random neighbouring room with a chance of 1/3
      */
+    @Override
     public void tick(){
         if(stunned){
-            stunTimer--;
+            setStunTimer(getStunTimer() - 1);
         }
-        if (stunTimer == 0) {
+        if (getStunTimer() == 0) {
             stunned=false;
         }
         if(!stunned){
             initAttack();
             List<Door> reachableDoors=this.getRoom().getDoors();
-            Random random1=new Random();
-            Random random2=new Random();
-            int y=random1.nextInt(3);
+            Random random=new Random();
+            int y=random.nextInt(3);
             if (y == 1) {
-                int x=random2.nextInt(reachableDoors.size());
+                int x=random.nextInt(reachableDoors.size());
                 this.move(reachableDoors.get(x-1));
             }
         }

@@ -14,7 +14,7 @@ public abstract class Person implements Entity {
     protected boolean stunned;
     protected Room room;
     protected List<Item> items = new ArrayList<>();
-    public int stunTimer;
+    private int stunTimer;
     /**
      * The first activated transistor of the student from a pair
      */
@@ -23,7 +23,6 @@ public abstract class Person implements Entity {
 
     /**
      * Sets Person's room to r
-     * @param r
      */
     public void setRoom(Room r) {
         Logger.logCall("setRoom",new Object[]{r},"void");
@@ -38,7 +37,6 @@ public abstract class Person implements Entity {
 
     /**
      * Drops item in its current room
-     * @param item
      */
     public void drop(Item item) {
         Logger.logCall("drop", new Object[]{item}, "void");
@@ -54,10 +52,7 @@ public abstract class Person implements Entity {
      */
     public void dropAll() {
         Logger.logCall("dropAll", "void");
-        List<Item> tempItems = new ArrayList<>();
-        for (Item i : items){
-            tempItems.add(i);
-        }
+        List<Item> tempItems = new ArrayList<>(items);
         for (Item i : tempItems){
             drop(i);
         }
@@ -67,7 +62,6 @@ public abstract class Person implements Entity {
 
     /**
      * An Item offering protection against gas calls this function
-     * @param protectionProvider
      * @param priority protectionProvider's protection's priority against other protecting items
      */
     public void gasProtection(Item protectionProvider, int priority) {}
@@ -80,7 +74,6 @@ public abstract class Person implements Entity {
 
     /**
      * Tries to move through door into door's destination
-     * @param door
      */
     public boolean move(Door door) {
         Logger.logCall("move",new Object[]{door},"void");
@@ -102,14 +95,12 @@ public abstract class Person implements Entity {
 
     /**
      * Picks up item from its room
-     * @param item
      */
     public abstract boolean pickup(Item item);
 
 
     /**
      * Adds item to the Person's list of Items
-     * @param item
      */
     public void addItem(Item item) {
         Logger.logCall("addItem",new Object[]{item},"void");
@@ -125,7 +116,6 @@ public abstract class Person implements Entity {
 
     /**
      * SlideRule calls this function whenever it's picked up
-     * @param slideRule
      */
     public void slideRuleNotification(Item slideRule) {
     }
@@ -139,16 +129,11 @@ public abstract class Person implements Entity {
 
     /**
      * An Item offering protection against Teacher calls this function
-     *
-     * @param protectionProvider
-     * @param priority
      */
     public void teacherProtection(Item protectionProvider, int priority) {}
 
     /**
      * Teleports Person to roomTo
-     *
-     * @param roomTo
      */
     public void teleport(Room roomTo) {
         Logger.logCall("teleport", new Object[]{roomTo}, "void");
@@ -174,5 +159,13 @@ public abstract class Person implements Entity {
     @Override
     public String toString() {
         return name;
+    }
+
+    public int getStunTimer() {
+        return stunTimer;
+    }
+
+    public void setStunTimer(int stunTimer) {
+        this.stunTimer = stunTimer;
     }
 }

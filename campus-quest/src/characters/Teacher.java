@@ -2,15 +2,18 @@ package characters;
 
 import items.Item;
 import utility.Logger;
+import map.Door;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Teacher extends Person {
 
     /**
      * Gets stunned by cloth.
      */
+    @Override
     public void clothStun(){
         Logger.logCall("clothStun", "void");
         stunned = true;
@@ -20,6 +23,7 @@ public class Teacher extends Person {
     /**
      * Gets stunned by gas.
      */
+    @Override
     public void gasStun(){
         Logger.logCall("gasStun", "void");
         stunned = true;
@@ -40,14 +44,14 @@ public class Teacher extends Person {
 
     /**
      * Picks up item and destroys it.
-     * @param item
      */
-    public void pickup(Item item){
+    public boolean pickup(Item item){
         Logger.logCall("pickup", new Object[]{item}, "void");
         room.removeItem(item);
         item.setOwner(this);
         item.destroy();
-        Logger.logReturn();
+        Logger.logReturn(true);
+        return true;
     }
 
     /**
@@ -60,13 +64,36 @@ public class Teacher extends Person {
 
     /**
      * SlideRule notifies the Teacher about being picked up, so the Teacher can drop it.
-     * @param slideRule
      */
     @Override
     public void slideRuleNotification(Item slideRule) {
         Logger.logCall("slideRuleNotification",new Object[]{slideRule}, "void");
         this.drop(slideRule);
         Logger.logReturn();
+    }
+
+    /**
+     * if stunned, the teacher doesn't attack or move and the stuntimer goes down,
+     * else it attacks and then moves to a random neighbouring room with a chance of 1/3
+     */
+    @Override
+    public void tick(){
+        if(stunned){
+            setStunTimer(getStunTimer() - 1);
+        }
+        if (getStunTimer() == 0) {
+            stunned=false;
+        }
+        if(!stunned){
+            initAttack();
+            List<Door> reachableDoors=this.getRoom().getDoors();
+            Random random=new Random();
+            int y=random.nextInt(3);
+            if (y == 1) {
+                int x=random.nextInt(reachableDoors.size());
+                this.move(reachableDoors.get(x-1));
+            }
+        }
     }
 
 }

@@ -9,7 +9,8 @@ public class Student extends Person {
     /**
      * Offered protective items are stored here when protection is needed.
      */
-    private HashMap<Item, Integer> protectiveItems = new HashMap<>();
+    private final HashMap<Item, Integer> protectiveItems = new HashMap<>();
+
     /**
      * Constructor calls Person's constructor
      */
@@ -22,14 +23,17 @@ public class Student extends Person {
      *
      * @param item Item to pick up
      */
-    public void pickup(Item item) {
+    public boolean pickup(Item item) {
         Logger.logCall("pickup",new Object[]{item},"void");
-        if (!Logger.testerInput("Is the inventory full?")) {
+        if(this.items.size()<5){
             items.add(item);
             item.setOwner(this);
             room.removeItem(item);
+            Logger.logReturn(true);
+            return true;
         }
-        Logger.logReturn();
+        Logger.logReturn(false);
+        return false;
     }
 
     /**
@@ -56,8 +60,6 @@ public class Student extends Person {
 
     /**
      * Activates the given item
-     *
-     * @param i
      */
     public void initActivate(Item i) {
         Logger.logCall("initActivate", new Object[]{i},"void");
@@ -68,6 +70,7 @@ public class Student extends Person {
     /**
      * when clothStun is called on a Student, nothing happens
      */
+    @Override
     public void clothStun(){
         Logger.logCall("clothStun", "void");
         Logger.logReturn();
@@ -117,8 +120,6 @@ public class Student extends Person {
 
     /**
      * An Item offering protection against Teacher calls this function
-     * @param protectionProvider
-     * @param priority
      */
     @Override
     public void teacherProtection(Item protectionProvider,int priority) {
@@ -129,7 +130,6 @@ public class Student extends Person {
 
     /**
      * An Item offering protection against gas calls this function
-     * @param protectionProvider
      * @param priority protectionProvider's protection's priority against other protecting items
      */
     @Override
@@ -142,7 +142,6 @@ public class Student extends Person {
 
     /**
      * SlideRule notifies the Student about being picked up, the Students win the game
-     * @param slideRule
      */
     @Override
     public void slideRuleNotification(Item slideRule) {
@@ -150,5 +149,17 @@ public class Student extends Person {
         Logger.logCall("win", "void");
         Logger.logReturn();
         Logger.logReturn();
+    }
+
+
+    @Override
+    public void tick(){
+        if(stunned){
+            setStunTimer(getStunTimer() - 1);
+        }
+        if (getStunTimer() == 0) {
+            stunned=false;
+        }
+        //todo:kapott parameter szerinti mozgas
     }
 }

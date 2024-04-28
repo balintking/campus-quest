@@ -8,6 +8,8 @@ import utility.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 
 public abstract class Person implements Entity {
     protected String name;
@@ -59,6 +61,11 @@ public abstract class Person implements Entity {
         tempItems.clear();
         Logger.logReturn();
     }
+
+    /**
+     * drops a random item from the inventory
+     */
+    public void dropRandomItem(){}
 
     /**
      * An Item offering protection against gas calls this function

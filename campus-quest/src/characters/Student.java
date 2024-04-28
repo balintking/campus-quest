@@ -4,6 +4,7 @@ import items.Item;
 import utility.Logger;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class Student extends Person {
     /**
@@ -34,6 +35,16 @@ public class Student extends Person {
         }
         Logger.logReturn(false);
         return false;
+    }
+
+
+    /**
+     * drops a random item from the inventory
+     */
+    public void dropRandomItem() {
+        Random random = new Random();
+        int x = random.nextInt(items.size());
+        drop(items.get(x - 1));
     }
 
     /**

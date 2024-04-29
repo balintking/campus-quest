@@ -38,6 +38,11 @@ public class Mask extends Item {
             owner.gasProtection(this, lifetime);
         }
     }
+    @Override
+    public void acceptProtection() {
+        activate();
+        lifetime--;
+    }
 
     /**
      * The item deactivates itself after every use, because every protection for a round costs one life only.
@@ -45,7 +50,6 @@ public class Mask extends Item {
     @Override
     public void tick() {
         if (active) {
-            lifetime--;
             deactivate();
         }
         if (lifetime <= 0) {

@@ -2,7 +2,7 @@ init
 	Room room
 	Student student room
     Teacher teacher room
+    Beer beer student active: true
 	TVSZ tvsz student
-Beer beer student isActive: true
 endinit
 tick

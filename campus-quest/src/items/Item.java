@@ -36,7 +36,7 @@ public abstract class Item implements Entity {
     protected boolean active;
 
 
-    private boolean destroyed = false;
+    protected boolean destroyed = false;
 
     /**
      * Initializer constructor

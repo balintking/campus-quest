@@ -45,7 +45,7 @@ public class Student extends Person implements Entity {
     public void dropRandomItem() {
         Random random = new Random();
         int x = random.nextInt(items.size());
-        drop(items.get(x - 1));
+        drop(items.get(x));
     }
 
     /**

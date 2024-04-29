@@ -1,6 +1,5 @@
 status
-Room room1
-Teacher teacher1 room1
-Teacher teacher2 room1
-Players lost
+    Room room1
+    Teacher teacher1 room1
+    Student student1 room1
 endstatus

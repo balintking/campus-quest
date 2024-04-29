@@ -1,4 +1,5 @@
 status
 Room room
 Teacher teacher room
+Players lost
 endstatus

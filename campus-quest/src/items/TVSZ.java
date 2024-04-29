@@ -39,6 +39,14 @@ public class TVSZ extends Item {
             owner.teacherProtection(this, lifetime);
         }
     }
+    @Override
+    public void acceptProtection() {
+        activate();
+        lifetime--;
+        if (lifetime <= 0) {
+            destroy();
+        }
+    }
 
     /**
      * The item deactivates itself after every use, because every protection for a round costs one life only.
@@ -46,7 +54,6 @@ public class TVSZ extends Item {
     @Override
     public void tick() {
         if (active) {
-            lifetime--;
             deactivate();
         }
         if (lifetime <= 0) {

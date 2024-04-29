@@ -57,12 +57,27 @@ public class GameState {
         objects.remove(n);
     }
 
-    private void updateObjects(){
+    private void updateObjects() {
         Map<String, GameObject> objectsTemp = new HashMap<>(objects);
         objects.clear();
-        for (Map.Entry<String, GameObject> entry : objectsTemp.entrySet())
+        fstate = finalState.PENDING;
+        boolean foundStudent = false;
+        for (Map.Entry<String, GameObject> entry : objectsTemp.entrySet()) {
             if (!entry.getValue().getObj().isDestroyed())
                 objects.put(entry.getKey(), entry.getValue());
+        }
+        for (Map.Entry<String, GameObject> entry : objects.entrySet()) {
+            if (entry.getValue().getObj() instanceof Student s) {
+                foundStudent = true;
+                if (s.didWin())
+                    win();
+            }
+            if (!foundStudent) {
+                lose();
+            } else if (fstate != finalState.WIN) {
+                fstate = finalState.PENDING;
+            }
+        }
     }
 
     public void removeObject(Object o) {
@@ -83,6 +98,7 @@ public class GameState {
         for (GameObject go : sorted) {
             sb.append(go);
         }
+        sb.append(getFinalState() + "\n");
         return sb.toString();
     }
 
@@ -92,10 +108,10 @@ public class GameState {
             String line;
             while (sc.hasNextLine()) {
                 line = sc.nextLine();
-                if(line.equals("Players won")) {
+                if (line.equals("players won")) {
                     fstate = finalState.WIN;
                     continue;
-                } else if(line.equals("Players lost")) {
+                } else if (line.equals("players lost")) {
                     fstate = finalState.LOSE;
                     continue;
                 }
@@ -141,7 +157,8 @@ public class GameState {
                     Class<?> newObjType;
                     String typename = splitted[0];
                     newObjType = types.get(typename);
-                    if (newObjType == null) throw new NonexistentObjectException();
+                    if (newObjType == null)
+                        throw new NonexistentObjectException();
 
                     Object constructed = null;
                     try {
@@ -218,17 +235,19 @@ public class GameState {
                 ret.addAll(objects.get(go.getKey()).testCompare(go.getValue()));
             }
         }
+        if (!getFinalState().equals(expected.getFinalState()))
+            ret.add("Final state mismatch: current: " + getFinalState() + " expected: " + expected.getFinalState());
         return ret;
     }
 
     public String getFinalState() {
         switch (fstate) {
             case WIN:
-                return "Players won\n";
+                return "Players won";
             case LOSE:
-                return "Players lost\n";
+                return "Players lost";
             default:
-                return "";
+                return "Game running";
         }
     }
 

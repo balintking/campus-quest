@@ -183,10 +183,12 @@ public class Room implements Entity {
                 }
             }
             List<Door> neighbourDoors = new ArrayList<>(neighbour.getDoors());
-            neighbour.destroy();
             for (int i = 0; i < neighbour.getDoors().size(); i++) {
                 neighbourDoors.get(i).destroy();
             }
+            neighbourDoors.clear();
+            neighbour.setDoors(neighbourDoors);
+            neighbour.destroy();
         }
         Logger.logReturn();
     }
@@ -239,6 +241,10 @@ public class Room implements Entity {
         Logger.logCall("getDoors", "List<Door>");
         Logger.logReturn(doors);
         return doors;
+    }
+
+    public void setDoors(List<Door> d){
+        doors = d;
     }
 
     /**

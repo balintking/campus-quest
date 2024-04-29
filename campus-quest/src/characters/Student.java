@@ -13,6 +13,8 @@ public class Student extends Person implements Entity {
      */
     private final HashMap<Item, Integer> protectiveItems = new HashMap<>();
 
+    private boolean won = false;
+
     /**
      * Constructor calls Person's constructor
      */
@@ -162,6 +164,7 @@ public class Student extends Person implements Entity {
     public void slideRuleNotification(Item slideRule) {
         Logger.logCall("slideRuleNotification", new Object[]{slideRule}, "void");
         Logger.logCall("win", "void");
+        won = true;
         Logger.logReturn();
         Logger.logReturn();
     }
@@ -176,5 +179,9 @@ public class Student extends Person implements Entity {
             stunned = false;
         }
         //todo:kapott parameter szerinti mozgas
+    }
+
+    public boolean didWin(){
+        return won;
     }
 }

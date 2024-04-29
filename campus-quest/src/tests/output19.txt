@@ -9,4 +9,5 @@ Camembert camembert room1
 door21: room2 > room1
 door31: room3 > room1
 door41: room4 > room1
+Players lost
 endstatus

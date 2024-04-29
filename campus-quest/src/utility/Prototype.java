@@ -32,16 +32,20 @@ public class Prototype {
 
     static {
         commands.put("pickup", pitem -> {
-            if (!(pitem instanceof Item item)) throw new IllegalArgumentException();
+            if (!(pitem instanceof Item item))
+                throw new IllegalArgumentException();
             agent.pickup(item);
         });
         commands.put("move", pdoor -> {
-            if (!(pdoor instanceof Door door)) throw new IllegalArgumentException();
+            if (!(pdoor instanceof Door door))
+                throw new IllegalArgumentException();
             agent.move(door);
         });
         commands.put("activate", pitem -> {
-            if (!(agent instanceof Student sagent)) throw new IllegalArgumentException();
-            if (!(pitem instanceof Item item)) throw new IllegalArgumentException();
+            if (!(agent instanceof Student sagent))
+                throw new IllegalArgumentException();
+            if (!(pitem instanceof Item item))
+                throw new IllegalArgumentException();
             sagent.initActivate(item);
         });
         commands.put("drop", pitem -> {
@@ -196,15 +200,14 @@ public class Prototype {
         }
     }
 
-    public static void main(String[] args) throws NecessaryParamsMissingException, NonexistentObjectException, FileNotFoundException, UnexpectedErrorException, NonexistentOperationException {
+    public static void main(String[] args) {
         System.out.println("Welcome to the Campus Quest prototype program! \nType in any command to use shell or press 1 to run tests. Press 0 to exit.");
         Scanner scanner = new Scanner(System.in);
-        readInputFromScanner(scanner, false);
-//        try {
-//
-//        } catch (Exception e) {
-//            System.err.println(e.getMessage());
-//        }
+        try {
+            readInputFromScanner(scanner, false);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 }
 

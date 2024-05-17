@@ -5,11 +5,8 @@ import items.Transistor;
 import map.Door;
 import map.Room;
 import utility.Entity;
-import utility.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 
 public abstract class Person implements Entity {
@@ -33,9 +30,7 @@ public abstract class Person implements Entity {
      * Sets Person's room to r
      */
     public void setRoom(Room r) {
-        Logger.logCall("setRoom",new Object[]{r},"void");
         room = r;
-        Logger.logReturn();
     }
 
     /**
@@ -47,25 +42,21 @@ public abstract class Person implements Entity {
      * Drops item in its current room
      */
     public void drop(Item item) {
-        Logger.logCall("drop", new Object[]{item}, "void");
         items.remove(item);
         item.setRoom(room);
         room.addItem(item);
         item.setOwner(null);
-        Logger.logReturn();
     }
 
     /**
      * Drops all its items in its current room
      */
     public void dropAll() {
-        Logger.logCall("dropAll", "void");
         List<Item> tempItems = new ArrayList<>(items);
         for (Item i : tempItems){
             drop(i);
         }
         tempItems.clear();
-        Logger.logReturn();
     }
 
     /**
@@ -89,19 +80,15 @@ public abstract class Person implements Entity {
      * Tries to move through door into door's destination
      */
     public boolean move(Door door) {
-        Logger.logCall("move",new Object[]{door},"void");
         Room r = door.getDest();
         if (stunned) {
-            Logger.logReturn(false);
             return false;
         }
         if(r.addPerson(this)){
             this.getRoom().removePerson(this);
             this.setRoom(r);
-            Logger.logReturn(true);
             return true;
         }
-        Logger.logReturn(false);
         return false;
     }
 
@@ -116,15 +103,11 @@ public abstract class Person implements Entity {
      * Adds item to the Person's list of Items
      */
     public void addItem(Item item) {
-        Logger.logCall("addItem",new Object[]{item},"void");
         items.add(item);
-        Logger.logReturn();
     }
 
     public void removeItem(Item item){
-        Logger.logCall("removeItem",new Object[]{item},"void");
         items.remove(item);
-        Logger.logReturn();
     }
 
     /**
@@ -149,10 +132,9 @@ public abstract class Person implements Entity {
      * Teleports Person to roomTo
      */
     public void teleport(Room roomTo) {
-        Logger.logCall("teleport", new Object[]{roomTo}, "void");
         room.removePerson(this);
+        this.setRoom(roomTo);
         roomTo.addPerson(this);
-        Logger.logReturn();
     }
 
     @Override
@@ -169,8 +151,6 @@ public abstract class Person implements Entity {
      * @return room
      */
     public Room getRoom() {
-        Logger.logCall("getRoom", "Room");
-        Logger.logReturn(room.toString());
         return room;
     }
 

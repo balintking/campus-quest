@@ -2,7 +2,6 @@ package items;
 
 import map.Room;
 import characters.Person;
-
 import java.util.List;
 
 /**

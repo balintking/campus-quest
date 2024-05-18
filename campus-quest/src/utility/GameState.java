@@ -8,6 +8,7 @@ import exceptions.*;
 import items.*;
 import map.Door;
 import map.Room;
+import views.*;
 
 import java.util.*;
 
@@ -37,9 +38,10 @@ public class GameState {
     }
 
     private enum finalState {WIN, LOSE, PENDING}
-
     Map<String, GameObject> objects;
     private finalState fstate = finalState.PENDING;
+    private Queue<Student> studentQueue = new ArrayDeque<>();
+    private List<View> views = new ArrayList<>();
 
     public GameState() {
         objects = new HashMap<>();
@@ -115,7 +117,6 @@ public class GameState {
                     fstate = finalState.LOSE;
                     continue;
                 }
-                GameObject obj;
                 String[] splitted = line.split(" ");
                 if (splitted.length == 0) continue;
                 if (splitted.length == 1) throw new NecessaryParamsMissingException();
@@ -152,7 +153,7 @@ public class GameState {
                     if (splitted.length > 4) { //door has "hidden:" property defined
                         newDoorObj.setProperty("hidden", splitted[5].equals("true"));
                     }
-
+                    views.add(new DoorView(newDoor,"doorpath"));
                 } else {
                     Class<?> newObjType;
                     String typename = splitted[0];
@@ -171,15 +172,17 @@ public class GameState {
                         throw new NonexistentObjectException();
                     GameObject gameObject = new GameObject(splitted[1], newObj, this);
                     // if it is not a Room an owner specifier comes after the name
-                    if (newObjType != Room.class) {
+                    if (!(newObj instanceof Room r)) {
                         if (splitted.length < 3 || !objects.containsKey(splitted[2]))
                             throw new NecessaryParamsMissingException();
                         if (newObj instanceof Person p) {
+                            views.add(new PersonView(p,"personpath"));
                             Object roomObj = getObject(splitted[2]);
                             if (!(roomObj instanceof Room room)) throw new NonexistentObjectException();
                             room.addPerson(p);
                             p.setRoom(room);
                         } else if (newObj instanceof Item i) {
+                            views.add(new ItemView(i,"itempath"));
                             Object oobj = getObject(splitted[2]);
                             if (oobj instanceof Person p) {
                                 i.setOwner(p);
@@ -191,6 +194,8 @@ public class GameState {
                                 throw new NonexistentObjectException();
                             }
                         }
+                    } else {
+                        views.add(new RoomView(r,"roompath"));
                     }
                     boolean propertyName = true;
                     String lastname = null;
@@ -295,8 +300,32 @@ public class GameState {
             go.getObj().tick();
     }
 
+    public List<View> getViews() {
+        return views;
+    }
+
+    public Student nextStudent() {
+        Student top = studentQueue.remove();
+        studentQueue.offer(top);
+        while(!studentQueue.isEmpty() && (top = studentQueue.peek()).isDestroyed()) {
+            studentQueue.poll();
+        }
+        if(studentQueue.isEmpty()) {
+            GUI.lose();
+            return null;
+        }
+        return top;
+    }
+
+    public Student getCurrentStudent() {
+        Student top = studentQueue.peek();
+        if(top == null) throw new IllegalStateException("Cannot retrieve the current student for a lost game!");
+        return top;
+    }
+
     public void reset() {
         objects.clear();
+        studentQueue.clear();
         fstate = finalState.PENDING;
     }
 }

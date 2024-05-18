@@ -1,13 +1,13 @@
 package views;
 
-import map.Room;
+import characters.Person;
 
-public class RoomView extends View {
-    Room room;
+public class PersonView extends View {
+    Person person;
 
-    public RoomView(Room room, String path) {
+    public PersonView(Person person, String path) {
         super(path);
-        this.room = room;
+        this.person = person;
     }
 
     @Override

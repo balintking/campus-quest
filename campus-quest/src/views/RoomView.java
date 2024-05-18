@@ -1,13 +1,13 @@
 package views;
 
-import items.Item;
+import map.Room;
 
-public class ItemView extends View {
-    Item item;
+public class RoomView extends View {
+    Room room;
 
-    public ItemView(Item item, String path) {
+    public RoomView(Room room, String path) {
         super(path);
-        this.item = item;
+        this.room = room;
     }
 
     @Override

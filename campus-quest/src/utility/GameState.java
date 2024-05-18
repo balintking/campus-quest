@@ -177,6 +177,9 @@ public class GameState {
                             throw new NecessaryParamsMissingException();
                         if (newObj instanceof Person p) {
                             views.add(new PersonView(p,"personpath"));
+                            if(p instanceof Student s) {
+                                studentQueue.offer(s);
+                            }
                             Object roomObj = getObject(splitted[2]);
                             if (!(roomObj instanceof Room room)) throw new NonexistentObjectException();
                             room.addPerson(p);

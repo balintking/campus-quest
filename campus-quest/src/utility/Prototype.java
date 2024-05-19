@@ -11,7 +11,6 @@ import map.Door;
 import map.Room;
 
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
@@ -202,6 +201,7 @@ public class Prototype {
 
     public static void main(String[] args) {
         System.out.println("Welcome to the Campus Quest prototype program! \nType in any command to use shell or press 1 to run tests. Press 0 to exit.");
+        GUI.initMenu();
         Scanner scanner = new Scanner(System.in);
         try {
             readInputFromScanner(scanner, false);

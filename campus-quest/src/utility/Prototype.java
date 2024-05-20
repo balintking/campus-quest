@@ -204,6 +204,9 @@ public class Prototype {
         GUI.setState(currentState);
         GUI.initMenu();
 
+        //testing
+        //GUI.inGameView();
+
         // TODO: itt meg kell oldani, hogy tesztelés is lehessen
         FileInputStream fs = null;
         try {

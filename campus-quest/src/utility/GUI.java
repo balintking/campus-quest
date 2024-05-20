@@ -7,6 +7,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
@@ -55,12 +57,15 @@ public class GUI {
         newGameButton.setBackground(Color.lightGray);
         newGameButton.setBorder(new LineBorder(Color.BLACK, 5));
         newGameButton.setFont(getMainFont(48));
+        newGameButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         loadButton.setBackground(Color.lightGray);
         loadButton.setBorder(new LineBorder(Color.BLACK, 5));
         loadButton.setFont(getMainFont(48));
+        loadButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         quitButton.setBackground(Color.lightGray);
         quitButton.setBorder(new LineBorder(Color.BLACK, 5));
         quitButton.setFont(getMainFont(48));
+        quitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         //Add action listeners to the buttons
         newGameButton.addActionListener(e -> {
@@ -69,7 +74,7 @@ public class GUI {
         });
 
         loadButton.addActionListener(e -> {
-            // Code to load game
+            //TODO load game
         });
 
         quitButton.addActionListener(e -> {
@@ -143,9 +148,11 @@ public class GUI {
         addButton.setBackground(Color.lightGray);
         addButton.setBorder(new LineBorder(Color.BLACK, 5));
         addButton.setFont(getMainFont(28));
+        addButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         startButton.setBackground(Color.lightGray);
         startButton.setBorder(new LineBorder(Color.BLACK, 5));
         startButton.setFont(getMainFont(36));
+        startButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 
         //newNamePanel components
@@ -194,7 +201,7 @@ public class GUI {
             }
             //Start game
             state.createStudents(playerNames);
-            GUI.update();   //And so it begins
+            GUI.inGameView();   //And so it begins
         });
     }
 
@@ -227,12 +234,120 @@ public class GUI {
         }
     }
 
-    public static void update() {
+    public static void inGameView() {
         //Clear the viewport
         for (Component c : frame.getContentPane().getComponents())
             c.setVisible(false);
         frame.getContentPane().removeAll();
 
+        JMenuBar menuBar = getjMenuBar();
+
+        frame.setJMenuBar(menuBar);
+
+
+        //Create a label for the title
+        JLabel titleLabel = new JLabel(getCurrentStudent().toString() + "'s turn", SwingConstants.CENTER);
+        titleLabel.setFont(getMainFont(36));
+        titleLabel.setForeground(Color.lightGray);
+        frame.getContentPane().add(titleLabel, BorderLayout.NORTH);
+
+        JPanel roomPanel = new JPanel();
+        roomPanel.setBorder(new LineBorder(Color.BLACK, 5));
+        roomPanel.setBackground(bgColor);
+        roomPanel.setPreferredSize(new Dimension(700, 500));
+
+        //inventory
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setBackground(bgColor);
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
+        bottomPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+
+        JLabel inventoryLabel = new JLabel("Inventory", SwingConstants.LEFT);
+        inventoryLabel.setFont(getMainFont(28));
+        inventoryLabel.setForeground(Color.lightGray);
+        inventoryLabel.setBorder(new EmptyBorder(0, 0, 0, 20));
+        bottomPanel.add(inventoryLabel);
+
+        JPanel inventorySlots = new JPanel(new GridLayout(1, 5, 10, 10));
+        inventorySlots.setBackground(bgColor);
+        inventorySlots.setBorder(new EmptyBorder(0, 0, 0, 200));
+        bottomPanel.add(inventorySlots);
+
+        for (int i = 0; i < 5; i++) {
+            JPanel inventorySlot = new JPanel();
+            inventorySlot.setBorder(new LineBorder(Color.BLACK, 5));
+            inventorySlot.setBackground(Color.lightGray);
+            bottomPanel.setSize(new Dimension(50, 50));
+            inventorySlots.add(inventorySlot);
+        }
+
+        //todo fill inventory
+
+        JButton endTurnButton = new JButton("End Turn");
+        endTurnButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        endTurnButton.setBackground(Color.lightGray);
+        endTurnButton.setOpaque(true);
+        endTurnButton.setBorder(new LineBorder(Color.BLACK, 5));
+        endTurnButton.setFont(getMainFont(28));
+        endTurnButton.setPreferredSize(new Dimension(100, 50));
+        endTurnButton.addActionListener(e -> next());
+        bottomPanel.add(endTurnButton);
+
+        frame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
+
+        JPanel sidePanel = new JPanel();
+        sidePanel.setBackground(bgColor);
+        sidePanel.setPreferredSize(new Dimension(300, 500));
+        frame.getContentPane().add(sidePanel, BorderLayout.EAST);
+
+        //doors
+        JPanel doorPanel = new JPanel();
+        doorPanel.setLayout(new BoxLayout(doorPanel, BoxLayout.Y_AXIS));
+        doorPanel.setBackground(bgColor);
+
+        //todo add doors
+        for (int i = 0; i < 10; i++) {
+            JButton doorButton = new JButton("Door " + i);
+            doorButton.setBackground(Color.lightGray);
+            doorButton.setBorder(new LineBorder(Color.BLACK, 5));
+            doorButton.setFont(getMainFont(28));
+            doorButton.setPreferredSize(new Dimension(100, 50));
+            doorPanel.add(doorButton);
+        }
+
+        JScrollPane doorScrollPane = new JScrollPane(doorPanel);
+        doorScrollPane.setPreferredSize(new Dimension(250, 400));
+        doorScrollPane.setBackground(bgColor);
+        sidePanel.add(doorScrollPane);
+
+        frame.getContentPane().add(roomPanel, BorderLayout.CENTER);
+        frame.pack();
+    }
+
+    private static JMenuBar getjMenuBar() {
+        JMenuBar menuBar = new JMenuBar();
+        JMenu gameMenu = new JMenu("Game");
+
+        JMenuItem saveMenuItem = new JMenuItem("Save Game");
+        JMenuItem quitMenuItem = new JMenuItem("Quit Game");
+
+        // Add action listeners for menu items
+        saveMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //todo save game
+            }
+        });
+
+        quitMenuItem.addActionListener(e -> System.exit(0));
+
+        gameMenu.add(saveMenuItem);
+        gameMenu.add(quitMenuItem);
+        menuBar.add(gameMenu);
+        return menuBar;
+    }
+
+    public static void update() {
         //Redraw views
         for (View v : state.getViews()){
             frame.getContentPane().add(v);

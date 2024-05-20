@@ -33,7 +33,6 @@ Recent updates to the game have introduced new items and characters, such as air
 ### Prerequisites
 To run this game, you'll need:
 - Java JDK 11 or higher
-- An IDE that supports Java (such as IntelliJ IDEA, Eclipse, or VS Code)
 
 ### Running the Game
 1. **Clone the repository**

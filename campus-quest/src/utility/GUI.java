@@ -4,13 +4,9 @@ import characters.Student;
 import views.View;
 
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
@@ -42,7 +38,7 @@ public class GUI {
         //Create a label for the title
         JLabel titleLabel = new JLabel("Campus Quest", SwingConstants.CENTER);
         titleLabel.setFont(getMainFont(72));
-        titleLabel.setForeground(new Color(200, 200, 200, 255));
+        titleLabel.setForeground(Color.lightGray);
         panel.add(titleLabel, BorderLayout.NORTH);
 
         //Create a panel to hold the buttons
@@ -112,7 +108,7 @@ public class GUI {
         //Create a label for the title
         JLabel titleLabel = new JLabel("Choose Players", SwingConstants.CENTER);
         titleLabel.setFont(getMainFont(36));
-        titleLabel.setForeground(new Color(200, 200, 200, 255));
+        titleLabel.setForeground(Color.lightGray);
         panel.add(titleLabel, BorderLayout.NORTH);
 
         //Create the center panel
@@ -186,7 +182,7 @@ public class GUI {
                 playerNames.add(nameField.getText());
                 startButton.setVisible(true);
                 errorLabel.setText("");
-                updateLabel(namesPanel, playerNames);
+                updatePlayersList(namesPanel, playerNames);
             }
         });
 
@@ -196,6 +192,9 @@ public class GUI {
                 errorLabel.setText("At least one player is required to start");
                 return;
             }
+            //Start game
+            state.createStudents(playerNames);
+            GUI.update();   //And so it begins
         });
     }
 
@@ -212,7 +211,7 @@ public class GUI {
         return font;
     }
 
-    private static void updateLabel(JPanel pane, List<String> names) {
+    private static void updatePlayersList(JPanel pane, List<String> names) {
         for (Component c : pane.getComponents())
             c.setVisible(false);
         pane.removeAll();
@@ -229,8 +228,22 @@ public class GUI {
     }
 
     public static void update() {
-        for (View v : state.getViews())
+        //Clear the viewport
+        for (Component c : frame.getContentPane().getComponents())
+            c.setVisible(false);
+        frame.getContentPane().removeAll();
+
+        //Redraw views
+        for (View v : state.getViews()){
+            frame.getContentPane().add(v);
             v.draw();
+        }
+
+        //Create a label for the title
+        JLabel titleLabel = new JLabel(getCurrentStudent().toString() + "'s turn", SwingConstants.CENTER);
+        titleLabel.setFont(getMainFont(36));
+        titleLabel.setForeground(Color.lightGray);
+        frame.getContentPane().add(titleLabel, BorderLayout.NORTH);
     }
 
     public static void win() {
@@ -248,5 +261,25 @@ public class GUI {
     public static void next() {
         Student s = state.nextStudent();
         // TODO
+    }
+
+
+
+    /**
+     * Rescales icon to scale
+     * @param icon
+     * @param scale
+     * @return rescaled icon
+     */
+    public static ImageIcon rescaleIcon(ImageIcon icon, double scale) {
+        int newWidth = (int) (icon.getIconWidth() * scale);
+        int newHeight = (int) (icon.getIconHeight() * scale);
+        Image img = icon.getImage();
+
+        if (newWidth == 0 || newHeight == 0)
+            return icon;
+
+        Image scaledImg = img.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        return new ImageIcon(scaledImg);
     }
 }

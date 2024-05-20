@@ -201,11 +201,21 @@ public class Prototype {
 
     public static void main(String[] args) {
         System.out.println("Welcome to the Campus Quest prototype program! \nType in any command to use shell or press 1 to run tests. Press 0 to exit.");
+        GUI.setState(currentState);
         GUI.initMenu();
-        Scanner scanner = new Scanner(System.in);
+
+        // TODO: itt meg kell oldani, hogy tesztelés is lehessen
+        FileInputStream fs = null;
         try {
-            readInputFromScanner(scanner, false);
-        } catch (Exception e) {
+            fs = new FileInputStream(new File("campus-quest" + File.separator + "saves" + File.separator + "newgame.txt"));
+            Scanner sc = new Scanner(fs);
+            readInputFromScanner(sc, false);
+        }
+//        Scanner scanner = new Scanner(System.in);
+//        try {
+//            readInputFromScanner(scanner, false);
+//        }
+        catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }

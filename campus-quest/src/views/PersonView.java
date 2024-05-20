@@ -2,6 +2,8 @@ package views;
 
 import characters.Person;
 
+import java.awt.*;
+
 public class PersonView extends View {
     Person person;
 
@@ -12,6 +14,9 @@ public class PersonView extends View {
 
     @Override
     public void draw(){
-        // TODO
+        //Draw
+        String iconPath = path + (person.isStunned() ? "stunned" : "default") + ".png";
+        Point position = new Point(50, 50); // TODO: helyes pozícionálás
+        draw(iconPath, 1, position);
     }
 }

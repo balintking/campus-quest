@@ -2,6 +2,8 @@ package views;
 
 import map.Door;
 
+import java.awt.*;
+
 public class DoorView extends View {
     Door door;
 
@@ -12,6 +14,11 @@ public class DoorView extends View {
 
     @Override
     public void draw(){
-        // TODO
+        //Draw
+        if (door.getSrc().isCursed())
+            return;
+        String iconPath = path + "default.png";
+        Point position = new Point(700, 50); // TODO: helyes pozícionálás
+        draw(iconPath, 1, position);
     }
 }

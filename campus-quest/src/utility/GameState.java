@@ -42,9 +42,28 @@ public class GameState {
     private finalState fstate = finalState.PENDING;
     private Queue<Student> studentQueue = new ArrayDeque<>();
     private List<View> views = new ArrayList<>();
+    private List<Room> rooms = new ArrayList<>();
 
     public GameState() {
         objects = new HashMap<>();
+    }
+
+    public void createStudents(List<String> studentNames) {
+        for (String name : studentNames){
+            studentQueue.add(new Student(name));
+        }
+
+        //Assign player created students to rooms if rooms exist
+        if (rooms.isEmpty())
+            return;
+
+        Random rand = new Random();
+        for (Student st : studentQueue){
+            Room room = rooms.get(rand.nextInt(rooms.size()));
+            st.setRoom(room);
+            room.addPerson(st);
+            views.add(new PersonView(st, "student"));
+        }
     }
 
     public Object getObject(String objName) {
@@ -153,7 +172,7 @@ public class GameState {
                     if (splitted.length > 4) { //door has "hidden:" property defined
                         newDoorObj.setProperty("hidden", splitted[5].equals("true"));
                     }
-                    views.add(new DoorView(newDoor,"doorpath"));
+                    views.add(new DoorView(newDoor,"door"));
                 } else {
                     Class<?> newObjType;
                     String typename = splitted[0];
@@ -176,16 +195,24 @@ public class GameState {
                         if (splitted.length < 3 || !objects.containsKey(splitted[2]))
                             throw new NecessaryParamsMissingException();
                         if (newObj instanceof Person p) {
-                            views.add(new PersonView(p,"personpath"));
+
                             if(p instanceof Student s) {
                                 studentQueue.offer(s);
+                                views.add(new PersonView(s,"student"));
                             }
+                            else if(p instanceof Teacher t) {
+                                views.add(new PersonView(t,"teacher"));
+                            }
+                            else if(p instanceof Cleaner c) {
+                                views.add(new PersonView(c,"cleaner"));
+                            }
+
                             Object roomObj = getObject(splitted[2]);
                             if (!(roomObj instanceof Room room)) throw new NonexistentObjectException();
                             room.addPerson(p);
                             p.setRoom(room);
                         } else if (newObj instanceof Item i) {
-                            views.add(new ItemView(i,"itempath"));
+                            views.add(new ItemView(i,"item"));
                             Object oobj = getObject(splitted[2]);
                             if (oobj instanceof Person p) {
                                 i.setOwner(p);
@@ -198,7 +225,8 @@ public class GameState {
                             }
                         }
                     } else {
-                        views.add(new RoomView(r,"roompath"));
+                        views.add(new RoomView(r,"room"));
+                        rooms.add(r);
                     }
                     boolean propertyName = true;
                     String lastname = null;

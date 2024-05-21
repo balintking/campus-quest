@@ -9,8 +9,8 @@ import java.awt.*;
 public class RoomView extends View {
     Room room;
 
-    public RoomView(Room room, String path) {
-        super(path);
+    public RoomView(Room room) {
+        super(room);
         this.room = room;
     }
 

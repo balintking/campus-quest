@@ -1,17 +1,37 @@
 package views;
 
+import utility.Entity;
 import utility.GUI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class View extends JLabel {
 
     protected String path;
+    private static Map<String,String> pathCatalog = new HashMap<String,String>();
 
-    protected View(String path) {
-        this.path = "campus-quest" + File.separator + "resources" + File.separator + path + File.separator;
+    static {
+        pathCatalog.put("room","room");
+        pathCatalog.put("door","door");
+        pathCatalog.put("airfresehener","airfresehener");
+        pathCatalog.put("beer","beer");
+        pathCatalog.put("camembert","camembert");
+        pathCatalog.put("tvsz","tvsz");
+        pathCatalog.put("cloth","cloth");
+        pathCatalog.put("sliderule","sliderule");
+        pathCatalog.put("transistor","transistor");
+        pathCatalog.put("mask","mask");
+        pathCatalog.put("student","student");
+        pathCatalog.put("cleaner","cleaner");
+        pathCatalog.put("teacher","teacher");
+    }
+
+    protected View(Entity e) {
+        this.path = "campus-quest" + File.separator + "resources" + File.separator + pathCatalog.get(e.getClass().getSimpleName().toLowerCase()) + File.separator;
     }
 
     public abstract void draw();

@@ -7,11 +7,12 @@ import map.Room;
 import utility.Entity;
 import utility.Logger;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public abstract class Person implements Entity {
+public abstract class Person implements Entity, Serializable {
     protected String name;
     protected boolean stunned;
     protected Room room;

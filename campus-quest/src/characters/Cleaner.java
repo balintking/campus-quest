@@ -5,10 +5,11 @@ import map.Door;
 import map.Room;
 import utility.Logger;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
-public class Cleaner extends Person{
+public class Cleaner extends Person implements Serializable {
 
     boolean cleaning = false;
 

@@ -7,13 +7,14 @@ import items.Item;
 import map.Door;
 import map.Room;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.*;
 
 /**
  * A class representing a game object for testing.
  */
-public class GameObject {
+public class GameObject implements Serializable {
 
     /**
      * The name of the object.

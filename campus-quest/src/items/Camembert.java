@@ -3,11 +3,13 @@ package items;
 import characters.Person;
 import map.Room;
 
+import java.io.Serializable;
+
 /**
  * Represents a Camembert item that, when activated, gasses the room it is located in.
  * It signals to the room that it has been gassed.
  */
-public class Camembert extends Item {
+public class Camembert extends Item implements Serializable {
 
     /**
      * Constructor for Camembert. Sets life to 1 and active to false by default.

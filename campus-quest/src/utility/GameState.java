@@ -41,8 +41,8 @@ public class GameState implements Serializable{
     private enum finalState {WIN, LOSE, PENDING}
     Map<String, GameObject> objects;
     private finalState fstate = finalState.PENDING;
-    private Queue<Student> studentQueue = new ArrayDeque<>();
-    private List<View> views = new ArrayList<>();
+    private transient Queue<Student> studentQueue = new ArrayDeque<>();
+    private transient List<View> views = new ArrayList<>();
     private List<Room> rooms = new ArrayList<>();
 
     public GameState() {

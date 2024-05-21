@@ -3,10 +3,12 @@ package items;
 import characters.Person;
 import map.Room;
 
+import java.io.Serializable;
+
 /**
  * Represents an Air Freshener item that can neutralize the effects of gas when placed in a gassed room.
  */
-public class AirFreshener extends Item {
+public class AirFreshener extends Item implements Serializable {
 
     /**
      * Initializer constructor.

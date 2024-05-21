@@ -3,10 +3,12 @@ package items;
 import characters.Person;
 import map.Room;
 
+import java.io.Serializable;
+
 /**
  * Represents the Slide rule artifact, the central objective in the game.
  */
-public class Sliderule extends Item {
+public class Sliderule extends Item implements Serializable {
 
     /**
      * Indicates whether the item is a fake or a genuine version.

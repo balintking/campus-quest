@@ -3,11 +3,13 @@ package items;
 import characters.Person;
 import map.Room;
 
+import java.io.Serializable;
+
 /**
  * Represents a TVSZ (Tanulmanyi Vizsga Szabalyzat) item that activates to protect a student
  * when attacked by a teacher, if the student does not have a higher-priority protection.
  */
-public class TVSZ extends Item {
+public class TVSZ extends Item implements Serializable {
 
     /**
      * Indicates whether the item is a fake or a genuine version.

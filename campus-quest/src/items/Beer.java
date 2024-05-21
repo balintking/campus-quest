@@ -3,11 +3,13 @@ package items;
 import characters.Person;
 import map.Room;
 
+import java.io.Serializable;
+
 /**
  * Represents a Beer item that, when activated by a student,
  * provides protection against instructors for three rounds.
  */
-public class Beer extends Item {
+public class Beer extends Item implements Serializable {
 
     /**
      * Constructor for Beer. Sets life to 3 and active to false by default.

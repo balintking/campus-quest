@@ -25,7 +25,8 @@ public class GUI {
 
     private static JFrame frame;
     private static JLabel nameLabel;
-    private static JPanel inventorySlots;
+    private static final List<JPanel> inventorySlots = new ArrayList<>();
+    private static int itemsInInventory = 0;
     private static JPanel roomPanel;
     private static JPanel doorPanel;
 
@@ -222,7 +223,7 @@ public class GUI {
     private static Font getMainFont(float fontSize) {
         File file = new File(resourcesPath + File.separator + "AGENCYR.TTF");
         Font font;
-        System.out.println(file.getAbsolutePath());
+
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, file);
         } catch (Exception e) {
@@ -284,10 +285,19 @@ public class GUI {
         inventoryLabel.setBorder(new EmptyBorder(0, 0, 0, 20));
         bottomPanel.add(inventoryLabel);
 
-        inventorySlots = new JPanel(new GridLayout(1, 5, 10, 10));
-        inventorySlots.setBackground(bgColor);
-        inventorySlots.setBorder(new EmptyBorder(0, 0, 0, 200));
-        bottomPanel.add(inventorySlots);
+        JPanel inventorySlotsPanel = new JPanel(new GridLayout(1, 5, 10, 10));
+        inventorySlotsPanel.setBackground(bgColor);
+        inventorySlotsPanel.setBorder(new EmptyBorder(0, 0, 0, 200));
+        bottomPanel.add(inventorySlotsPanel);
+
+        for (int i = 0; i < 5; i++) {
+            JPanel inventorySlot = new JPanel();
+            inventorySlot.setBorder(new LineBorder(Color.BLACK, 5));
+            inventorySlot.setBackground(Color.lightGray);
+            inventorySlot.setPreferredSize(new Dimension(50, 50));
+            inventorySlotsPanel.add(inventorySlot);
+            inventorySlots.add(inventorySlot);
+        }
 
         JButton endTurnButton = new JButton("End Turn");
         endTurnButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -360,9 +370,12 @@ public class GUI {
         roomPanel.repaint();
 
         //clear inventory
-        inventorySlots.removeAll();
-        inventorySlots.revalidate();
-        inventorySlots.repaint();
+        for (JPanel slot : inventorySlots) {
+            slot.removeAll();
+            slot.revalidate();
+            slot.repaint();
+        }
+        itemsInInventory = 0;
 
         //clear doors
         doorPanel.removeAll();
@@ -401,12 +414,11 @@ public class GUI {
      * @param itemView the item to be added to the inventory
      */
     public static void addToInventory(ItemView itemView) {
-        JPanel inventorySlot = new JPanel();
-        inventorySlot.setBorder(new LineBorder(Color.BLACK, 5));
-        inventorySlot.setBackground(Color.lightGray);
-        inventorySlot.setPreferredSize(new Dimension(50, 50));
-        inventorySlot.add(itemView);
-        inventorySlots.add(inventorySlot);
+        if (itemsInInventory >= inventorySlots.size()) {
+            return;
+        }
+        inventorySlots.get(itemsInInventory).add(itemView);
+        itemsInInventory++;
     }
 
     /**

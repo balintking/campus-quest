@@ -175,4 +175,6 @@ public abstract class Person implements Entity {
     public void setStunTimer(int stunTimer) {
         this.stunTimer = stunTimer;
     }
+
+    public boolean isStunned(){ return stunned; }
 }

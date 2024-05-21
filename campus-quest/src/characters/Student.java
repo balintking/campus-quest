@@ -21,6 +21,14 @@ public class Student extends Person implements Entity {
     }
 
     /**
+     * Constructor with name given
+     */
+    public Student(String name){
+        super();
+        this.name = name;
+    }
+
+    /**
      * Overrides the pickup method of the base class. Before picking up an item it checks if the inventory is full.
      *
      * @param item Item to pick up

@@ -1,0 +1,8 @@
+init
+    Room room1
+    Room room2
+    door: room1 > room2
+    Student st room1 name: player
+    TVSZ tvsz room1
+    Beer beer st
+endinit

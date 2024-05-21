@@ -246,6 +246,9 @@ public class Room implements Entity {
         return destroyed;
     }
 
+    public boolean isGassed() { return gassed; }
+    public boolean isCursed() {return cursed; }
+
     public void evacuate() {
         for (Person p : people) {
             int value = 0;

@@ -24,7 +24,7 @@ public class PersonView extends View {
         setPreferredSize(new Dimension(100, 200));
 
         if (person.getRoom() == GUI.getCurrentStudent().getRoom()) {
-            GUI.addToRoom(this);
+            GUI.addToRoom(this, 100, 200);
         }
     }
 }

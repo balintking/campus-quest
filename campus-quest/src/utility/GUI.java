@@ -401,11 +401,11 @@ public class GUI {
      * The view is placed randomly in the room.
      * @param view the view to be added to the room
      */
-    public static void addToRoom(View view) {
+    public static void addToRoom(View view, int width, int height) {
         //randomly place the view in the room
-        int x = random.nextInt(roomSize.width - 100);
-        int y = random.nextInt(roomSize.height - 100);
-        view.setBounds(x, y, 100, 100);
+        int x = random.nextInt(roomSize.width - width);
+        int y = random.nextInt(roomSize.height - height);
+        view.setBounds(x, y, width, height);
 
         roomPanel.add(view);
     }

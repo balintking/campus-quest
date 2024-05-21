@@ -71,14 +71,17 @@ public class GUI {
         newGameButton.setBorder(new LineBorder(Color.BLACK, 5));
         newGameButton.setFont(getMainFont(48));
         newGameButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        newGameButton.setOpaque(true);
         loadButton.setBackground(Color.lightGray);
         loadButton.setBorder(new LineBorder(Color.BLACK, 5));
         loadButton.setFont(getMainFont(48));
         loadButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        loadButton.setOpaque(true);
         quitButton.setBackground(Color.lightGray);
         quitButton.setBorder(new LineBorder(Color.BLACK, 5));
         quitButton.setFont(getMainFont(48));
         quitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        quitButton.setOpaque(true);
 
         //Add action listeners to the buttons
         newGameButton.addActionListener(e -> {
@@ -126,7 +129,7 @@ public class GUI {
         ArrayList<String> playerNames = new ArrayList<>();
 
         //Create a label for the title
-        JLabel titleLabel = new JLabel("Choose Players", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Players", SwingConstants.CENTER);
         titleLabel.setFont(getMainFont(36));
         titleLabel.setForeground(Color.lightGray);
         panel.add(titleLabel, BorderLayout.NORTH);
@@ -164,10 +167,12 @@ public class GUI {
         addButton.setBorder(new LineBorder(Color.BLACK, 5));
         addButton.setFont(getMainFont(28));
         addButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        addButton.setOpaque(true);
         startButton.setBackground(Color.lightGray);
         startButton.setBorder(new LineBorder(Color.BLACK, 5));
         startButton.setFont(getMainFont(36));
         startButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        startButton.setOpaque(true);
 
 
         //newNamePanel components
@@ -205,6 +210,7 @@ public class GUI {
                 startButton.setVisible(true);
                 errorLabel.setText("");
                 updatePlayersList(namesPanel, playerNames);
+                nameField.setText("");
             }
         });
 
@@ -246,6 +252,8 @@ public class GUI {
             nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
             pane.add(nameLabel);
         }
+        pane.revalidate();
+        pane.repaint();
     }
 
     public static void inGameView() {

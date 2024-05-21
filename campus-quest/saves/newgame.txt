@@ -1,45 +1,7 @@
 init
     Room room1
     Room room2
-    Room room3
-    Room room4
-    Room room5
-    Room room6
-    Room room7
-    Room room8
-    Room room9
-    Room room10
-    Room room11
-    Room room12
-    Room room13
-    Room room14
-    Room room15
-    Room room16
-    Room room17
-    Room room18
-    Room room19
-    Room room20
-    door12: room1 > room2
-    door23: room2 > room3
-    door34: room3 > room4
-    door45: room4 > room5
-    door56: room5 > room6
-    door67: room6 > room7
-    door78: room7 > room8
-    door89: room8 > room9
-    door910: room9 > room10
-    door1011: room10 > room11
-    door1112: room11 > room12
-    door21: room2 > room1
-    door32: room3 > room2
-    door43: room4 > room3
-    door54: room5 > room4
-    door65: room6 > room5
-    door76: room7 > room6
-    door87: room8 > room7
-    door98: room9 > room8
-    door109: room10 > room9
-    door1110: room11 > room10
-    door1211: room12 > room11
     Student st room1 name: player
+    TVSZ tvsz room1
+    Beer beer st
 endinit

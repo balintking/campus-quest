@@ -39,11 +39,27 @@ public class ItemView extends View {
         });
     }
 
+    /**
+     * Adds the item to the inventory or to the room corresponding to the item's state.
+     */
     @Override
     public void draw(){
         //Draw
         String iconPath = path + (item.isActive() ? "active" : "inactive") + ".png";
-        Point position = new Point(50, 50); // TODO: helyes pozícionálás
-        draw(iconPath, 1, position);
+        //ImageIcon icon = GUI.rescaleIcon(new ImageIcon(iconPath), 1);
+        //setIcon(icon);
+        setText("ITEM");
+        setPreferredSize(new Dimension(50, 50));
+
+
+        if (item.getOwner() == GUI.getCurrentStudent()) {
+            GUI.addToInventory(this);
+        } else if (item.getOwner() == null && item.getRoom() == GUI.getCurrentStudent().getRoom()) {
+            GUI.addToRoom(this);
+        }
+
+//        Point position = new Point(50, 50); // TODO: helyes pozícionálás
+//        draw(iconPath, 1, position);
+
     }
 }

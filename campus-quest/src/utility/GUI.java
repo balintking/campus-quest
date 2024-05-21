@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GUI {
     private static GameState state;
@@ -28,9 +29,12 @@ public class GUI {
     private static JPanel roomPanel;
     private static JPanel doorPanel;
 
+    private static final Random random = new Random();
+
     private static boolean gameEnded = false;
 
     private static final Color bgColor = new Color(40, 40, 40);
+    private static final Dimension roomSize = new Dimension(700, 500);
 
     private static final String resourcesPath = "campus-quest" + File.separator + "resources";
 
@@ -264,7 +268,8 @@ public class GUI {
         roomPanel = new JPanel();
         roomPanel.setBorder(new LineBorder(Color.BLACK, 5));
         roomPanel.setBackground(bgColor);
-        roomPanel.setPreferredSize(new Dimension(700, 500));
+        roomPanel.setPreferredSize(roomSize);
+        roomPanel.setLayout(null);
         frame.getContentPane().add(roomPanel, BorderLayout.CENTER);
 
         //inventory
@@ -283,14 +288,6 @@ public class GUI {
         inventorySlots.setBackground(bgColor);
         inventorySlots.setBorder(new EmptyBorder(0, 0, 0, 200));
         bottomPanel.add(inventorySlots);
-
-        for (int i = 0; i < 5; i++) {
-            JPanel inventorySlot = new JPanel();
-            inventorySlot.setBorder(new LineBorder(Color.BLACK, 5));
-            inventorySlot.setBackground(Color.lightGray);
-            bottomPanel.setSize(new Dimension(50, 50));
-            inventorySlots.add(inventorySlot);
-        }
 
         JButton endTurnButton = new JButton("End Turn");
         endTurnButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -348,18 +345,29 @@ public class GUI {
 
     /**
      * Updates the GUI to reflect the current state of the game
+     * Calls every views draw method
      */
     public static void update() {
         //update name
         nameLabel.setText(getCurrentStudent().toString() + "'s turn");
 
-        //todo update room items
+        //clear room state
+        roomPanel.setBackground(bgColor);
 
-        //update inventory
+        //clear room items
+        roomPanel.removeAll();
+        roomPanel.revalidate();
+        roomPanel.repaint();
+
+        //clear inventory
         inventorySlots.removeAll();
+        inventorySlots.revalidate();
+        inventorySlots.repaint();
 
-        //update doors
+        //clear doors
         doorPanel.removeAll();
+        doorPanel.revalidate();
+        doorPanel.repaint();
 
         for (View view : state.getViews()) {
             view.draw();
@@ -372,6 +380,20 @@ public class GUI {
      */
     public static void updateRoom(Color color) {
         roomPanel.setBackground(color);
+    }
+
+    /**
+     * ItemView and PersonView calls this function to add itself to the room.
+     * The view is placed randomly in the room.
+     * @param view the view to be added to the room
+     */
+    public static void addToRoom(View view) {
+        //randomly place the view in the room
+        int x = random.nextInt(roomSize.width - 100);
+        int y = random.nextInt(roomSize.height - 100);
+        view.setBounds(x, y, 100, 100);
+
+        roomPanel.add(view);
     }
 
     /**
@@ -401,7 +423,6 @@ public class GUI {
         winMessage.setFont(getMainFont(72));
         winMessage.setForeground(Color.green);
         roomPanel.add(winMessage, BorderLayout.CENTER);
-
 
         roomPanel.revalidate();
         roomPanel.repaint();

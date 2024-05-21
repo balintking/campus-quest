@@ -19,10 +19,17 @@ public class ItemView extends View {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(e.getButton() == MouseEvent.BUTTON1){
-                    item.activate();
-                } else if(e.getButton() == MouseEvent.BUTTON2){
-                    GUI.getCurrentStudent().drop(item);
+                    if (item.getRoom() != null) {
+                        GUI.getCurrentStudent().pickup(item);
+                    } else {
+                        GUI.getCurrentStudent().drop(item);
+                    }
+                } else if(e.getButton() == MouseEvent.BUTTON3){
+                    if (item.getOwner() == GUI.getCurrentStudent()) {
+                        item.activate();
+                    }
                 }
+                GUI.update();
             }
 
             @Override

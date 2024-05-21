@@ -17,18 +17,18 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GUI implements Serializable {
+public class GUI {
     private static GameState state;
 
     public static Student getCurrentStudent() {
         return state.getCurrentStudent();
     }
 
-    private static transient JFrame frame;
-    private static transient JLabel nameLabel;
-    private static transient JPanel inventorySlots;
-    private static transient JPanel roomPanel;
-    private static transient JPanel doorPanel;
+    private static JFrame frame;
+    private static JLabel nameLabel;
+    private static JPanel inventorySlots;
+    private static JPanel roomPanel;
+    private static JPanel doorPanel;
 
     private static final Random random = new Random();
 
@@ -88,7 +88,7 @@ public class GUI implements Serializable {
 
         loadButton.addActionListener(e -> {
             //TODO load game
-            state=GameState.loadGame("savedgame.txt");
+            GameSaver.loadGame("savedgame.txt");
             if (state != null) {
                 inGameView();
                 update();
@@ -340,7 +340,7 @@ public class GUI implements Serializable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //todo save game
-                state.saveGame(state,"savedgame.txt");
+                GameSaver.saveGame(state,"savedgame.txt");
                 System.out.println("savve");
             }
         });

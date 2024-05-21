@@ -17,7 +17,7 @@ import java.util.*;
  * This class represents the game state at a moment.
  */
 
-public class GameState implements Serializable{
+public class GameState implements Serializable {
 
     private static Map<String, Class<?>> types;
 
@@ -39,6 +39,7 @@ public class GameState implements Serializable{
     }
 
     private enum finalState {WIN, LOSE, PENDING}
+
     Map<String, GameObject> objects;
     private finalState fstate = finalState.PENDING;
     private transient Queue<Student> studentQueue = new ArrayDeque<>();
@@ -54,7 +55,7 @@ public class GameState implements Serializable{
     }
 
     public void createStudents(List<String> studentNames) {
-        for (String name : studentNames){
+        for (String name : studentNames) {
             studentQueue.add(new Student(name));
         }
 
@@ -63,7 +64,7 @@ public class GameState implements Serializable{
             return;
 
         Random rand = new Random();
-        for (Student st : studentQueue){
+        for (Student st : studentQueue) {
             Room room = rooms.get(rand.nextInt(rooms.size()));
             st.setRoom(room);
             room.addPerson(st);
@@ -167,7 +168,7 @@ public class GameState implements Serializable{
                     throw new NecessaryParamsMissingException();
                 if (newObj instanceof Person p) {
                     views.add(new PersonView(p));
-                    if (p instanceof Student s){
+                    if (p instanceof Student s) {
                         studentQueue.offer(s);
                     }
                     Object roomObj = getObject(splitted[2]);
@@ -254,7 +255,7 @@ public class GameState implements Serializable{
                     fstate = finalState.LOSE;
                     continue;
                 }
-               addObjectFromLine(line);
+                addObjectFromLine(line);
             }
         }
     }
@@ -341,10 +342,10 @@ public class GameState implements Serializable{
     public Student nextStudent() {
         Student top = studentQueue.remove();
         studentQueue.offer(top);
-        while(!studentQueue.isEmpty() && (top = studentQueue.peek()).isDestroyed()) {
+        while (!studentQueue.isEmpty() && (top = studentQueue.peek()).isDestroyed()) {
             studentQueue.poll();
         }
-        if(studentQueue.isEmpty()) {
+        if (studentQueue.isEmpty()) {
             GUI.lose();
             return null;
         }
@@ -353,7 +354,7 @@ public class GameState implements Serializable{
 
     public Student getCurrentStudent() {
         Student top = studentQueue.peek();
-        if(top == null) throw new IllegalStateException("Cannot retrieve the current student for a lost game!");
+        if (top == null) throw new IllegalStateException("Cannot retrieve the current student for a lost game!");
         return top;
     }
 
@@ -365,32 +366,7 @@ public class GameState implements Serializable{
         fstate = finalState.PENDING;
     }
 
-
-    /**
-     * saves the current state of the game
-     * @param state
-     * @param filename
-     */
-    public static void saveGame(GameState state, String filename) {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
-            out.writeObject(state);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * loads the saved game
-     * @param filename
-     * @return
-     */
-    public static GameState loadGame(String filename) {
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
-            return (GameState) in.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 }
+
+
 

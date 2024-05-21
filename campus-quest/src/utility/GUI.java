@@ -28,6 +28,8 @@ public class GUI {
     private static JPanel roomPanel;
     private static JPanel doorPanel;
 
+    private static boolean gameEnded = false;
+
     private static final Color bgColor = new Color(40, 40, 40);
 
     private static final String resourcesPath = "campus-quest" + File.separator + "resources";
@@ -113,6 +115,8 @@ public class GUI {
             c.setVisible(false);
         }
         panel.removeAll();
+
+        gameEnded = false;
 
         ArrayList<String> playerNames = new ArrayList<>();
 
@@ -392,11 +396,26 @@ public class GUI {
     }
 
     public static void win() {
-        // TODO
+        roomPanel.removeAll();
+        JLabel winMessage = new JLabel("The students won!");
+        winMessage.setFont(getMainFont(72));
+        winMessage.setForeground(Color.green);
+        roomPanel.add(winMessage, BorderLayout.CENTER);
+
+
+        roomPanel.revalidate();
+        roomPanel.repaint();
     }
 
     public static void lose() {
-        // TODO
+        roomPanel.removeAll();
+        JLabel winMessage = new JLabel("The students lost!");
+        winMessage.setFont(getMainFont(72));
+        winMessage.setForeground(Color.red);
+        roomPanel.add(winMessage, BorderLayout.CENTER);
+
+        roomPanel.revalidate();
+        roomPanel.repaint();
     }
 
     public static void setState(GameState state) {
@@ -407,8 +426,10 @@ public class GUI {
      * Switches to the next student and updates the GUI
      */
     public static void next() {
-        state.nextStudent();
-        update();
+        if(!gameEnded){
+            state.nextStudent();
+            update();
+        }
     }
 
     /**

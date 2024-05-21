@@ -183,6 +183,16 @@ public class Prototype {
             path = path.replace("/", "\\");
             System.out.println("Current working directory: " + path);
         });
+        commands.put("add", param -> {
+            if(parameters.isEmpty())
+                throw new NecessaryParamsMissingException();
+            StringBuilder line = new StringBuilder();
+            for(String par: parameters) {
+                line.append(par);
+                line.append(" ");
+            }
+           currentState.addObjectFromLine(line.toString().trim().toLowerCase());
+        });
     }
 
     private static boolean processLine(String _line) throws NonexistentObjectException, FileNotFoundException, UnexpectedErrorException, NecessaryParamsMissingException, NonexistentOperationException {

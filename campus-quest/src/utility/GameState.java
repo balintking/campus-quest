@@ -105,7 +105,7 @@ public class GameState {
         }
     }
 
-    private void addObjectFromLine(String line) throws NecessaryParamsMissingException, NonexistentObjectException, UnexpectedErrorException, NonexistentOperationException {
+    public void addObjectFromLine(String line) throws NecessaryParamsMissingException, NonexistentObjectException, UnexpectedErrorException, NonexistentOperationException {
         String[] splitted = line.split(" ");
         if (splitted.length == 0) return;
         if (splitted.length == 1) throw new NecessaryParamsMissingException();

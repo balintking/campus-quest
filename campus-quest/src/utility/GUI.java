@@ -284,13 +284,13 @@ public class GUI {
         inventorySlots.setBorder(new EmptyBorder(0, 0, 0, 200));
         bottomPanel.add(inventorySlots);
 
-//        for (int i = 0; i < 5; i++) {
-//            JPanel inventorySlot = new JPanel();
-//            inventorySlot.setBorder(new LineBorder(Color.BLACK, 5));
-//            inventorySlot.setBackground(Color.lightGray);
-//            bottomPanel.setSize(new Dimension(50, 50));
-//            inventorySlots.add(inventorySlot);
-//        }
+        for (int i = 0; i < 5; i++) {
+            JPanel inventorySlot = new JPanel();
+            inventorySlot.setBorder(new LineBorder(Color.BLACK, 5));
+            inventorySlot.setBackground(Color.lightGray);
+            bottomPanel.setSize(new Dimension(50, 50));
+            inventorySlots.add(inventorySlot);
+        }
 
         JButton endTurnButton = new JButton("End Turn");
         endTurnButton.setCursor(new Cursor(Cursor.HAND_CURSOR));

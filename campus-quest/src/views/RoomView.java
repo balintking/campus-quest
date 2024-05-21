@@ -3,7 +3,6 @@ package views;
 import map.Room;
 import utility.GUI;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class RoomView extends View {

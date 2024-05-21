@@ -25,6 +25,7 @@ import java.io.*;
          */
         public static GameState loadGame(String filename) {
             try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+                System.out.println("sikeres load");
                 return (GameState) in.readObject();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();

@@ -366,6 +366,24 @@ public class GameState implements Serializable {
         fstate = finalState.PENDING;
     }
 
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeInt(studentQueue.size());
+        for (Student student : studentQueue) {
+            out.writeObject(student);
+        }
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        studentQueue = new ArrayDeque<>();
+        int size = in.readInt();
+        for (int i = 0; i < size; i++) {
+            studentQueue.add((Student) in.readObject());
+        }
+        views = new ArrayList<>(); // reinitialize views if needed
+    }
+
 }
 
 

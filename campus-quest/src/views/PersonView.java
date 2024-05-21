@@ -1,7 +1,9 @@
 package views;
 
 import characters.Person;
+import utility.GUI;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class PersonView extends View {
@@ -16,7 +18,13 @@ public class PersonView extends View {
     public void draw(){
         //Draw
         String iconPath = path + (person.isStunned() ? "stunned" : "default") + ".png";
-        Point position = new Point(50, 50); // TODO: helyes pozícionálás
-        draw(iconPath, 1, position);
+
+        ImageIcon icon = GUI.rescaleIcon(new ImageIcon(iconPath), 1);
+        setIcon(icon);
+        setPreferredSize(new Dimension(100, 200));
+
+        if (person.getRoom() == GUI.getCurrentStudent().getRoom()) {
+            GUI.addToRoom(this);
+        }
     }
 }

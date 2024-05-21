@@ -3,6 +3,7 @@ package views;
 import items.Item;
 import utility.GUI;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -46,11 +47,9 @@ public class ItemView extends View {
     public void draw(){
         //Draw
         String iconPath = path + (item.isActive() ? "active" : "inactive") + ".png";
-        //ImageIcon icon = GUI.rescaleIcon(new ImageIcon(iconPath), 1);
-        //setIcon(icon);
-        setText("ITEM");
+        ImageIcon icon = GUI.rescaleIcon(new ImageIcon(iconPath), 1);
+        setIcon(icon);
         setPreferredSize(new Dimension(50, 50));
-
 
         if (item.getOwner() == GUI.getCurrentStudent()) {
             GUI.addToInventory(this);

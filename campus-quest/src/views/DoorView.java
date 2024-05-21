@@ -3,6 +3,7 @@ package views;
 import map.Door;
 import utility.GUI;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -42,8 +43,8 @@ public class DoorView extends View {
         if (door.getSrc().isCursed())
             return;
         String iconPath = path + "default.png";
-        Point position = new Point(700, 50); // TODO: helyes pozícionálás
         GUI.addToDoors(this);
-        draw(iconPath, 1, position);
+        ImageIcon icon = GUI.rescaleIcon(new ImageIcon(iconPath), 1);
+        setIcon(icon);
     }
 }

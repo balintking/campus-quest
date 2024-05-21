@@ -14,6 +14,7 @@ public abstract class View extends JLabel {
     protected String path;
     private static Map<String,String> pathCatalog = new HashMap<String,String>();
 
+
     static {
         pathCatalog.put("room","room");
         pathCatalog.put("door","door");
@@ -35,10 +36,6 @@ public abstract class View extends JLabel {
     }
 
     public abstract void draw();
-
-    public void leftClick() {}
-
-    public void rightClick() {}
 
     protected void draw(String iconPath, double iconScale, Point position){
         ImageIcon icon = GUI.rescaleIcon(new ImageIcon(iconPath), iconScale);

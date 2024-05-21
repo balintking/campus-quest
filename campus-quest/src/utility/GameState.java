@@ -9,13 +9,14 @@ import items.*;
 import map.Door;
 import map.Room;
 
+import java.io.*;
 import java.util.*;
 
 /**
  * This class represents the game state at a moment.
  */
 
-public class GameState {
+public class GameState implements Serializable{
 
     private static Map<String, Class<?>> types;
 
@@ -299,4 +300,33 @@ public class GameState {
         objects.clear();
         fstate = finalState.PENDING;
     }
+
+
+    /**
+     * saves the current state of the game
+     * @param state
+     * @param filename
+     */
+    public static void saveGame(GameState state, String filename) {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
+            out.writeObject(state);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * loads the saved game
+     * @param filename
+     * @return
+     */
+    public static GameState loadGame(String filename) {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+            return (GameState) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
+

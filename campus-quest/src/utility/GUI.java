@@ -223,7 +223,6 @@ public class GUI {
     private static Font getMainFont(float fontSize) {
         File file = new File(resourcesPath + File.separator + "AGENCYR.TTF");
         Font font;
-
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, file);
         } catch (Exception e) {
@@ -393,6 +392,8 @@ public class GUI {
      */
     public static void updateRoom(Color color) {
         roomPanel.setBackground(color);
+        roomPanel.revalidate();
+        roomPanel.repaint();
     }
 
     /**

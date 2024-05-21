@@ -51,7 +51,6 @@ public class ItemView extends View {
         setIcon(icon);
         setPreferredSize(new Dimension(50, 50));
 
-
         if (item.getOwner() == GUI.getCurrentStudent()) {
             GUI.addToInventory(this);
         } else if (item.getOwner() == null && item.getRoom() == GUI.getCurrentStudent().getRoom()) {

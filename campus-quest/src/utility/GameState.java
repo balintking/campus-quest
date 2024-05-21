@@ -37,6 +37,8 @@ public class GameState {
         types.put("tvsz", TVSZ.class);
     }
 
+    private int playerCounter = 1;
+
     private enum finalState {WIN, LOSE, PENDING}
     Map<String, GameObject> objects;
     private finalState fstate = finalState.PENDING;
@@ -346,6 +348,13 @@ public class GameState {
         if(studentQueue.isEmpty()) {
             GUI.lose();
             return null;
+        }
+        if (top != null) {
+            playerCounter++;
+            if (playerCounter > studentQueue.size()) {
+                tick();
+                playerCounter = 1;
+            }
         }
         return top;
     }

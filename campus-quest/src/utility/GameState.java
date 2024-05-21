@@ -8,6 +8,7 @@ import exceptions.*;
 import items.*;
 import map.Door;
 import map.Room;
+import views.*;
 
 import java.io.*;
 import java.util.*;
@@ -38,12 +39,36 @@ public class GameState implements Serializable{
     }
 
     private enum finalState {WIN, LOSE, PENDING}
-
     Map<String, GameObject> objects;
     private finalState fstate = finalState.PENDING;
+    private Queue<Student> studentQueue = new ArrayDeque<>();
+    private List<View> views = new ArrayList<>();
+    private List<Room> rooms = new ArrayList<>();
 
     public GameState() {
         objects = new HashMap<>();
+    }
+
+    public GameState(int studentsNum) {
+        // TODO map generation - game design choices
+    }
+
+    public void createStudents(List<String> studentNames) {
+        for (String name : studentNames){
+            studentQueue.add(new Student(name));
+        }
+
+        //Assign player created students to rooms if rooms exist
+        if (rooms.isEmpty())
+            return;
+
+        Random rand = new Random();
+        for (Student st : studentQueue){
+            Room room = rooms.get(rand.nextInt(rooms.size()));
+            st.setRoom(room);
+            room.addPerson(st);
+            views.add(new PersonView(st));
+        }
     }
 
     public Object getObject(String objName) {
@@ -78,6 +103,119 @@ public class GameState implements Serializable{
             } else if (fstate != finalState.WIN) {
                 fstate = finalState.PENDING;
             }
+        }
+    }
+
+    public void addObjectFromLine(String line) throws NecessaryParamsMissingException, NonexistentObjectException, UnexpectedErrorException, NonexistentOperationException {
+        String[] splitted = line.split(" ");
+        if (splitted.length == 0) return;
+        if (splitted.length == 1) throw new NecessaryParamsMissingException();
+        // if it should be a Door declaration
+        if (splitted[0].charAt(splitted[0].length() - 1) == ':') {
+
+            Object srcObj = getObject(splitted[1]);
+            Object destObj = getObject(splitted[3]);
+            if (!(srcObj instanceof Room) || !(destObj instanceof Room))
+                throw new NonexistentObjectException();
+            Room srcRoom = (Room) srcObj;
+            Room destRoom = (Room) destObj;
+            Door newDoor = new Door();
+            switch (splitted[2]) {
+                case "<":
+                    //switch srcRoom and destRoom
+                    Room temp = srcRoom;
+                    srcRoom = destRoom;
+                    destRoom = temp;
+                    srcRoom.addDoor(newDoor);
+                    break;
+                case ">":
+                    srcRoom.addDoor(newDoor);
+                    break;
+                default:
+                    throw new NonexistentOperationException();
+            }
+            String doorName = splitted[0].substring(0, splitted[0].length() - 1);
+            GameObject newDoorObj = new GameObject(doorName, newDoor, this);
+            objects.put(doorName, newDoorObj);
+            newDoorObj.setProperty("destination", destRoom);
+            newDoorObj.setProperty("source", srcRoom);
+
+            if (splitted.length > 4) { //door has "hidden:" property defined
+                newDoorObj.setProperty("hidden", splitted[5].equals("true"));
+            }
+            views.add(new DoorView(newDoor));
+        } else {
+            Class<?> newObjType;
+            String typename = splitted[0];
+            newObjType = types.get(typename);
+            if (newObjType == null)
+                throw new NonexistentObjectException();
+
+            Object constructed = null;
+            try {
+                constructed = newObjType.getConstructor().newInstance();
+            } catch (Exception e) {
+                throw new RuntimeException();
+            }
+
+            if (!(constructed instanceof Entity newObj))
+                throw new NonexistentObjectException();
+            GameObject gameObject = new GameObject(splitted[1], newObj, this);
+            // if it is not a Room an owner specifier comes after the name
+            if (!(newObj instanceof Room r)) {
+                if (splitted.length < 3 || !objects.containsKey(splitted[2]))
+                    throw new NecessaryParamsMissingException();
+                if (newObj instanceof Person p) {
+                    views.add(new PersonView(p));
+                    if (p instanceof Student s){
+                        studentQueue.offer(s);
+                    }
+                    Object roomObj = getObject(splitted[2]);
+                    if (!(roomObj instanceof Room room)) throw new NonexistentObjectException();
+                    room.addPerson(p);
+                    p.setRoom(room);
+                } else if (newObj instanceof Item i) {
+                    views.add(new ItemView(i));
+                    Object oobj = getObject(splitted[2]);
+                    if (oobj instanceof Person p) {
+                        i.setOwner(p);
+                        p.addItem(i);
+                    } else if (oobj instanceof Room r) {
+                        i.setRoom(r);
+                        r.addItem(i);
+                    } else {
+                        throw new NonexistentObjectException();
+                    }
+                }
+            } else {
+                views.add(new RoomView(r));
+                rooms.add(r);
+            }
+            boolean propertyName = true;
+            String lastname = null;
+            for (int i = (newObjType == Room.class) ? 2 : 3; i < splitted.length; i++) {
+                String element = (propertyName) ? splitted[i].substring(0, splitted[i].length() - 1) : splitted[i];
+                if (propertyName) {
+                    lastname = element;
+                } else {
+                    Object propertyObj = null;
+                    if (isReference(element)) {
+                        propertyObj = getObject(element);
+                    } else if (isBoolean(element)) {
+                        propertyObj = Boolean.parseBoolean(element);
+                    } else if (isInteger(element)) {
+                        propertyObj = Integer.parseInt(element);
+                    } else {
+                        propertyObj = element;
+                    }
+                    if (propertyObj != null) gameObject.setProperty(lastname, propertyObj);
+                }
+                propertyName = !propertyName;
+            }
+            // we check whether the last property had a value
+            if (!propertyName)
+                throw new NecessaryParamsMissingException();
+            objects.put(splitted[1], gameObject);
         }
     }
 
@@ -116,107 +254,7 @@ public class GameState implements Serializable{
                     fstate = finalState.LOSE;
                     continue;
                 }
-                GameObject obj;
-                String[] splitted = line.split(" ");
-                if (splitted.length == 0) continue;
-                if (splitted.length == 1) throw new NecessaryParamsMissingException();
-                // if it should be a Door declaration
-                if (splitted[0].charAt(splitted[0].length() - 1) == ':') {
-
-                    Object srcObj = getObject(splitted[1]);
-                    Object destObj = getObject(splitted[3]);
-                    if (!(srcObj instanceof Room) || !(destObj instanceof Room))
-                        throw new NonexistentObjectException();
-                    Room srcRoom = (Room) srcObj;
-                    Room destRoom = (Room) destObj;
-                    Door newDoor = new Door();
-                    switch (splitted[2]) {
-                        case "<":
-                            //switch srcRoom and destRoom
-                            Room temp = srcRoom;
-                            srcRoom = destRoom;
-                            destRoom = temp;
-                            srcRoom.addDoor(newDoor);
-                            break;
-                        case ">":
-                            srcRoom.addDoor(newDoor);
-                            break;
-                        default:
-                            throw new NonexistentOperationException();
-                    }
-                    String doorName = splitted[0].substring(0, splitted[0].length() - 1);
-                    GameObject newDoorObj = new GameObject(doorName, newDoor, this);
-                    objects.put(doorName, newDoorObj);
-                    newDoorObj.setProperty("destination", destRoom);
-                    newDoorObj.setProperty("source", srcRoom);
-
-                    if (splitted.length > 4) { //door has "hidden:" property defined
-                        newDoorObj.setProperty("hidden", splitted[5].equals("true"));
-                    }
-
-                } else {
-                    Class<?> newObjType;
-                    String typename = splitted[0];
-                    newObjType = types.get(typename);
-                    if (newObjType == null)
-                        throw new NonexistentObjectException();
-
-                    Object constructed = null;
-                    try {
-                        constructed = newObjType.getConstructor().newInstance();
-                    } catch (Exception e) {
-                        throw new RuntimeException();
-                    }
-
-                    if (!(constructed instanceof Entity newObj))
-                        throw new NonexistentObjectException();
-                    GameObject gameObject = new GameObject(splitted[1], newObj, this);
-                    // if it is not a Room an owner specifier comes after the name
-                    if (newObjType != Room.class) {
-                        if (splitted.length < 3 || !objects.containsKey(splitted[2]))
-                            throw new NecessaryParamsMissingException();
-                        if (newObj instanceof Person p) {
-                            Object roomObj = getObject(splitted[2]);
-                            if (!(roomObj instanceof Room room)) throw new NonexistentObjectException();
-                            room.addPerson(p);
-                            p.setRoom(room);
-                        } else if (newObj instanceof Item i) {
-                            Object oobj = getObject(splitted[2]);
-                            if (oobj instanceof Person p) {
-                                i.setOwner(p);
-                                p.addItem(i);
-                            } else if (oobj instanceof Room r) {
-                                i.setRoom(r);
-                                r.addItem(i);
-                            } else {
-                                throw new NonexistentObjectException();
-                            }
-                        }
-                    }
-                    boolean propertyName = true;
-                    String lastname = null;
-                    for (int i = (newObjType == Room.class) ? 2 : 3; i < splitted.length; i++) {
-                        String element = (propertyName) ? splitted[i].substring(0, splitted[i].length() - 1) : splitted[i];
-                        if (propertyName) {
-                            lastname = element;
-                        } else {
-                            Object propertyObj = null;
-                            if (isReference(element)) {
-                                propertyObj = getObject(element);
-                            } else if (isBoolean(element)) {
-                                propertyObj = Boolean.parseBoolean(element);
-                            } else if (isInteger(element)) {
-                                propertyObj = Integer.parseInt(element);
-                            }
-                            if (propertyObj != null) gameObject.setProperty(lastname, propertyObj);
-                        }
-                        propertyName = !propertyName;
-                    }
-                    // we check whether the last property had a value
-                    if (!propertyName)
-                        throw new NecessaryParamsMissingException();
-                    objects.put(splitted[1], gameObject);
-                }
+               addObjectFromLine(line);
             }
         }
     }
@@ -296,8 +334,34 @@ public class GameState implements Serializable{
             go.getObj().tick();
     }
 
+    public List<View> getViews() {
+        return views;
+    }
+
+    public Student nextStudent() {
+        Student top = studentQueue.remove();
+        studentQueue.offer(top);
+        while(!studentQueue.isEmpty() && (top = studentQueue.peek()).isDestroyed()) {
+            studentQueue.poll();
+        }
+        if(studentQueue.isEmpty()) {
+            GUI.lose();
+            return null;
+        }
+        return top;
+    }
+
+    public Student getCurrentStudent() {
+        Student top = studentQueue.peek();
+        if(top == null) throw new IllegalStateException("Cannot retrieve the current student for a lost game!");
+        return top;
+    }
+
     public void reset() {
         objects.clear();
+        studentQueue.clear();
+        views.clear();
+        rooms.clear();
         fstate = finalState.PENDING;
     }
 

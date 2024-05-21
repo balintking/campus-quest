@@ -161,4 +161,6 @@ public abstract class Item implements Entity {
     public boolean isDestroyed(){
         return destroyed;
     }
+
+    public boolean isActive() { return active; }
 }

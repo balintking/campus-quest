@@ -9,7 +9,6 @@ import utility.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 
 public abstract class Person implements Entity {
@@ -195,4 +194,6 @@ public abstract class Person implements Entity {
     public void setStunTimer(int stunTimer) {
         this.stunTimer = stunTimer;
     }
+
+    public boolean isStunned(){ return stunned; }
 }

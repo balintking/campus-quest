@@ -63,9 +63,5 @@ public class ItemView extends View {
         } else if (item.getOwner() == null && item.getRoom() == GUI.getCurrentStudent().getRoom()) {
             GUI.addToRoom(this);
         }
-
-//        Point position = new Point(50, 50); // TODO: helyes pozícionálás
-//        draw(iconPath, 1, position);
-
     }
 }

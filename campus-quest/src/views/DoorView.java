@@ -42,9 +42,12 @@ public class DoorView extends View {
         //Draw
         if (door.getSrc().isCursed())
             return;
-        String iconPath = path + "default.png";
-        GUI.addToDoors(this);
-        ImageIcon icon = GUI.rescaleIcon(new ImageIcon(iconPath), 1);
-        setIcon(icon);
+        if(GUI.getCurrentStudent().getRoom() == door.getSrc()) {
+            String iconPath = path + "default.png";
+            GUI.addToDoors(this);
+            ImageIcon icon = GUI.rescaleIcon(new ImageIcon(iconPath), 1);
+            setIcon(icon);
+
+        }
     }
 }

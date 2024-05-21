@@ -1,6 +1,0 @@
-init
-	Room room gassed: true
-	Student student room
-	Mask m student lifetime: 3
-endinit
-tick

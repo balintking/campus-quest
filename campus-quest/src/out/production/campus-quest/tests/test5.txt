@@ -1,7 +1,0 @@
-init
-    Room room
-    Student student room
-    TVSZ tvsz student lifetime: 3
-    Teacher teacher room
-endinit
-tick

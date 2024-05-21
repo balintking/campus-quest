@@ -1,6 +1,0 @@
-status
-Room room
-Student student room
-TVSZ tvsz student
-Teacher teacher room stunned: true
-endstatus

@@ -1,7 +1,0 @@
-status
-Room room
-Student student room
-Teacher teacher room
-Beer beer student lifetime: 2
-TVSZ tvsz student lifetime: 3
-endstatus

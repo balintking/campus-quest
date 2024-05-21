@@ -1,8 +1,0 @@
-init
-	Room room
-	Student student room
-    Teacher teacher room
-    Beer beer student active: true
-	TVSZ tvsz student
-endinit
-tick

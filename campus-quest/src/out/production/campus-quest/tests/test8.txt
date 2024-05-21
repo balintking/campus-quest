@@ -1,9 +1,0 @@
-init
-	Room room gassed: false
-	Student student room
-	Camembert camembert student
-	TVSZ tvsz student
-	Teacher teacher room
-endinit
-act student activate camembert
-tick

@@ -1,8 +1,0 @@
-init
-Room room1
-Room room2
-door1: room1 > room2
-Room room99
-Student student room99
-endinit
-merge room1 room2

@@ -1,6 +1,0 @@
-status
-Room room gassed: true
-Room room99
-Teacher teacher room stunned: true
-Student student room99
-endstatus

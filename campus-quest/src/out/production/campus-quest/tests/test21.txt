@@ -1,9 +1,0 @@
-init
-    Room room1
-    Teacher teacher1 room1
-    Student student1 room1
-    Student student2 room1
-    Student student3 room1
-    TVSZ tvsz student1 lifetime: 1
-endinit
-tick

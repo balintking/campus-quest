@@ -1,5 +1,0 @@
-status
-Room room gassed: true
-Student student room stunned: false
-Mask m student lifetime: 2
-endstatus

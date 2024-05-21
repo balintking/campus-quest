@@ -1,6 +1,0 @@
-Players won
-status
-Room room
-Student student room
-SlideRule sr student
-endstatus

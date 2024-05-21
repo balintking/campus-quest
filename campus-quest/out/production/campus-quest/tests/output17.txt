@@ -1,4 +1,0 @@
-status
-Room room gassed: false
-Student student room
-endstatus

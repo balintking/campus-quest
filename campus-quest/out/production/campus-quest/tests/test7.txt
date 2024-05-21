@@ -1,8 +1,0 @@
-init
-	Room room
-	Student student room
-	Cloth cloth student
-	TVSZ tvsz student
-	Teacher teacher room
-endinit
-act student activate cloth

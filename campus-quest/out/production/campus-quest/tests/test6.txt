@@ -1,7 +1,0 @@
-init
-	Room room gassed: true
-	Room room99
-	Teacher teacher room
-	Student student room99
-endinit
-tick

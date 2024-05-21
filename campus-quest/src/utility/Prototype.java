@@ -17,10 +17,11 @@ import java.util.*;
  * This class provides a user interface for the Prototype program.
  */
 public class Prototype {
-    private static boolean testMode;
+    private static boolean testMode = false;
     private static boolean readingExpected = false;
     private static boolean isReadingState = false;
     private static Map<String, Command> commands = new HashMap<>();
+    private static GameState GUIState = new GameState();
     private static GameState currentState = new GameState();
     private static GameState expectedState = new GameState();
     private static Person agent;
@@ -160,6 +161,38 @@ public class Prototype {
             expectedState.readState(inputBuffer.toString());
             inputBuffer.setLength(0);
         });
+        commands.put("load", param -> {
+            if(parameters.isEmpty())
+                throw new NecessaryParamsMissingException();
+            String path = parameters.getFirst();
+            String pwd = System.getProperty("user.dir");
+            FileInputStream fs = new FileInputStream(new File(pwd + File.separator + path));
+            Scanner sc = new Scanner(fs);
+            readInputFromScanner(sc, true);
+        });
+        commands.put("setguistate", param -> {
+            // TODO kellene ellenőrizni hogy a GUI játékban van-e
+            GUIState = currentState;
+        });
+        commands.put("getguistate", param -> {
+            currentState = GUIState;
+        });
+
+        commands.put("pwd", param -> {
+            String path = System.getProperty("user.dir") + "\\";
+            path = path.replace("/", "\\");
+            System.out.println("Current working directory: " + path);
+        });
+        commands.put("add", param -> {
+            if(parameters.isEmpty())
+                throw new NecessaryParamsMissingException();
+            StringBuilder line = new StringBuilder();
+            for(String par: parameters) {
+                line.append(par);
+                line.append(" ");
+            }
+           currentState.addObjectFromLine(line.toString().trim().toLowerCase());
+        });
     }
 
     private static boolean processLine(String _line) throws NonexistentObjectException, FileNotFoundException, UnexpectedErrorException, NecessaryParamsMissingException, NonexistentOperationException {
@@ -201,15 +234,17 @@ public class Prototype {
 
     public static void main(String[] args) {
         System.out.println("Welcome to the Campus Quest prototype program! \nType in any command to use shell or press 1 to run tests. Press 0 to exit.");
-        GUI.setState(currentState);
+        GUI.setState(GUIState);
         GUI.initMenu();
-
         // TODO: itt meg kell oldani, hogy tesztelés is lehessen
         FileInputStream fs = null;
         try {
             fs = new FileInputStream(new File("campus-quest" + File.separator + "saves" + File.separator + "newgame.txt"));
             Scanner sc = new Scanner(fs);
-            readInputFromScanner(sc, false);
+            readInputFromScanner(sc, true);
+            GUIState = currentState;
+            Scanner scanner = new Scanner(System.in);
+            readInputFromScanner(scanner,false);
         }
 //        Scanner scanner = new Scanner(System.in);
 //        try {

@@ -7,8 +7,8 @@ import java.awt.*;
 public class PersonView extends View {
     Person person;
 
-    public PersonView(Person person, String path) {
-        super(path);
+    public PersonView(Person person) {
+        super(person);
         this.person = person;
     }
 

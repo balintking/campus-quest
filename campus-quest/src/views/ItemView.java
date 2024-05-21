@@ -7,8 +7,8 @@ import java.awt.*;
 public class ItemView extends View {
     Item item;
 
-    public ItemView(Item item, String path) {
-        super(path);
+    public ItemView(Item item) {
+        super(item);
         this.item = item;
     }
 

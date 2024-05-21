@@ -7,8 +7,8 @@ import java.awt.*;
 public class DoorView extends View {
     Door door;
 
-    public DoorView(Door door, String path) {
-        super(path);
+    public DoorView(Door door) {
+        super(door);
         this.door = door;
     }
 

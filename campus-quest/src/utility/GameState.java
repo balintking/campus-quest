@@ -166,6 +166,9 @@ public class GameState {
                     throw new NecessaryParamsMissingException();
                 if (newObj instanceof Person p) {
                     views.add(new PersonView(p));
+                    if (p instanceof Student s){
+                        studentQueue.offer(s);
+                    }
                     Object roomObj = getObject(splitted[2]);
                     if (!(roomObj instanceof Room room)) throw new NonexistentObjectException();
                     room.addPerson(p);
@@ -201,6 +204,8 @@ public class GameState {
                         propertyObj = Boolean.parseBoolean(element);
                     } else if (isInteger(element)) {
                         propertyObj = Integer.parseInt(element);
+                    } else {
+                        propertyObj = element;
                     }
                     if (propertyObj != null) gameObject.setProperty(lastname, propertyObj);
                 }
@@ -354,6 +359,8 @@ public class GameState {
     public void reset() {
         objects.clear();
         studentQueue.clear();
+        views.clear();
+        rooms.clear();
         fstate = finalState.PENDING;
     }
 }

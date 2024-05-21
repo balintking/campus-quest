@@ -1,6 +1,8 @@
 package utility;
 
 import characters.Student;
+import views.DoorView;
+import views.ItemView;
 import views.View;
 
 import javax.swing.*;
@@ -20,15 +22,19 @@ public class GUI {
         return state.getCurrentStudent();
     }
 
-    public static JFrame frame;
+    private static JFrame frame;
+    private static JLabel nameLabel;
+    private static JPanel inventorySlots;
+    private static JPanel roomPanel;
+    private static JPanel doorPanel;
 
-    private static Color bgColor = new Color(40, 40, 40);
+    private static final Color bgColor = new Color(40, 40, 40);
 
-    private static String resourcesPath = "campus-quest" + File.separator + "resources";
+    private static final String resourcesPath = "campus-quest" + File.separator + "resources";
 
     public static void initMenu() {
         frame = new JFrame("Campus Quest");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.getContentPane().setBackground(bgColor);
         frame.setSize(1280, 720);
         frame.setResizable(false);
@@ -240,21 +246,22 @@ public class GUI {
             c.setVisible(false);
         frame.getContentPane().removeAll();
 
+        //menubar
         JMenuBar menuBar = getjMenuBar();
-
         frame.setJMenuBar(menuBar);
 
+        //Create a label for the name
+        nameLabel = new JLabel(getCurrentStudent().toString() + "'s turn", SwingConstants.CENTER);
+        nameLabel.setFont(getMainFont(36));
+        nameLabel.setForeground(Color.lightGray);
+        frame.getContentPane().add(nameLabel, BorderLayout.NORTH);
 
-        //Create a label for the title
-        JLabel titleLabel = new JLabel(getCurrentStudent().toString() + "'s turn", SwingConstants.CENTER);
-        titleLabel.setFont(getMainFont(36));
-        titleLabel.setForeground(Color.lightGray);
-        frame.getContentPane().add(titleLabel, BorderLayout.NORTH);
-
-        JPanel roomPanel = new JPanel();
+        //room
+        roomPanel = new JPanel();
         roomPanel.setBorder(new LineBorder(Color.BLACK, 5));
         roomPanel.setBackground(bgColor);
         roomPanel.setPreferredSize(new Dimension(700, 500));
+        frame.getContentPane().add(roomPanel, BorderLayout.CENTER);
 
         //inventory
         JPanel bottomPanel = new JPanel();
@@ -268,20 +275,18 @@ public class GUI {
         inventoryLabel.setBorder(new EmptyBorder(0, 0, 0, 20));
         bottomPanel.add(inventoryLabel);
 
-        JPanel inventorySlots = new JPanel(new GridLayout(1, 5, 10, 10));
+        inventorySlots = new JPanel(new GridLayout(1, 5, 10, 10));
         inventorySlots.setBackground(bgColor);
         inventorySlots.setBorder(new EmptyBorder(0, 0, 0, 200));
         bottomPanel.add(inventorySlots);
 
-        for (int i = 0; i < 5; i++) {
-            JPanel inventorySlot = new JPanel();
-            inventorySlot.setBorder(new LineBorder(Color.BLACK, 5));
-            inventorySlot.setBackground(Color.lightGray);
-            bottomPanel.setSize(new Dimension(50, 50));
-            inventorySlots.add(inventorySlot);
-        }
-
-        //todo fill inventory
+//        for (int i = 0; i < 5; i++) {
+//            JPanel inventorySlot = new JPanel();
+//            inventorySlot.setBorder(new LineBorder(Color.BLACK, 5));
+//            inventorySlot.setBackground(Color.lightGray);
+//            bottomPanel.setSize(new Dimension(50, 50));
+//            inventorySlots.add(inventorySlot);
+//        }
 
         JButton endTurnButton = new JButton("End Turn");
         endTurnButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -301,26 +306,16 @@ public class GUI {
         frame.getContentPane().add(sidePanel, BorderLayout.EAST);
 
         //doors
-        JPanel doorPanel = new JPanel();
+        doorPanel = new JPanel();
         doorPanel.setLayout(new BoxLayout(doorPanel, BoxLayout.Y_AXIS));
         doorPanel.setBackground(bgColor);
-
-        //todo add doors
-        for (int i = 0; i < 10; i++) {
-            JButton doorButton = new JButton("Door " + i);
-            doorButton.setBackground(Color.lightGray);
-            doorButton.setBorder(new LineBorder(Color.BLACK, 5));
-            doorButton.setFont(getMainFont(28));
-            doorButton.setPreferredSize(new Dimension(100, 50));
-            doorPanel.add(doorButton);
-        }
 
         JScrollPane doorScrollPane = new JScrollPane(doorPanel);
         doorScrollPane.setPreferredSize(new Dimension(250, 400));
         doorScrollPane.setBackground(bgColor);
         sidePanel.add(doorScrollPane);
 
-        frame.getContentPane().add(roomPanel, BorderLayout.CENTER);
+        update();
         frame.pack();
     }
 
@@ -347,18 +342,53 @@ public class GUI {
         return menuBar;
     }
 
+    /**
+     * Updates the GUI to reflect the current state of the game
+     */
     public static void update() {
-        //Redraw views
-        for (View v : state.getViews()){
-            frame.getContentPane().add(v);
-            v.draw();
-        }
+        //update name
+        nameLabel.setText(getCurrentStudent().toString() + "'s turn");
 
-        //Create a label for the title
-        JLabel titleLabel = new JLabel(getCurrentStudent().toString() + "'s turn", SwingConstants.CENTER);
-        titleLabel.setFont(getMainFont(36));
-        titleLabel.setForeground(Color.lightGray);
-        frame.getContentPane().add(titleLabel, BorderLayout.NORTH);
+        //todo update room items
+
+        //update inventory
+        inventorySlots.removeAll();
+
+        //update doors
+        doorPanel.removeAll();
+
+        for (View view : state.getViews()) {
+            view.draw();
+        }
+    }
+
+    /**
+     * RoomView calls this function to update the room
+     * @param color the color to update the room to
+     */
+    public static void updateRoom(Color color) {
+        roomPanel.setBackground(color);
+    }
+
+    /**
+     * ItemView calls this function to add itself to the inventory
+     * @param itemView the item to be added to the inventory
+     */
+    public static void addToInventory(ItemView itemView) {
+        JPanel inventorySlot = new JPanel();
+        inventorySlot.setBorder(new LineBorder(Color.BLACK, 5));
+        inventorySlot.setBackground(Color.lightGray);
+        inventorySlot.setPreferredSize(new Dimension(50, 50));
+        inventorySlot.add(itemView);
+        inventorySlots.add(inventorySlot);
+    }
+
+    /**
+     * DoorView calls this function to add itself to the doors
+     * @param doorView the door to be added to the doors
+     */
+    public static void addToDoors(DoorView doorView) {
+        doorPanel.add(doorView);
     }
 
     public static void win() {
@@ -373,12 +403,13 @@ public class GUI {
         GUI.state = state;
     }
 
+    /**
+     * Switches to the next student and updates the GUI
+     */
     public static void next() {
-        Student s = state.nextStudent();
-        // TODO
+        state.nextStudent();
+        update();
     }
-
-
 
     /**
      * Rescales icon to scale

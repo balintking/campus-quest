@@ -164,7 +164,7 @@ public class Prototype {
         commands.put("load", param -> {
             if(parameters.isEmpty())
                 throw new NecessaryParamsMissingException();
-            String path = parameters.getFirst();
+            String path = parameters.get(0);
             String pwd = System.getProperty("user.dir");
             FileInputStream fs = new FileInputStream(new File(pwd + File.separator + path));
             Scanner sc = new Scanner(fs);
@@ -172,7 +172,9 @@ public class Prototype {
         });
         commands.put("setguistate", param -> {
             // TODO kellene ellenőrizni hogy a GUI játékban van-e
-            GUIState = currentState;
+//            GUIState = currentState;
+            GUI.setState(currentState);
+            GUI.update();
         });
         commands.put("getguistate", param -> {
             currentState = GUIState;
@@ -242,7 +244,8 @@ public class Prototype {
             fs = new FileInputStream(new File("campus-quest" + File.separator + "saves" + File.separator + "newgame.txt"));
             Scanner sc = new Scanner(fs);
             readInputFromScanner(sc, true);
-            GUIState = currentState;
+//            GUIState = currentState;
+            GUI.setState(currentState);
             Scanner scanner = new Scanner(System.in);
             readInputFromScanner(scanner,false);
         }

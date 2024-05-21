@@ -1,0 +1,6 @@
+status
+Room room gassed: true
+Student student room stunned: true
+Teacher teacher room stunned: true
+TVSZ tvsz room
+endstatus

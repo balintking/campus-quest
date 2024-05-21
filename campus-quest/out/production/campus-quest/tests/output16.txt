@@ -1,0 +1,13 @@
+status
+    Room room1
+	Room room2
+	Room room3
+	Room room4
+	door21: room2 > room1
+	door12: room1 > room2
+	door32: room3 > room2
+	door14: room1 > room4
+    Teacher teacher room2
+    Transistor t2 room2 isActive: false
+    Student student room4
+endstatus

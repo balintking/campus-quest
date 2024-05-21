@@ -1,0 +1,6 @@
+init
+Room room
+Student student room
+Beer beer room
+endinit
+act student pickup beer

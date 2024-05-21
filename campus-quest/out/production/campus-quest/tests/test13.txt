@@ -1,0 +1,6 @@
+init
+Room room
+Student student room
+SlideRule sr room
+endinit
+act student pickup sr

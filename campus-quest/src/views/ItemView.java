@@ -54,16 +54,13 @@ public class ItemView extends View {
     public void draw(){
         //Draw
         String iconPath = path + (item.isActive() ? "active" : "inactive") + ".png";
+        setPreferredSize(new Dimension(100, 100));
+        ImageIcon icon = GUI.rescaleIcon(new ImageIcon(iconPath), 1);
+        setIcon(icon);
 
         if (item.getOwner() == GUI.getCurrentStudent()) {
-            setPreferredSize(new Dimension(50, 50));
-            ImageIcon icon = GUI.rescaleIcon(new ImageIcon(iconPath), 0.5);
-            setIcon(icon);
             GUI.addToInventory(this);
         } else if (item.getOwner() == null && item.getRoom() == GUI.getCurrentStudent().getRoom()) {
-            setPreferredSize(new Dimension(100, 100));
-            ImageIcon icon = GUI.rescaleIcon(new ImageIcon(iconPath), 1);
-            setIcon(icon);
             GUI.addToRoom(this, 100, 100);
         }
     }

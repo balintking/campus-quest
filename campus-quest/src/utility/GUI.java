@@ -293,7 +293,7 @@ public class GUI {
             JPanel inventorySlot = new JPanel();
             inventorySlot.setBorder(new LineBorder(Color.BLACK, 5));
             inventorySlot.setBackground(Color.lightGray);
-            inventorySlot.setPreferredSize(new Dimension(50, 50));
+            inventorySlot.setPreferredSize(new Dimension(100, 100));
             inventorySlotsPanel.add(inventorySlot);
             inventorySlots.add(inventorySlot);
         }

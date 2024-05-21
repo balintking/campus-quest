@@ -18,8 +18,10 @@ public class DoorView extends View {
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(e.getButton() == MouseEvent.BUTTON1)
+                if(e.getButton() == MouseEvent.BUTTON1) {
                     GUI.getCurrentStudent().move(door);
+                    GUI.update();
+                }
             }
 
             @Override

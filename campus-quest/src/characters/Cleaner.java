@@ -3,10 +3,11 @@ package characters;
 import items.Item;
 import map.Door;
 import map.Room;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
-public class Cleaner extends Person{
+public class Cleaner extends Person implements Serializable {
 
     boolean cleaning = false;
 

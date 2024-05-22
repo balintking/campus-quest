@@ -4,13 +4,14 @@ import characters.Person;
 import items.Item;
 import utility.Entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class Room implements Entity {
+public class Room implements Entity, Serializable {
     /**
      * Person objects in the room.
      */

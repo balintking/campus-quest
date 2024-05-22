@@ -2,10 +2,11 @@ package characters;
 
 import items.Item;
 import utility.Entity;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Random;
 
-public class Student extends Person implements Entity {
+public class Student extends Person implements Entity, Serializable {
     /**
      * Offered protective items are stored here when protection is needed.
      */

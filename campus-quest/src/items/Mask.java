@@ -3,10 +3,12 @@ package items;
 import characters.Person;
 import map.Room;
 
+import java.io.Serializable;
+
 /**
  * Represents a Mask item that protects its owner when in a gassed room.
  */
-public class Mask extends Item {
+public class Mask extends Item implements Serializable {
 
     /**
      * Indicates whether the item is a fake or a genuine version.

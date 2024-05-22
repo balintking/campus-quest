@@ -3,7 +3,9 @@ package items;
 import characters.Person;
 import map.Room;
 
-enum TransistorState {
+import java.io.Serializable;
+
+enum TransistorState implements Serializable {
     UNPAIRED,
     PAIRING,
     PAIRED
@@ -14,7 +16,7 @@ enum TransistorState {
  * When paired with another transistor, it allows a student to
  * instantly teleport between the two connected locations.
  */
- public class Transistor extends Item {
+ public class Transistor extends Item implements Serializable {
 
     /**
      * The actual state of the transistor.

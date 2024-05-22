@@ -10,13 +10,14 @@ import map.Door;
 import map.Room;
 import views.*;
 
+import java.io.*;
 import java.util.*;
 
 /**
  * This class represents the game state at a moment.
  */
 
-public class GameState {
+public class GameState implements Serializable {
 
     private static Map<String, Class<?>> types;
 
@@ -40,10 +41,11 @@ public class GameState {
     private int playerCounter = 1;
 
     private enum finalState {WIN, LOSE, PENDING}
+
     Map<String, GameObject> objects;
     private finalState fstate = finalState.PENDING;
-    private Queue<Student> studentQueue = new ArrayDeque<>();
-    private List<View> views = new ArrayList<>();
+    private transient Queue<Student> studentQueue = new ArrayDeque<>();
+    private transient List<View> views = new ArrayList<>();
     private List<Room> rooms = new ArrayList<>();
 
     public GameState() {
@@ -55,7 +57,7 @@ public class GameState {
     }
 
     public void createStudents(List<String> studentNames) {
-        for (String name : studentNames){
+        for (String name : studentNames) {
             studentQueue.add(new Student(name));
         }
 
@@ -64,7 +66,7 @@ public class GameState {
             return;
 
         Random rand = new Random();
-        for (Student st : studentQueue){
+        for (Student st : studentQueue) {
             Room room = rooms.get(rand.nextInt(rooms.size()));
             st.setRoom(room);
             room.addPerson(st);
@@ -168,7 +170,7 @@ public class GameState {
                     throw new NecessaryParamsMissingException();
                 if (newObj instanceof Person p) {
                     views.add(new PersonView(p));
-                    if (p instanceof Student s){
+                    if (p instanceof Student s) {
                         studentQueue.offer(s);
                     }
                     Object roomObj = getObject(splitted[2]);
@@ -255,7 +257,7 @@ public class GameState {
                     fstate = finalState.LOSE;
                     continue;
                 }
-               addObjectFromLine(line);
+                addObjectFromLine(line);
             }
         }
     }
@@ -342,10 +344,10 @@ public class GameState {
     public Student nextStudent() {
         Student top = studentQueue.remove();
         studentQueue.offer(top);
-        while(!studentQueue.isEmpty() && (top = studentQueue.peek()).isDestroyed()) {
+        while (!studentQueue.isEmpty() && (top = studentQueue.peek()).isDestroyed()) {
             studentQueue.poll();
         }
-        if(studentQueue.isEmpty()) {
+        if (studentQueue.isEmpty()) {
             GUI.lose();
             return null;
         }
@@ -361,7 +363,7 @@ public class GameState {
 
     public Student getCurrentStudent() {
         Student top = studentQueue.peek();
-        if(top == null) throw new IllegalStateException("Cannot retrieve the current student for a lost game!");
+        if (top == null) throw new IllegalStateException("Cannot retrieve the current student for a lost game!");
         return top;
     }
 
@@ -372,4 +374,26 @@ public class GameState {
         rooms.clear();
         fstate = finalState.PENDING;
     }
+
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeInt(studentQueue.size());
+        for (Student student : studentQueue) {
+            out.writeObject(student);
+        }
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        studentQueue = new ArrayDeque<>();
+        int size = in.readInt();
+        for (int i = 0; i < size; i++) {
+            studentQueue.add((Student) in.readObject());
+        }
+        views = new ArrayList<>(); // reinitialize views if needed
+    }
+
 }
+
+
+

@@ -7,13 +7,19 @@ import items.Item;
 import map.Door;
 import map.Room;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.*;
 
 /**
  * A class representing a game object for testing.
  */
-public class GameObject {
+public class GameObject implements Serializable{
+    private static final long serialVersionUID = 1L;
+
 
     /**
      * The name of the object.
@@ -26,7 +32,7 @@ public class GameObject {
     /**
      * The Fields.
      */
-    private Map<String, Field> fields;
+    private transient Map<String, Field> fields;
     private int listOrder = 3;
 
     private void syncProperties() throws UnexpectedErrorException {
@@ -228,5 +234,32 @@ public class GameObject {
         sb.append('\n');
         return sb.toString();
     }
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeInt(fields.size());
+        for (Map.Entry<String, Field> entry : fields.entrySet()) {
+            out.writeObject(entry.getKey());
+            out.writeObject(entry.getValue().getDeclaringClass());
+        }
+    }
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        fields = new HashMap<>();
+        int size = in.readInt();
+        for (int i = 0; i < size; i++) {
+            String key = (String) in.readObject();
+            Class<?> declaringClass = (Class<?>) in.readObject();
+            try {
+                Field field = declaringClass.getDeclaredField(key);
+                field.setAccessible(true);
+                fields.put(key, field);
+            } catch (NoSuchFieldException e) {
+                throw new IOException("Failed to restore field: " + key, e);
+            }
+        }
+    }
+
 
 }
+
+

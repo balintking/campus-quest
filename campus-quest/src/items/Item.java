@@ -4,6 +4,8 @@ import characters.*;
 import map.*;
 import utility.Entity;
 
+import java.io.Serializable;
+
 /**
  * Represents the abstract base class for items within the game.
  * This class stores an item's name and lifetime, and manages its active state.
@@ -13,7 +15,7 @@ import utility.Entity;
  * implement the specific behaviors of those items in the system.
  * </p>
  */
-public abstract class Item implements Entity {
+public abstract class Item implements Entity, Serializable {
 
     /**
      * Who has the item? If it is in a room the value is null.

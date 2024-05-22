@@ -2,13 +2,14 @@ package items;
 
 import map.Room;
 import characters.Person;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Represents a Cloth item that, when active, attempts to stun everyone in the room,
  * but only affects teachers. The item self-destructs after use.
  */
-public class Cloth extends Item {
+public class Cloth extends Item implements Serializable {
 
     /**
      * Constructor for Cloth. Sets life to 1 and active to false by default.

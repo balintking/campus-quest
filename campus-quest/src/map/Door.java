@@ -1,9 +1,10 @@
 package map;
 
 import utility.Entity;
+import java.io.Serializable;
 import java.util.Random;
 
-public class Door implements Entity {
+public class Door implements Entity, Serializable {
     /**
      * Neighbouring room, opens from here.
      */

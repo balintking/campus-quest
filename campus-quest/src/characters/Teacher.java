@@ -4,11 +4,12 @@ import items.Item;
 import utility.Entity;
 import map.Door;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Teacher extends Person implements Entity {
+public class Teacher extends Person implements Entity, Serializable {
 
     /**
      * Gets stunned by cloth.

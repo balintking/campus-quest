@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
@@ -91,6 +92,13 @@ public class GUI {
 
         loadButton.addActionListener(e -> {
             //TODO load game
+            state=GameSaver.loadGame("savedgame.txt");
+            if (state != null) {
+                inGameView();
+                update();
+            } else {
+                JOptionPane.showMessageDialog(frame, "Failed to load game.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         quitButton.addActionListener(e -> {
@@ -349,6 +357,8 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //todo save game
+                GameSaver.saveGame(state,"savedgame.txt");
+                System.out.println("savve");
             }
         });
 

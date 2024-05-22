@@ -43,4 +43,6 @@ public abstract class View extends JLabel {
         setIcon(icon);
         setBounds(position.x, position.y, icon.getIconWidth(), icon.getIconHeight());
     }
+
+    public abstract boolean isDestroyed();
 }

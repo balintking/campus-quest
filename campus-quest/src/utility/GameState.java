@@ -44,8 +44,8 @@ public class GameState implements Serializable {
 
     Map<String, GameObject> objects;
     private finalState fstate = finalState.PENDING;
-    private transient Queue<Student> studentQueue = new ArrayDeque<>();
-    private List<View> views = new ArrayList<>();
+    private Queue<Student> studentQueue = new ArrayDeque<>();
+    private transient List<View> views = new ArrayList<>();
     private List<Room> rooms = new ArrayList<>();
 
     public GameState() {
@@ -74,6 +74,16 @@ public class GameState implements Serializable {
         }
     }
 
+    public void removeDestroyedViews(){
+        List<View> viewsToRemove = new ArrayList<>();
+        for (View view : views){
+            if (view.isDestroyed())
+                viewsToRemove.add(view);
+        }
+
+        views.removeAll(viewsToRemove);
+    }
+
     public Object getObject(String objName) {
         return (objects.containsKey(objName)) ? objects.get(objName).getObj() : null;
     }
@@ -86,7 +96,7 @@ public class GameState implements Serializable {
         objects.remove(n);
     }
 
-    private void updateObjects() {
+    public void updateObjects() {
         Map<String, GameObject> objectsTemp = new HashMap<>(objects);
         objects.clear();
         fstate = finalState.PENDING;
@@ -95,18 +105,22 @@ public class GameState implements Serializable {
             if (!entry.getValue().getObj().isDestroyed())
                 objects.put(entry.getKey(), entry.getValue());
         }
-        for (Map.Entry<String, GameObject> entry : objects.entrySet()) {
-            if (entry.getValue().getObj() instanceof Student s) {
-                foundStudent = true;
-                if (s.didWin())
-                    win();
-            }
-            if (!foundStudent) {
-                lose();
-            } else if (fstate != finalState.WIN) {
-                fstate = finalState.PENDING;
-            }
+        for (Student st : studentQueue){
+            if (st.didWin())
+                win();
         }
+//        for (Map.Entry<String, GameObject> entry : objects.entrySet()) {
+//            if (entry.getValue().getObj() instanceof Student s) {
+//                foundStudent = true;
+//                if (s.didWin())
+//                    win();
+//            }
+//            if (!foundStudent) {
+//                lose();
+//            } else if (fstate != finalState.WIN) {
+//                fstate = finalState.PENDING;
+//            }
+//        }
     }
 
     public void addObjectFromLine(String line) throws NecessaryParamsMissingException, NonexistentObjectException, UnexpectedErrorException, NonexistentOperationException {
@@ -300,6 +314,7 @@ public class GameState implements Serializable {
 
     public void win() {
         fstate = finalState.WIN;
+        GUI.win();
     }
 
     public boolean isFinished() {
@@ -349,6 +364,7 @@ public class GameState implements Serializable {
             studentQueue.poll();
         }
         if (studentQueue.isEmpty()) {
+            fstate = finalState.LOSE;
             GUI.lose();
             return null;
         }
@@ -363,8 +379,12 @@ public class GameState implements Serializable {
     }
 
     public Student getCurrentStudent() {
+        if (studentQueue.isEmpty())
+            return new Student();
+
         Student top = studentQueue.peek();
-        if (top == null) throw new IllegalStateException("Cannot retrieve the current student for a lost game!");
+        if (fstate == finalState.PENDING && top == null)
+            throw new IllegalStateException("Cannot retrieve the current student for a lost game!");
         return top;
     }
 

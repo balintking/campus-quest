@@ -1,5 +1,6 @@
 package views;
 
+import characters.Student;
 import items.Item;
 import utility.GUI;
 
@@ -18,6 +19,9 @@ public class ItemView extends View {
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (GUI.getCurrentStudent() == null)
+                    return;
+
                 if(e.getButton() == MouseEvent.BUTTON1){
                     if (item.getRoom() != null) {
                         GUI.getCurrentStudent().pickup(item);
@@ -63,5 +67,10 @@ public class ItemView extends View {
         } else if (item.getOwner() == null && item.getRoom() == GUI.getCurrentStudent().getRoom()) {
             GUI.addToRoom(this, 100, 100);
         }
+    }
+
+    @Override
+    public boolean isDestroyed() {
+        return item.isDestroyed();
     }
 }

@@ -168,8 +168,6 @@ public abstract class Person implements Entity {
      * @return room
      */
     public Room getRoom() {
-        Logger.logCall("getRoom", "Room");
-        Logger.logReturn(room.toString());
         return room;
     }
 

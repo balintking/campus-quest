@@ -81,26 +81,27 @@ public class GameState implements Serializable {
      * @throws NonexistentOperationException if a nonexistent operation is attempted.
      */
     public GameState(int studentsNum) throws NecessaryParamsMissingException, NonexistentObjectException, UnexpectedErrorException, NonexistentOperationException {
+        objects = new HashMap<>();
         Random rand = new Random();
         int roomNum = studentsNum * 3 + 5;
         for (int i = 0; i < roomNum; i++) {
-            addObjectFromLine("Room room" + i + " capacity: " + (rand.nextInt(7) + 3) + " cursed: " + ((rand.nextInt(99) < 10) ? "true" : "false" + " gassed: " + ((rand.nextInt(99) < 18) ? "true" : "false")));
+            addObjectFromLine("room room" + i + " capacity: " + (rand.nextInt(7) + 3) + " cursed: " + ((rand.nextInt(99) < 10) ? "true" : "false" + " gassed: " + ((rand.nextInt(99) < 18) ? "true" : "false")));
 
         }
         int doorcount = 0;
         // door generation logic
         for(int i = 0; i < roomNum; i++) {
             int toRoom = randDifferentInt(roomNum,i);
-            addObjectFromLine(doorcount++ + ": room" + i + "> room" + toRoom);
-            addObjectFromLine(doorcount++ + ": room" + toRoom + "> room" + i);
+            addObjectFromLine(doorcount++ + ": room" + i + " > room" + toRoom);
+            addObjectFromLine(doorcount++ + ": room" + toRoom + " > room" + i);
         }
         int otherDoorsNum = roomNum * 2 + 5;
         for (int i = 0; i < otherDoorsNum; i++) {
             int fromRoom = rand.nextInt(roomNum);
             int toRoom = randDifferentInt(roomNum,i);
-            addObjectFromLine(doorcount++ + ": room" + fromRoom + "> room" + toRoom);
+            addObjectFromLine(doorcount++ + ": room" + fromRoom + " > room" + toRoom);
             if(rand.nextInt(10) < 5) {
-                addObjectFromLine(doorcount++ + ": room" + toRoom + "> room" + fromRoom);
+                addObjectFromLine(doorcount++ + ": room" + toRoom + " > room" + fromRoom);
             }
         }
         // the real SlideRule is always going to be on the room of the highest number.

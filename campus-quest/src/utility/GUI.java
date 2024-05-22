@@ -1,6 +1,10 @@
 package utility;
 
 import characters.Student;
+import exceptions.NecessaryParamsMissingException;
+import exceptions.NonexistentObjectException;
+import exceptions.NonexistentOperationException;
+import exceptions.UnexpectedErrorException;
 import views.DoorView;
 import views.ItemView;
 import views.View;
@@ -229,6 +233,17 @@ public class GUI {
             if (playerNames.isEmpty()) {
                 errorLabel.setText("At least one player is required to start");
                 return;
+            }
+            try {
+                state = new GameState(playerNames.size());
+            } catch (NecessaryParamsMissingException ex) {
+                throw new RuntimeException(ex);
+            } catch (NonexistentObjectException ex) {
+                throw new RuntimeException(ex);
+            } catch (UnexpectedErrorException ex) {
+                throw new RuntimeException(ex);
+            } catch (NonexistentOperationException ex) {
+                throw new RuntimeException(ex);
             }
             //Start game
             state.createStudents(playerNames);

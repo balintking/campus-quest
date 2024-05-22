@@ -381,6 +381,10 @@ public class GameState implements Serializable {
         for (Student student : studentQueue) {
             out.writeObject(student);
         }
+        out.writeInt(views.size());
+        for (View view : views) {
+            out.writeObject(view);
+        }
     }
 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
@@ -390,7 +394,11 @@ public class GameState implements Serializable {
         for (int i = 0; i < size; i++) {
             studentQueue.add((Student) in.readObject());
         }
-        views = new ArrayList<>(); // reinitialize views if needed
+        views = new ArrayList<>();
+        int viewsSize = in.readInt();
+        for (int i = 0; i < viewsSize; i++) {
+            views.add((View) in.readObject());
+        }
     }
 
 }

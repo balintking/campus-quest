@@ -141,6 +141,23 @@ public class Prototype {
             }
             testMode = false;
         });
+        commands.put("savegame", param -> {
+            if (parameters.isEmpty()) {
+                throw new NecessaryParamsMissingException();
+            }
+            String filename = parameters.get(0);
+            GameSaver.saveGame(currentState, filename);
+        });
+
+        commands.put("loadgame", param -> {
+            if (parameters.isEmpty()) {
+                throw new NecessaryParamsMissingException();
+            }
+            String filename = parameters.get(0);
+            currentState = GameSaver.loadGame(filename);
+            GUI.setState(currentState);
+            GUI.update();
+        });
         commands.put("init", param -> {
             isReadingState = true;
         });

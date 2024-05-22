@@ -3,7 +3,6 @@ package map;
 import characters.Person;
 import items.Item;
 import utility.Entity;
-import utility.Logger;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -66,32 +65,25 @@ public class Room implements Entity, Serializable {
      * Adds the Door received as a parameter to the room.
      */
     public void addDoor(Door door) {
-        Logger.logCall("addDoor", new Object[]{door}, "void");
         doors.add(door);
-        Logger.logReturn();
     }
 
     /**
      * Adds the Item received as a parameter to the room.
      */
     public void addItem(Item item) {
-        Logger.logCall("addItem", new Object[]{item}, "void");
         items.add(item);
-        Logger.logReturn();
     }
 
     /**
      * Adds the Person received as a parameter to the room.
      */
     public boolean addPerson(Person person) {
-        Logger.logCall("addPerson", new Object[]{person}, "boolean");
         if (capacity == people.size()) {
-            Logger.logReturn(false);
             return false;
         } else {
             people.add(person);
             cleanliness--;
-            Logger.logReturn(true);
             return true;
         }
     }
@@ -102,10 +94,7 @@ public class Room implements Entity, Serializable {
      * Practically no use
      */
     public void destroy() {
-        Logger.logCall("destroy", "void");
-        Logger.logDestroy(this, "Room");
         destroyed = true;
-        Logger.logReturn();
     }
 
     /**
@@ -114,46 +103,36 @@ public class Room implements Entity, Serializable {
      * be created between the two "new" rooms formed after division.
      */
     public void divide() {
-        Logger.logCall("divide", "void");
         Map<Room, Door> neighbors = new HashMap<>();
         for (Door d : doors) {
             neighbors.put(d.getDest(), d);
         }
         Room r2 = new Room(2, capacity, cursed);
-        Logger.logCreate(r2, "Room", "r2", new Object[]{2, 10, false});
         Door d1 = new Door();
         Door d2 = new Door();
-        Logger.logCreate(d2, "Door", "d2");
         d1.setSrc(this);
         d1.setDest(r2);
         d2.setSrc(r2);
         d2.setDest(this);
         this.addDoor(d1);
         r2.addDoor(d2);
-        if (Logger.testerInput("Is the new Room getting the old one's neighbour as its neighbour?")) {
-            for (Map.Entry<Room, Door> n : neighbors.entrySet()) {
-                Door d = n.getValue();
-                d.setSrc(r2);
-                this.removeDoor(d);
-                r2.addDoor(d);
-            }
+        for (Map.Entry<Room, Door> n : neighbors.entrySet()) {
+            Door d = n.getValue();
+            d.setSrc(r2);
+            this.removeDoor(d);
+            r2.addDoor(d);
         }
-        Logger.logReturn();
     }
 
     /**
      * The room becomes gased.
      */
     public void gas() {
-        Logger.logCall("gas", "void");
         gassed = true;
-        Logger.logReturn();
     }
 
     public void unGas() {
-        Logger.logCall("unGas", "void");
         gassed = false;
-        Logger.logReturn();
     }
 
 
@@ -162,7 +141,6 @@ public class Room implements Entity, Serializable {
      * Checks if there is enough space to accommodate all people, if not it returns without merging.
      */
     public void merge() {
-        Logger.logCall("merge", "void");
         if (!doors.isEmpty()) {
             Random rand = new Random();
             int value = rand.nextInt(doors.size());
@@ -191,34 +169,27 @@ public class Room implements Entity, Serializable {
             neighbour.setDoors(neighbourDoors);
             neighbour.destroy();
         }
-        Logger.logReturn();
     }
 
     /**
      * Removes the door received as a parameter from the room.
      */
     public void removeDoor(Door door) {
-        Logger.logCall("removeDoor", new Object[]{door}, "void");
         doors.remove(door);
-        Logger.logReturn();
     }
 
     /**
      * Removes the item received as a parameter from the room.
      */
     public void removeItem(Item item) {
-        Logger.logCall("removeItem", new Object[]{item}, "void");
         items.remove(item);
-        Logger.logReturn();
     }
 
     /**
      * Removes the person received as a parameter from the room.
      */
     public void removePerson(Person person) {
-        Logger.logCall("removePerson", new Object[]{person}, "void");
         people.remove(person);
-        Logger.logReturn();
     }
 
 
@@ -228,8 +199,6 @@ public class Room implements Entity, Serializable {
      * @return people
      */
     public List<Person> getPeople() {
-        Logger.logCall("getPeople", "List<Person>");
-        Logger.logReturn(people);
         return people;
     }
 
@@ -239,8 +208,6 @@ public class Room implements Entity, Serializable {
      * @return doors
      */
     public List<Door> getDoors() {
-        Logger.logCall("getDoors", "List<Door>");
-        Logger.logReturn(doors);
         return doors;
     }
 
@@ -254,8 +221,6 @@ public class Room implements Entity, Serializable {
      * @return items
      */
     public List<Item> getItems() {
-        Logger.logCall("getItems", "List<Item>");
-        Logger.logReturn(items);
         return items;
     }
 
@@ -266,7 +231,6 @@ public class Room implements Entity, Serializable {
      * What happens if there are two-way doors ?!
      */
     public void tick() {
-        Logger.logCall("tick", "void");
         if (gassed) {
             for (Person p : people)
                 p.gasStun();
@@ -276,7 +240,6 @@ public class Room implements Entity, Serializable {
                 d.tick();
             }
         }
-        Logger.logReturn();
     }
 
     @Override

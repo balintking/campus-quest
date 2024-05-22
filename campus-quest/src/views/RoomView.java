@@ -17,9 +17,11 @@ public class RoomView extends View {
     public void draw(){
         if (room.getPeople().contains(GUI.getCurrentStudent())){
             //Draw
-            String iconPath = path + (room.isGassed() ? "gassed" : "default") + ".png";
-            Point position = new Point(50, 50); // TODO: helyes pozícionálás
-            draw(iconPath, 1, position);
+            if(room.isGassed()){
+                GUI.updateRoom(Color.green);
+            } else {
+                GUI.updateRoom(new Color(40,40,40));
+            }
         }
     }
 }

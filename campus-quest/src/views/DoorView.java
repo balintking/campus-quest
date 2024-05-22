@@ -3,6 +3,7 @@ package views;
 import map.Door;
 import utility.GUI;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -17,8 +18,10 @@ public class DoorView extends View {
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(e.getButton() == MouseEvent.BUTTON1)
+                if(e.getButton() == MouseEvent.BUTTON1) {
                     GUI.getCurrentStudent().move(door);
+                    GUI.update();
+                }
             }
 
             @Override
@@ -41,9 +44,12 @@ public class DoorView extends View {
         //Draw
         if (door.getSrc().isCursed())
             return;
-        String iconPath = path + "default.png";
-        Point position = new Point(700, 50); // TODO: helyes pozícionálás
-        GUI.addToDoors(this);
-        draw(iconPath, 1, position);
+        if(GUI.getCurrentStudent().getRoom() == door.getSrc()) {
+            String iconPath = path + "default.png";
+            GUI.addToDoors(this);
+            ImageIcon icon = GUI.rescaleIcon(new ImageIcon(iconPath), 1);
+            setIcon(icon);
+
+        }
     }
 }

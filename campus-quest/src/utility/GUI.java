@@ -26,7 +26,8 @@ public class GUI {
 
     private static JFrame frame;
     private static JLabel nameLabel;
-    private static JPanel inventorySlots;
+    private static final List<JPanel> inventorySlots = new ArrayList<>();
+    private static int itemsInInventory = 0;
     private static JPanel roomPanel;
     private static JPanel doorPanel;
 
@@ -71,14 +72,17 @@ public class GUI {
         newGameButton.setBorder(new LineBorder(Color.BLACK, 5));
         newGameButton.setFont(getMainFont(48));
         newGameButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        newGameButton.setOpaque(true);
         loadButton.setBackground(Color.lightGray);
         loadButton.setBorder(new LineBorder(Color.BLACK, 5));
         loadButton.setFont(getMainFont(48));
         loadButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        loadButton.setOpaque(true);
         quitButton.setBackground(Color.lightGray);
         quitButton.setBorder(new LineBorder(Color.BLACK, 5));
         quitButton.setFont(getMainFont(48));
         quitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        quitButton.setOpaque(true);
 
         //Add action listeners to the buttons
         newGameButton.addActionListener(e -> {
@@ -133,7 +137,7 @@ public class GUI {
         ArrayList<String> playerNames = new ArrayList<>();
 
         //Create a label for the title
-        JLabel titleLabel = new JLabel("Choose Players", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Players", SwingConstants.CENTER);
         titleLabel.setFont(getMainFont(36));
         titleLabel.setForeground(Color.lightGray);
         panel.add(titleLabel, BorderLayout.NORTH);
@@ -171,10 +175,12 @@ public class GUI {
         addButton.setBorder(new LineBorder(Color.BLACK, 5));
         addButton.setFont(getMainFont(28));
         addButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        addButton.setOpaque(true);
         startButton.setBackground(Color.lightGray);
         startButton.setBorder(new LineBorder(Color.BLACK, 5));
         startButton.setFont(getMainFont(36));
         startButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        startButton.setOpaque(true);
 
 
         //newNamePanel components
@@ -212,6 +218,7 @@ public class GUI {
                 startButton.setVisible(true);
                 errorLabel.setText("");
                 updatePlayersList(namesPanel, playerNames);
+                nameField.setText("");
             }
         });
 
@@ -230,7 +237,6 @@ public class GUI {
     private static Font getMainFont(float fontSize) {
         File file = new File(resourcesPath + File.separator + "AGENCYR.TTF");
         Font font;
-        System.out.println(file.getAbsolutePath());
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, file);
         } catch (Exception e) {
@@ -254,6 +260,8 @@ public class GUI {
             nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
             pane.add(nameLabel);
         }
+        pane.revalidate();
+        pane.repaint();
     }
 
     public static void inGameView() {
@@ -292,10 +300,19 @@ public class GUI {
         inventoryLabel.setBorder(new EmptyBorder(0, 0, 0, 20));
         bottomPanel.add(inventoryLabel);
 
-        inventorySlots = new JPanel(new GridLayout(1, 5, 10, 10));
-        inventorySlots.setBackground(bgColor);
-        inventorySlots.setBorder(new EmptyBorder(0, 0, 0, 200));
-        bottomPanel.add(inventorySlots);
+        JPanel inventorySlotsPanel = new JPanel(new GridLayout(1, 5, 10, 10));
+        inventorySlotsPanel.setBackground(bgColor);
+        inventorySlotsPanel.setBorder(new EmptyBorder(0, 0, 0, 200));
+        bottomPanel.add(inventorySlotsPanel);
+
+        for (int i = 0; i < 5; i++) {
+            JPanel inventorySlot = new JPanel();
+            inventorySlot.setBorder(new LineBorder(Color.BLACK, 5));
+            inventorySlot.setBackground(Color.lightGray);
+            inventorySlot.setPreferredSize(new Dimension(100, 100));
+            inventorySlotsPanel.add(inventorySlot);
+            inventorySlots.add(inventorySlot);
+        }
 
         JButton endTurnButton = new JButton("End Turn");
         endTurnButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -370,9 +387,12 @@ public class GUI {
         roomPanel.repaint();
 
         //clear inventory
-        inventorySlots.removeAll();
-        inventorySlots.revalidate();
-        inventorySlots.repaint();
+        for (JPanel slot : inventorySlots) {
+            slot.removeAll();
+            slot.revalidate();
+            slot.repaint();
+        }
+        itemsInInventory = 0;
 
         //clear doors
         doorPanel.removeAll();
@@ -390,6 +410,8 @@ public class GUI {
      */
     public static void updateRoom(Color color) {
         roomPanel.setBackground(color);
+        roomPanel.revalidate();
+        roomPanel.repaint();
     }
 
     /**
@@ -397,11 +419,11 @@ public class GUI {
      * The view is placed randomly in the room.
      * @param view the view to be added to the room
      */
-    public static void addToRoom(View view) {
+    public static void addToRoom(View view, int width, int height) {
         //randomly place the view in the room
-        int x = random.nextInt(roomSize.width - 100);
-        int y = random.nextInt(roomSize.height - 100);
-        view.setBounds(x, y, 100, 100);
+        int x = random.nextInt(roomSize.width - width);
+        int y = random.nextInt(roomSize.height - height);
+        view.setBounds(x, y, width, height);
 
         roomPanel.add(view);
     }
@@ -411,12 +433,11 @@ public class GUI {
      * @param itemView the item to be added to the inventory
      */
     public static void addToInventory(ItemView itemView) {
-        JPanel inventorySlot = new JPanel();
-        inventorySlot.setBorder(new LineBorder(Color.BLACK, 5));
-        inventorySlot.setBackground(Color.lightGray);
-        inventorySlot.setPreferredSize(new Dimension(50, 50));
-        inventorySlot.add(itemView);
-        inventorySlots.add(inventorySlot);
+        if (itemsInInventory >= inventorySlots.size()) {
+            return;
+        }
+        inventorySlots.get(itemsInInventory).add(itemView);
+        itemsInInventory++;
     }
 
     /**

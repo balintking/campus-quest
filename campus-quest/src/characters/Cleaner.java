@@ -3,8 +3,6 @@ package characters;
 import items.Item;
 import map.Door;
 import map.Room;
-import utility.Logger;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
@@ -31,19 +29,15 @@ public class Cleaner extends Person implements Serializable {
      */
     @Override
     public boolean move(Door door){
-        Logger.logCall("move",new Object[]{door},"void");
         if(cleaning){
-            Logger.logReturn(false);
             return false;
         }
         Room r = door.getDest();
         if(r.addPerson(this)){
             this.getRoom().removePerson(this);
             this.setRoom(r);
-            Logger.logReturn(true);
             return true;
         }
-        Logger.logReturn(false);
         return false;
     }
 

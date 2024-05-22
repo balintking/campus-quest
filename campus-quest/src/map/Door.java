@@ -1,8 +1,6 @@
 package map;
 
 import utility.Entity;
-import utility.Logger;
-
 import java.io.Serializable;
 import java.util.Random;
 
@@ -26,21 +24,13 @@ public class Door implements Entity, Serializable {
     public Door() {
     }
 
-    public Door(Room src, Room dst) {
-        source = src;
-        destination = dst;
-    }
-
     /**
      * Destroys the door.
      */
     void destroy() {
-        Logger.logCall("destroy", "void");
-        Logger.logDestroy(this, "Door");
         source.removeDoor(this);
         destination.removeDoor(this);
         destroyed = true;
-        Logger.logReturn();
     }
 
     /**
@@ -65,8 +55,6 @@ public class Door implements Entity, Serializable {
      * @return source
      */
     public Room getSrc() {
-        Logger.logCall("getSrc", "Room");
-        Logger.logReturn(source);
         return source;
     }
 
@@ -74,8 +62,6 @@ public class Door implements Entity, Serializable {
      * Setter for the sourceRoom
      */
     public void setSrc(Room source) {
-        Logger.logCall("setSrc", new Object[]{source}, "void");
-        Logger.logReturn();
         this.source = source;
     }
     /**
@@ -84,16 +70,12 @@ public class Door implements Entity, Serializable {
      * @return destination
      */
     public Room getDest() {
-        Logger.logCall("getDest", "Room");
-        Logger.logReturn(destination);
         return destination;
     }
     /**
      * Sets the destination of the door.
      */
     public void setDest(Room destination) {
-        Logger.logCall("setDest", new Object[]{destination}, "void");
-        Logger.logReturn();
         this.destination = destination;
     }
 

@@ -3,6 +3,7 @@ package views;
 import items.Item;
 import utility.GUI;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -18,10 +19,17 @@ public class ItemView extends View {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(e.getButton() == MouseEvent.BUTTON1){
-                    item.activate();
-                } else if(e.getButton() == MouseEvent.BUTTON2){
-                    GUI.getCurrentStudent().drop(item);
+                    if (item.getRoom() != null) {
+                        GUI.getCurrentStudent().pickup(item);
+                    } else {
+                        GUI.getCurrentStudent().drop(item);
+                    }
+                } else if(e.getButton() == MouseEvent.BUTTON3){
+                    if (item.getOwner() == GUI.getCurrentStudent()) {
+                        item.activate();
+                    }
                 }
+                GUI.update();
             }
 
             @Override
@@ -46,20 +54,14 @@ public class ItemView extends View {
     public void draw(){
         //Draw
         String iconPath = path + (item.isActive() ? "active" : "inactive") + ".png";
-        //ImageIcon icon = GUI.rescaleIcon(new ImageIcon(iconPath), 1);
-        //setIcon(icon);
-        setText("ITEM");
-        setPreferredSize(new Dimension(50, 50));
-
+        setPreferredSize(new Dimension(100, 100));
+        ImageIcon icon = GUI.rescaleIcon(new ImageIcon(iconPath), 1);
+        setIcon(icon);
 
         if (item.getOwner() == GUI.getCurrentStudent()) {
             GUI.addToInventory(this);
         } else if (item.getOwner() == null && item.getRoom() == GUI.getCurrentStudent().getRoom()) {
-            GUI.addToRoom(this);
+            GUI.addToRoom(this, 100, 100);
         }
-
-//        Point position = new Point(50, 50); // TODO: helyes pozícionálás
-//        draw(iconPath, 1, position);
-
     }
 }

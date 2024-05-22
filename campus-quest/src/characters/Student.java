@@ -2,8 +2,6 @@ package characters;
 
 import items.Item;
 import utility.Entity;
-import utility.Logger;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Random;
@@ -37,15 +35,12 @@ public class Student extends Person implements Entity, Serializable {
      * @param item Item to pick up
      */
     public boolean pickup(Item item) {
-        Logger.logCall("pickup", new Object[]{item}, "void");
         if (this.items.size() < 5) {
             items.add(item);
             item.setOwner(this);
             room.removeItem(item);
-            Logger.logReturn(true);
             return true;
         }
-        Logger.logReturn(false);
         return false;
     }
 
@@ -85,9 +80,7 @@ public class Student extends Person implements Entity, Serializable {
      * Activates the given item
      */
     public void initActivate(Item i) {
-        Logger.logCall("initActivate", new Object[]{i}, "void");
         i.activate();
-        Logger.logReturn();
     }
 
     /**
@@ -95,8 +88,6 @@ public class Student extends Person implements Entity, Serializable {
      */
     @Override
     public void clothStun() {
-        Logger.logCall("clothStun", "void");
-        Logger.logReturn();
     }
 
     /**
@@ -107,7 +98,6 @@ public class Student extends Person implements Entity, Serializable {
      */
     @Override
     public void gasStun() {
-        Logger.logCall("gasStun", "void");
         for (Item i : items) {
             i.gasThreat();
         }
@@ -118,7 +108,6 @@ public class Student extends Person implements Entity, Serializable {
             selectProtectionProvider();
         }
         protectiveItems.clear();
-        Logger.logReturn();
     }
 
 
@@ -127,7 +116,6 @@ public class Student extends Person implements Entity, Serializable {
      */
     @Override
     public void teacherAttack() {
-        Logger.logCall("teacherAttack", "void");
         for (Item i : items) {
             i.teacherThreat();
         }
@@ -135,12 +123,10 @@ public class Student extends Person implements Entity, Serializable {
             // the student dies
             room.removePerson(this);
             destroyed = true;
-            Logger.logDestroy(this, "Student");
         } else {
             selectProtectionProvider();
         }
         protectiveItems.clear();
-        Logger.logReturn();
     }
 
     /**
@@ -148,9 +134,7 @@ public class Student extends Person implements Entity, Serializable {
      */
     @Override
     public void teacherProtection(Item protectionProvider, int priority) {
-        Logger.logCall("teacherProtection", new Object[]{protectionProvider, priority}, "void");
         protectiveItems.put(protectionProvider, priority);
-        Logger.logReturn();
     }
 
     /**
@@ -160,9 +144,7 @@ public class Student extends Person implements Entity, Serializable {
      */
     @Override
     public void gasProtection(Item protectionProvider, int priority) {
-        Logger.logCall("gasProtection", new Object[]{protectionProvider, priority}, "void");
         protectiveItems.put(protectionProvider, priority);
-        Logger.logReturn();
     }
 
 
@@ -171,11 +153,7 @@ public class Student extends Person implements Entity, Serializable {
      */
     @Override
     public void slideRuleNotification(Item slideRule) {
-        Logger.logCall("slideRuleNotification", new Object[]{slideRule}, "void");
-        Logger.logCall("win", "void");
         won = true;
-        Logger.logReturn();
-        Logger.logReturn();
     }
 
 
@@ -187,7 +165,6 @@ public class Student extends Person implements Entity, Serializable {
         if (getStunTimer() == 0) {
             stunned = false;
         }
-        //todo:kapott parameter szerinti mozgas
     }
 
     public boolean didWin(){

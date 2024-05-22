@@ -48,14 +48,96 @@ public class GameState implements Serializable {
     private transient List<View> views = new ArrayList<>();
     private List<Room> rooms = new ArrayList<>();
 
+    /**
+     * Generates a random integer different from the provided number.
+     *
+     * @param range the range within which the random number is to be generated.
+     * @param num the number that the generated number should differ from.
+     * @return a random integer different from the provided number.
+     */
+    private int randDifferentInt(int range, int num) {
+        Random rand = new Random();
+        int randnum;
+        do {
+            randnum = rand.nextInt(range);
+        } while (randnum == num);
+        return randnum;
+    }
+
+    /**
+     * Default constructor for GameState.
+     */
     public GameState() {
         objects = new HashMap<>();
     }
 
-    public GameState(int studentsNum) {
-        // TODO map generation - game design choices
+    /**
+     * Constructs a GameState with a specified number of students.
+     *
+     * @param studentsNum the number of students.
+     * @throws NecessaryParamsMissingException if necessary parameters are missing.
+     * @throws NonexistentObjectException if a nonexistent object is referenced.
+     * @throws UnexpectedErrorException if an unexpected error occurs.
+     * @throws NonexistentOperationException if a nonexistent operation is attempted.
+     */
+    public GameState(int studentsNum) throws NecessaryParamsMissingException, NonexistentObjectException, UnexpectedErrorException, NonexistentOperationException {
+        Random rand = new Random();
+        int roomNum = studentsNum * 3 + 5;
+        for (int i = 0; i < roomNum; i++) {
+            addObjectFromLine("Room room" + i + " capacity: " + (rand.nextInt(7) + 3) + " cursed: " + ((rand.nextInt(99) < 10) ? "true" : "false" + " gassed: " + ((rand.nextInt(99) < 18) ? "true" : "false")));
+
+        }
+        int doorcount = 0;
+        // door generation logic
+        for(int i = 0; i < roomNum; i++) {
+            int toRoom = randDifferentInt(roomNum,i);
+            addObjectFromLine(doorcount++ + ": room" + i + "> room" + toRoom);
+            addObjectFromLine(doorcount++ + ": room" + toRoom + "> room" + i);
+        }
+        int otherDoorsNum = roomNum * 2 + 5;
+        for (int i = 0; i < otherDoorsNum; i++) {
+            int fromRoom = rand.nextInt(roomNum);
+            int toRoom = randDifferentInt(roomNum,i);
+            addObjectFromLine(doorcount++ + ": room" + fromRoom + "> room" + toRoom);
+            if(rand.nextInt(10) < 5) {
+                addObjectFromLine(doorcount++ + ": room" + toRoom + "> room" + fromRoom);
+            }
+        }
+        // the real SlideRule is always going to be on the room of the highest number.
+        // the players will never notice this because they don't see the rooms name.
+        addObjectFromLine("sliderule sr room" + (roomNum-1) + " fake: false");
+        for(int i = 0; i < studentsNum; i++)
+            addObjectFromLine("sliderule fakesr" + i + " room" + rand.nextInt(roomNum-1) + " fake: true" );
+        int fakeableNum = studentsNum * 2 + 4;
+        List<String> fakeableObjects = List.of("mask","tvsz");
+        for(int i = 0; i < fakeableNum; i++) {
+            for(String typename : fakeableObjects) {
+                addObjectFromLine(typename + " " + typename + i + " room" + rand.nextInt(roomNum) + " fake: " + ((rand.nextInt(10) < 3) ? "true" : "false"));
+            }
+        }
+        List<String> nonFakeables = List.of("airfreshener","beer","camembert","cloth","transistor");
+        int nonFakeableNum = studentsNum * 2 + 1;
+        for(int i = 0; i < nonFakeableNum; i++) {
+            for(String typename : nonFakeables) {
+                addObjectFromLine(typename + " " + typename + i + " room" + rand.nextInt(roomNum));
+            }
+        }
+        List<String> npcs = List.of("teacher","cleaner");
+        int npcNum = studentsNum * 2 + 1;
+        for(int i = 0; i < npcNum; i++) {
+            for(String typename : npcs) {
+                addObjectFromLine(typename + " " + typename + i + " room" + rand.nextInt(roomNum));
+            }
+        }
+
+
     }
 
+    /**
+     * Creates students from a list of student names.
+     *
+     * @param studentNames the list of student names.
+     */
     public void createStudents(List<String> studentNames) {
         for (String name : studentNames) {
             studentQueue.add(new Student(name));
@@ -74,6 +156,13 @@ public class GameState implements Serializable {
         }
     }
 
+
+    /**
+     * Retrieves an object by its name.
+     *
+     * @param objName the name of the object.
+     * @return the object corresponding to the provided name.
+     */
     public void removeDestroyedViews(){
         List<View> viewsToRemove = new ArrayList<>();
         for (View view : views){
@@ -84,17 +173,21 @@ public class GameState implements Serializable {
         views.removeAll(viewsToRemove);
     }
 
+
     public Object getObject(String objName) {
         return (objects.containsKey(objName)) ? objects.get(objName).getObj() : null;
     }
 
+    /**
+     * Retrieves the type of an object by its name.
+     *
+     * @param objName the name of the object.
+     * @return the class type of the object.
+     */
     public Class<?> getObjectType(String objName) {
         return objects.get(objName).getObj().getClass();
     }
 
-    public void removeObject(String n) {
-        objects.remove(n);
-    }
 
     public void updateObjects() {
         Map<String, GameObject> objectsTemp = new HashMap<>(objects);
@@ -123,6 +216,15 @@ public class GameState implements Serializable {
 //        }
     }
 
+    /**
+     * Adds an object from a line of string.
+     *
+     * @param line the string representation of the object.
+     * @throws NecessaryParamsMissingException if necessary parameters are missing.
+     * @throws NonexistentObjectException if a nonexistent object is referenced.
+     * @throws UnexpectedErrorException if an unexpected error occurs.
+     * @throws NonexistentOperationException if a nonexistent operation is attempted.
+     */
     public void addObjectFromLine(String line) throws NecessaryParamsMissingException, NonexistentObjectException, UnexpectedErrorException, NonexistentOperationException {
         String[] splitted = line.split(" ");
         if (splitted.length == 0) return;
@@ -237,6 +339,11 @@ public class GameState implements Serializable {
         }
     }
 
+    /**
+     * Removes an object.
+     *
+     * @param o the object to be removed.
+     */
     public void removeObject(Object o) {
         for (Map.Entry<String, GameObject> e : objects.entrySet()) {
             if (e.getValue() == o) {
@@ -246,6 +353,11 @@ public class GameState implements Serializable {
         }
     }
 
+    /**
+     * Returns a string representation of the current game state.
+     *
+     * @return the string representation of the game state.
+     */
     @Override
     public String toString() {
         updateObjects();
@@ -259,6 +371,16 @@ public class GameState implements Serializable {
         return sb.toString();
     }
 
+
+    /**
+     * Reads the game state from a string.
+     *
+     * @param stateString the string representation of the game state.
+     * @throws UnexpectedErrorException if an unexpected error occurs.
+     * @throws NecessaryParamsMissingException if necessary parameters are missing.
+     * @throws NonexistentObjectException if a nonexistent object is referenced.
+     * @throws NonexistentOperationException if a nonexistent operation is attempted.
+     */
     public void readState(String stateString) throws UnexpectedErrorException, NecessaryParamsMissingException, NonexistentObjectException, NonexistentOperationException {
         reset();
         try (Scanner sc = new Scanner(stateString)) {
@@ -277,6 +399,14 @@ public class GameState implements Serializable {
         }
     }
 
+    /**
+     * Compares the current game state with an expected game state.
+     *
+     * @param expected the expected game state.
+     * @return a list of differences between the current and expected game states.
+     * @throws NonexistentObjectException if a nonexistent object is referenced.
+     * @throws UnexpectedErrorException if an unexpected error occurs.
+     */
     public List<String> testCompare(GameState expected) throws NonexistentObjectException, UnexpectedErrorException {
         updateObjects();
         List<String> ret = new ArrayList<>();
@@ -297,6 +427,11 @@ public class GameState implements Serializable {
         return ret;
     }
 
+    /**
+     * Retrieves the final state of the game.
+     *
+     * @return a string representation of the final state.
+     */
     public String getFinalState() {
         switch (fstate) {
             case WIN:
@@ -308,18 +443,22 @@ public class GameState implements Serializable {
         }
     }
 
+    /**
+     * Sets the game state to lose.
+     */
     public void lose() {
         fstate = finalState.LOSE;
     }
 
+    /**
+     * Sets the game state to win.
+     */
     public void win() {
         fstate = finalState.WIN;
         GUI.win();
     }
 
-    public boolean isFinished() {
-        return fstate != finalState.PENDING;
-    }
+
 
     private static boolean isInteger(String str) {
         try {
@@ -330,6 +469,7 @@ public class GameState implements Serializable {
         }
     }
 
+
     private static boolean isBoolean(String str) {
         return str.equalsIgnoreCase("true") || str.equalsIgnoreCase("false");
     }
@@ -338,6 +478,12 @@ public class GameState implements Serializable {
         return objects.containsKey(str);
     }
 
+    /**
+     * Retrieves the name of an object.
+     *
+     * @param obj the object whose name is to be retrieved.
+     * @return the name of the object.
+     */
     public String getObjectName(Object obj) {
         for (Map.Entry<String, GameObject> e : objects.entrySet()) {
             if (e.getValue().getObj() == obj) return e.getKey();
@@ -348,15 +494,28 @@ public class GameState implements Serializable {
         return null;
     }
 
+    /**
+     * Updates the state of all objects in the game.
+     */
     public void tick() {
         for (GameObject go : objects.values())
             go.getObj().tick();
     }
 
+    /**
+     * Retrieves the list of views.
+     *
+     * @return the list of views.
+     */
     public List<View> getViews() {
         return views;
     }
 
+    /**
+     * Retrieves the next student in the queue.
+     *
+     * @return the next student.
+     */
     public Student nextStudent() {
         Student top = studentQueue.remove();
         studentQueue.offer(top);
@@ -378,6 +537,12 @@ public class GameState implements Serializable {
         return top;
     }
 
+    /**
+     * Retrieves the current student.
+     *
+     * @return the current student.
+     * @throws IllegalStateException if the game is lost and no student can be retrieved.
+     */
     public Student getCurrentStudent() {
         if (studentQueue.isEmpty())
             return new Student();
@@ -388,6 +553,9 @@ public class GameState implements Serializable {
         return top;
     }
 
+    /**
+     * Resets the game state.
+     */
     public void reset() {
         objects.clear();
         studentQueue.clear();
@@ -396,6 +564,12 @@ public class GameState implements Serializable {
         fstate = finalState.PENDING;
     }
 
+    /**
+     * Writes the object state to an output stream.
+     *
+     * @param out the output stream.
+     * @throws IOException if an I/O error occurs.
+     */
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeInt(studentQueue.size());
@@ -408,6 +582,13 @@ public class GameState implements Serializable {
         }
     }
 
+    /**
+     * Reads the object state from an input stream.
+     *
+     * @param in the input stream.
+     * @throws IOException if an I/O error occurs.
+     * @throws ClassNotFoundException if the class of the serialized object cannot be found.
+     */
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         studentQueue = new ArrayDeque<>();

@@ -45,7 +45,7 @@ public class GameState implements Serializable {
     Map<String, GameObject> objects;
     private finalState fstate = finalState.PENDING;
     private transient Queue<Student> studentQueue = new ArrayDeque<>();
-    private transient List<View> views = new ArrayList<>();
+    private List<View> views = new ArrayList<>();
     private List<Room> rooms = new ArrayList<>();
 
     public GameState() {
@@ -169,9 +169,10 @@ public class GameState implements Serializable {
                 if (splitted.length < 3 || !objects.containsKey(splitted[2]))
                     throw new NecessaryParamsMissingException();
                 if (newObj instanceof Person p) {
-                    views.add(new PersonView(p));
                     if (p instanceof Student s) {
                         studentQueue.offer(s);
+                    } else {
+                        views.add(new PersonView(p));
                     }
                     Object roomObj = getObject(splitted[2]);
                     if (!(roomObj instanceof Room room)) throw new NonexistentObjectException();

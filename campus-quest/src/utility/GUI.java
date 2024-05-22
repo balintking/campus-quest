@@ -91,7 +91,6 @@ public class GUI {
         });
 
         loadButton.addActionListener(e -> {
-            //TODO load game
             state=GameSaver.loadGame("savedgame.txt");
             if (state != null) {
                 inGameView();

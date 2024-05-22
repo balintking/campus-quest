@@ -44,7 +44,7 @@ public class GameState implements Serializable {
 
     Map<String, GameObject> objects;
     private finalState fstate = finalState.PENDING;
-    private transient Queue<Student> studentQueue = new ArrayDeque<>();
+    private Queue<Student> studentQueue = new ArrayDeque<>();
     private transient List<View> views = new ArrayList<>();
     private List<Room> rooms = new ArrayList<>();
 
@@ -156,12 +156,24 @@ public class GameState implements Serializable {
         }
     }
 
+
     /**
      * Retrieves an object by its name.
      *
      * @param objName the name of the object.
      * @return the object corresponding to the provided name.
      */
+    public void removeDestroyedViews(){
+        List<View> viewsToRemove = new ArrayList<>();
+        for (View view : views){
+            if (view.isDestroyed())
+                viewsToRemove.add(view);
+        }
+
+        views.removeAll(viewsToRemove);
+    }
+
+
     public Object getObject(String objName) {
         return (objects.containsKey(objName)) ? objects.get(objName).getObj() : null;
     }
@@ -177,7 +189,7 @@ public class GameState implements Serializable {
     }
 
 
-    private void updateObjects() {
+    public void updateObjects() {
         Map<String, GameObject> objectsTemp = new HashMap<>(objects);
         objects.clear();
         fstate = finalState.PENDING;
@@ -186,18 +198,22 @@ public class GameState implements Serializable {
             if (!entry.getValue().getObj().isDestroyed())
                 objects.put(entry.getKey(), entry.getValue());
         }
-        for (Map.Entry<String, GameObject> entry : objects.entrySet()) {
-            if (entry.getValue().getObj() instanceof Student s) {
-                foundStudent = true;
-                if (s.didWin())
-                    win();
-            }
-            if (!foundStudent) {
-                lose();
-            } else if (fstate != finalState.WIN) {
-                fstate = finalState.PENDING;
-            }
+        for (Student st : studentQueue){
+            if (st.didWin())
+                win();
         }
+//        for (Map.Entry<String, GameObject> entry : objects.entrySet()) {
+//            if (entry.getValue().getObj() instanceof Student s) {
+//                foundStudent = true;
+//                if (s.didWin())
+//                    win();
+//            }
+//            if (!foundStudent) {
+//                lose();
+//            } else if (fstate != finalState.WIN) {
+//                fstate = finalState.PENDING;
+//            }
+//        }
     }
 
     /**
@@ -269,9 +285,10 @@ public class GameState implements Serializable {
                 if (splitted.length < 3 || !objects.containsKey(splitted[2]))
                     throw new NecessaryParamsMissingException();
                 if (newObj instanceof Person p) {
-                    views.add(new PersonView(p));
                     if (p instanceof Student s) {
                         studentQueue.offer(s);
+                    } else {
+                        views.add(new PersonView(p));
                     }
                     Object roomObj = getObject(splitted[2]);
                     if (!(roomObj instanceof Room room)) throw new NonexistentObjectException();
@@ -438,6 +455,7 @@ public class GameState implements Serializable {
      */
     public void win() {
         fstate = finalState.WIN;
+        GUI.win();
     }
 
 
@@ -505,6 +523,7 @@ public class GameState implements Serializable {
             studentQueue.poll();
         }
         if (studentQueue.isEmpty()) {
+            fstate = finalState.LOSE;
             GUI.lose();
             return null;
         }
@@ -525,8 +544,12 @@ public class GameState implements Serializable {
      * @throws IllegalStateException if the game is lost and no student can be retrieved.
      */
     public Student getCurrentStudent() {
+        if (studentQueue.isEmpty())
+            return new Student();
+
         Student top = studentQueue.peek();
-        if (top == null) throw new IllegalStateException("Cannot retrieve the current student for a lost game!");
+        if (fstate == finalState.PENDING && top == null)
+            throw new IllegalStateException("Cannot retrieve the current student for a lost game!");
         return top;
     }
 
@@ -553,6 +576,10 @@ public class GameState implements Serializable {
         for (Student student : studentQueue) {
             out.writeObject(student);
         }
+        out.writeInt(views.size());
+        for (View view : views) {
+            out.writeObject(view);
+        }
     }
 
     /**
@@ -569,7 +596,11 @@ public class GameState implements Serializable {
         for (int i = 0; i < size; i++) {
             studentQueue.add((Student) in.readObject());
         }
-        views = new ArrayList<>(); // reinitialize views if needed
+        views = new ArrayList<>();
+        int viewsSize = in.readInt();
+        for (int i = 0; i < viewsSize; i++) {
+            views.add((View) in.readObject());
+        }
     }
 
 }

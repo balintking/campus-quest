@@ -18,10 +18,16 @@ public class RoomView extends View {
         if (room.getPeople().contains(GUI.getCurrentStudent())){
             //Draw
             if(room.isGassed()){
-                GUI.updateRoom(Color.green);
+                GUI.updateRoom(new Color(52, 161, 8, 255));
             } else {
-                GUI.updateRoom(new Color(40,40,40));
+                GUI.updateRoom(new Color(202, 133, 48, 255));
             }
         }
+    }
+
+
+    @Override
+    public boolean isDestroyed() {
+        return room.isDestroyed();
     }
 }

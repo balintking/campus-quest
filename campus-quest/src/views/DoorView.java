@@ -1,5 +1,6 @@
 package views;
 
+import characters.Student;
 import map.Door;
 import utility.GUI;
 
@@ -19,7 +20,10 @@ public class DoorView extends View {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(e.getButton() == MouseEvent.BUTTON1) {
-                    GUI.getCurrentStudent().move(door);
+                    Student currSt = GUI.getCurrentStudent();
+                    if (currSt == null)
+                        return;
+                    currSt.move(door);
                     GUI.update();
                 }
             }
@@ -51,5 +55,10 @@ public class DoorView extends View {
             setIcon(icon);
 
         }
+    }
+
+    @Override
+    public boolean isDestroyed() {
+        return door.isDestroyed();
     }
 }

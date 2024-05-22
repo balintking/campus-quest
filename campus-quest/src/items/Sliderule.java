@@ -35,11 +35,9 @@ public class Sliderule extends Item implements Serializable {
      */
     @Override
     public void activate() {
-        if (lifetime > 0) {
-            active = true;
-            if (!fake) {
-                owner.slideRuleNotification(this);
-            }
+        active = true;
+        if (!fake) {
+            owner.slideRuleNotification(this);
         }
     }
 

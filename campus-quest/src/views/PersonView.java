@@ -27,4 +27,10 @@ public class PersonView extends View {
             GUI.addToRoom(this, 100, 200);
         }
     }
+
+
+    @Override
+    public boolean isDestroyed() {
+        return person.isDestroyed();
+    }
 }

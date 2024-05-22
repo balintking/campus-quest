@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 public class GUI {
@@ -30,6 +31,8 @@ public class GUI {
     private static int itemsInInventory = 0;
     private static JPanel roomPanel;
     private static JPanel doorPanel;
+    private static JButton endTurnButton = new JButton("End Turn");
+    private static JMenuItem saveMenuItem = new JMenuItem("Save Game");
 
     private static final Random random = new Random();
 
@@ -91,8 +94,7 @@ public class GUI {
         });
 
         loadButton.addActionListener(e -> {
-            //TODO load game
-            state=GameSaver.loadGame("savedgame.txt");
+            state = GameSaver.loadGame("savedgame.txt");
             if (state != null) {
                 inGameView();
                 update();
@@ -251,7 +253,7 @@ public class GUI {
             c.setVisible(false);
         pane.removeAll();
 
-        for (String name : names){
+        for (String name : names) {
             JLabel nameLabel = new JLabel(name);
             nameLabel.setFont(getMainFont(24));
             nameLabel.setForeground(Color.BLACK);
@@ -313,8 +315,6 @@ public class GUI {
             inventorySlotsPanel.add(inventorySlot);
             inventorySlots.add(inventorySlot);
         }
-
-        JButton endTurnButton = new JButton("End Turn");
         endTurnButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         endTurnButton.setBackground(Color.lightGray);
         endTurnButton.setOpaque(true);
@@ -349,7 +349,6 @@ public class GUI {
         JMenuBar menuBar = new JMenuBar();
         JMenu gameMenu = new JMenu("Game");
 
-        JMenuItem saveMenuItem = new JMenuItem("Save Game");
         JMenuItem quitMenuItem = new JMenuItem("Quit Game");
 
         // Add action listeners for menu items
@@ -357,7 +356,7 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //todo save game
-                GameSaver.saveGame(state,"savedgame.txt");
+                GameSaver.saveGame(state, "savedgame.txt");
                 System.out.println("savve");
             }
         });
@@ -376,7 +375,11 @@ public class GUI {
      */
     public static void update() {
         //update name
-        nameLabel.setText(getCurrentStudent().toString() + "'s turn");
+        if (Objects.equals(state.getFinalState(), "Game running")){
+            Student currSt = getCurrentStudent();
+            if (currSt != null)
+                nameLabel.setText(currSt.toString() + "'s turn");
+        }
 
         //clear room state
         roomPanel.setBackground(bgColor);
@@ -399,6 +402,9 @@ public class GUI {
         doorPanel.revalidate();
         doorPanel.repaint();
 
+        state.updateObjects();
+        state.removeDestroyedViews();
+
         for (View view : state.getViews()) {
             view.draw();
         }
@@ -406,6 +412,7 @@ public class GUI {
 
     /**
      * RoomView calls this function to update the room
+     *
      * @param color the color to update the room to
      */
     public static void updateRoom(Color color) {
@@ -417,6 +424,7 @@ public class GUI {
     /**
      * ItemView and PersonView calls this function to add itself to the room.
      * The view is placed randomly in the room.
+     *
      * @param view the view to be added to the room
      */
     public static void addToRoom(View view, int width, int height) {
@@ -430,6 +438,7 @@ public class GUI {
 
     /**
      * ItemView calls this function to add itself to the inventory
+     *
      * @param itemView the item to be added to the inventory
      */
     public static void addToInventory(ItemView itemView) {
@@ -442,6 +451,7 @@ public class GUI {
 
     /**
      * DoorView calls this function to add itself to the doors
+     *
      * @param doorView the door to be added to the doors
      */
     public static void addToDoors(DoorView doorView) {
@@ -450,10 +460,9 @@ public class GUI {
 
     public static void win() {
         roomPanel.removeAll();
-        JLabel winMessage = new JLabel("The students won!");
-        winMessage.setFont(getMainFont(72));
-        winMessage.setForeground(Color.green);
-        roomPanel.add(winMessage, BorderLayout.CENTER);
+        nameLabel.setText("The students won!");
+        endTurnButton.setVisible(false);
+        saveMenuItem.setVisible(false);
 
         roomPanel.revalidate();
         roomPanel.repaint();
@@ -461,10 +470,9 @@ public class GUI {
 
     public static void lose() {
         roomPanel.removeAll();
-        JLabel winMessage = new JLabel("The students lost!");
-        winMessage.setFont(getMainFont(72));
-        winMessage.setForeground(Color.red);
-        roomPanel.add(winMessage, BorderLayout.CENTER);
+        nameLabel.setText("The students lost!");
+        endTurnButton.setVisible(false);
+        saveMenuItem.setVisible(false);
 
         roomPanel.revalidate();
         roomPanel.repaint();
@@ -478,7 +486,7 @@ public class GUI {
      * Switches to the next student and updates the GUI
      */
     public static void next() {
-        if(!gameEnded){
+        if (!gameEnded) {
             state.nextStudent();
             update();
         }
@@ -486,6 +494,7 @@ public class GUI {
 
     /**
      * Rescales icon to scale
+     *
      * @param icon
      * @param scale
      * @return rescaled icon

@@ -24,4 +24,10 @@ public class RoomView extends View {
             }
         }
     }
+
+
+    @Override
+    public boolean isDestroyed() {
+        return room.isDestroyed();
+    }
 }

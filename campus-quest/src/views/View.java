@@ -6,6 +6,7 @@ import utility.GUI;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,4 +43,6 @@ public abstract class View extends JLabel {
         setIcon(icon);
         setBounds(position.x, position.y, icon.getIconWidth(), icon.getIconHeight());
     }
+
+    public abstract boolean isDestroyed();
 }

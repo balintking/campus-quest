@@ -31,6 +31,11 @@ public class TVSZ extends Item implements Serializable {
         fake = false; lifetime = 3;
     }
 
+    @Override
+    public void activate(){
+
+    }
+
     /**
      * The item gets notified about a teacher threat, and it offers its protection against it
      * with a priority equivalent to its lifetime if it is not fake.
@@ -43,7 +48,7 @@ public class TVSZ extends Item implements Serializable {
     }
     @Override
     public void acceptProtection() {
-        activate();
+        active = true;
         lifetime--;
         if (lifetime <= 0) {
             destroy();

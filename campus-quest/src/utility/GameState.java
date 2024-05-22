@@ -156,13 +156,6 @@ public class GameState implements Serializable {
         }
     }
 
-
-    /**
-     * Retrieves an object by its name.
-     *
-     * @param objName the name of the object.
-     * @return the object corresponding to the provided name.
-     */
     public void removeDestroyedViews(){
         List<View> viewsToRemove = new ArrayList<>();
         for (View view : views){

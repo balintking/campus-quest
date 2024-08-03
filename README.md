@@ -42,11 +42,15 @@ To run this game, you'll need:
    ```
 3. Compile the Java files
    ```bash
-   javac *.java
+   javac -d target -sourcepath . characters/*.java exceptions/*.java items/*.java map/*.java tests/*.java utility/*.java views/*.java
+   ```
+2. **Navigate back to the base directory**
+   ```bash
+   cd ../..
    ```
 4. Run the main Java class
    ```bash
-   java Main
+   java -classpath campus-quest/src/target utility.Prototype
    ```
 
 # Documentation
